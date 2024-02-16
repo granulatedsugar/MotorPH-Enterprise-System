@@ -1,0 +1,35 @@
+.post-background{
+    -fx-background-color: #fff;
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.02), 5.0,0.0,0.0,5.0);
+}
+
+.round-button{
+    -fx-background-color: #F0F2F5;
+    -fx-background-radius: 50;
+}
+
+.sidebar-container {
+    -fx-background-color: rgba(255, 255, 255, 0.8); /* White background with 30% opacity */
+    -fx-border-color: #d0d0d0; /* Super light gray border */
+    -fx-border-width: 0 0 0 1px; /* Border on the right side only */
+    -fx-border-style: dashed; /* Dashed border */
+    -fx-hbar-policy: never;
+}
+
+.sidebar-button {
+    -fx-text-fill: #637381; /* White text */
+    -fx-font-size: 14px;
+    /*-fx-font-weight: 200;*/
+    -fx-padding: 10px 20px;
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #D8F5E8; /* Background color on hover */
+    -fx-text-fill: #00A76F; /* Text color on hover */
+}
