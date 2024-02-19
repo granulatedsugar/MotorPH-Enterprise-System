@@ -21,10 +21,10 @@
 }
 
 .sidebar-container {
-    -fx-background-color: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
-    -fx-border-color: #d7d7d7; /* Super light gray border */
-    -fx-border-width: 0 2px 0 0; /* Border on the right side only */
-    -fx-border-style: dashed; /* Dashed border */
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-border-color: #d7d7d7;
+    -fx-border-width: 0 2px 0 0;
+    -fx-border-style: dashed;
 }
 
 .sidebar-button {
@@ -32,7 +32,7 @@
     -fx-font-size: 14px;
     /*-fx-font-weight: 200;*/
     -fx-padding: 10px 20px;
-    -fx-background-color: transparent; /* Transparent background */
+    -fx-background-color: transparent;
     -fx-background-radius: 5px;
     -fx-border-width: 0;
     -fx-border-color: transparent;
@@ -41,21 +41,16 @@
 }
 
 .sidebar-button:hover {
-    -fx-background-color: #f1f1f1; /* Background color on hover */
-    -fx-text-fill: #868686; /* Text color on hover */
-}
-
-.sidebar-button:focused {
-    -fx-background-color: #ebf6ff; /* Background color on hover */
-    -fx-text-fill: #419ed1; /* Text color on hover */
+    -fx-background-color: #ebf6ff;
+    -fx-text-fill: #419ed1;
 }
 
 .reg-button {
     -fx-text-fill: #637381;
     -fx-font-size: 14px;
     /*-fx-font-weight: 200;*/
-    -fx-padding: 10px 20px;
-    -fx-background-color: #f1f1f1; /* Transparent background */
+    -fx-padding: 5px 10px;
+    -fx-background-color: #f1f1f1;
     -fx-background-radius: 5px;
     -fx-border-width: 0;
     -fx-border-color: transparent;
@@ -64,6 +59,6 @@
 }
 
 .reg-button:hover {
-    -fx-background-color: #f1f1f1; /* Background color on hover */
-    -fx-text-fill: #868686; /* Text color on hover */
+    -fx-background-color: #ebf6ff;
+    -fx-text-fill: #419ed1;
 }

@@ -16,6 +16,7 @@ public class MainController {
     @FXML
     private Label nikkoLabel;
 
+
     @FXML
     protected void onClickEmployees() {
         try {
@@ -50,6 +51,7 @@ public class MainController {
 
             // Add the loaded AnchorPane to the center region:
             borderPane.setCenter(accountingView);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
