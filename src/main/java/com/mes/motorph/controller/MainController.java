@@ -1,13 +1,10 @@
 package com.mes.motorph.controller;
 
-import com.mes.motorph.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -42,7 +39,7 @@ public class MainController {
     @FXML
     protected void onClickPayroll() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("/com/mes/motorph/accounting-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("/com/mes/motorph/payroll-view.fxml"));
             AnchorPane accountingView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:

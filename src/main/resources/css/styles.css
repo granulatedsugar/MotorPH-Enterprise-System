@@ -3,6 +3,13 @@
     -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.02), 5.0,0.0,0.0,5.0);
 }
 
+.txtLabel {
+    -fx-text-fill: #637381;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
 .round-button{
     -fx-background-color: #fafafa;
     -fx-background-radius: 50;
@@ -20,9 +27,8 @@
     -fx-border-style: dashed; /* Dashed border */
 }
 
-
 .sidebar-button {
-    -fx-text-fill: #637381; /* White text */
+    -fx-text-fill: #637381;
     -fx-font-size: 14px;
     /*-fx-font-weight: 200;*/
     -fx-padding: 10px 20px;
@@ -42,4 +48,22 @@
 .sidebar-button:focused {
     -fx-background-color: #ebf6ff; /* Background color on hover */
     -fx-text-fill: #419ed1; /* Text color on hover */
+}
+
+.reg-button {
+    -fx-text-fill: #637381;
+    -fx-font-size: 14px;
+    /*-fx-font-weight: 200;*/
+    -fx-padding: 10px 20px;
+    -fx-background-color: #f1f1f1; /* Transparent background */
+    -fx-background-radius: 5px;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+.reg-button:hover {
+    -fx-background-color: #f1f1f1; /* Background color on hover */
+    -fx-text-fill: #868686; /* Text color on hover */
 }
