@@ -3,11 +3,13 @@ module com.mes.motorph {
     requires javafx.fxml;
     requires javafx.web;
 
+    requires mysql.connector.j;
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 //    requires eu.hansolo.tilesfx;
 //    requires eu.hansolo.toolbox;
 //    requires eu.hansolo.toolboxfx;
