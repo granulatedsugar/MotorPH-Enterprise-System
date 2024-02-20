@@ -17,6 +17,7 @@ module com.mes.motorph {
 //    requires eu.hansolo.fx.heatmap;
 
     opens com.mes.motorph to javafx.fxml;
+    opens com.mes.motorph.entity to javafx.base;
     exports com.mes.motorph;
     exports com.mes.motorph.controller;
     opens com.mes.motorph.controller to javafx.fxml;
