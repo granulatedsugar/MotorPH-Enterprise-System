@@ -4,66 +4,56 @@ import java.sql.Date;
 
 public class Attendance {
     private int id;
+    private int employeeId;
     private Date date;
-    private int employeeID;
-    private String firstName;
-    private String lastName;
-    private Time punchIn;
-    private Time punchOut;
-    private double workedHours;
-    private int regularHours;
-    private double overTime;
+    private Time timeIn;
+    private Time timeOut;
 
-    public Attendance(int id,Date date, int employeeID, String firstName, String lastName, Time punchIn, Time punchOut, double workedHours, int regularHours, double overTime) {
-        this.id = id;
-        this.date = date;
-        this.employeeID = employeeID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.punchIn = punchIn;
-        this.punchOut = punchOut;
-        this.workedHours = workedHours;
-        this.regularHours = regularHours;
-        this.overTime = overTime;
+    public int getId() {
+        return id;
     }
 
-    public int getId() { return id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public int getEmployeeId() {
+        return employeeId;
+    }
 
-    public Date getDate() { return date; }
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
-    public void setDate(Date date) { this.date = date; }
+    public Date getDate() {
+        return date;
+    }
 
-    public int getEmployeeID() { return employeeID; }
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-    public void setEmployeeID(int employeeID) { this.employeeID = employeeID; }
+    public Time getTimeIn() {
+        return timeIn;
+    }
 
-    public String getFirstName() { return firstName; }
+    public void setTimeIn(Time timeIn) {
+        this.timeIn = timeIn;
+    }
 
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public Time getTimeOut() {
+        return timeOut;
+    }
 
-    public String getLastName() { return lastName; }
+    public void setTimeOut(Time timeOut) {
+        this.timeOut = timeOut;
+    }
 
-    public void setLastName(String lastName) { this.lastName = lastName; }
-
-    public Time getPunchIn() { return punchIn;  }
-
-    public void setPunchIn(Time punchIn) { this.punchIn = punchIn; }
-
-    public Time getPunchOut() { return punchOut; }
-
-    public void setPunchOut(Time punchOut) {this.punchOut = punchOut; }
-
-    public double getWorkedHours() { return workedHours;}
-
-    public void setWorkedHours(double workedHours) { this.workedHours = workedHours; }
-
-    public int getRegularHours() { return regularHours; }
-
-    public void setRegularHours(int regularHours) { this.regularHours = regularHours; }
-
-    public double getOverTime() { return overTime; }
-
-    public void setOverTime(double overTime) { this.overTime = overTime; }
+    public Attendance(int id, int employeeId, Date date, Time timeIn, Time timeOut) {
+        this.id = id;
+        this.employeeId = employeeId;
+        this.date = date;
+        this.timeIn = timeIn;
+        this.timeOut = timeOut;
+    }
 }
