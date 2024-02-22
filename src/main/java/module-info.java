@@ -21,4 +21,6 @@ module com.mes.motorph {
     exports com.mes.motorph;
     exports com.mes.motorph.controller;
     opens com.mes.motorph.controller to javafx.fxml;
+    exports com.mes.motorph.view;
+    opens com.mes.motorph.view to javafx.fxml;
 }

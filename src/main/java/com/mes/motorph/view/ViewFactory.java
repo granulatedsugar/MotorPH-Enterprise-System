@@ -1,26 +1,20 @@
-package com.mes.motorph.controller;
+package com.mes.motorph.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 
-public class MainController {
+public class ViewFactory {
     @FXML
     private BorderPane mainView;
-    @FXML
-    private Label welcomeText;
-    @FXML
-    private Label nikkoLabel;
-
 
     @FXML
     protected void onClickEmployees() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("/com/mes/motorph/employees-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/employees-view.fxml"));
             AnchorPane employeesView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:
@@ -40,7 +34,7 @@ public class MainController {
     @FXML
     protected void onClickPayroll() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("/com/mes/motorph/payroll-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/payroll-list-view.fxml"));
             AnchorPane accountingView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:
@@ -60,7 +54,7 @@ public class MainController {
     @FXML
     protected void onClickAttendance() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("/com/mes/motorph/attendance-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-view.fxml"));
             AnchorPane attendanceView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:

@@ -4,11 +4,7 @@ import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.exception.PayrollException;
 import com.mes.motorph.utils.DBUtility;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Time;
-import java.time.LocalTime;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,27 +14,28 @@ public class PayrollRepository {
     Connection conn = null;
     Statement stmt = null;
 
-    public List<Payroll> fetchWorkedHours() throws PayrollException {
+    public List<Payroll> fetchPayrollList() throws PayrollException {
         List<Payroll> payrolls = new ArrayList<>();
 
         try {
             conn = DBUtility.getConnection();
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM motorph.employee_hours";
+            String sql = "SELECT * FROM motorph.payroll_list;";
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                int id = rs.getInt("Log ID");
-                Date date = rs.getDate("Date");
-                int employeeId = rs.getInt("Employee ID");
-                String employeeName = rs.getString("Employee Name");
-                Time timeIn = rs.getTime("Punch In");
-                Time timeOut = rs.getTime("Punch Out");
-                double workedHours = rs.getDouble("Worked Hours");
-                double regularHours = rs.getDouble("Regular Work Hours");
-                double overTime = rs.getDouble("Overtime");
+                String payrollId = rs.getString("PID");
+                int employeeId = rs.getInt("EID");
+                Date payPeriodFrom = rs.getDate("From");
+                Date payPeriodTo = rs.getDate("To");
+                double hoursWorked = rs.getDouble("Total Hours");
+                double totalDeduction = rs.getDouble("Total Deduction");
+                double totalAllowance = rs.getDouble("Total Allowance");
+                double grossPay = rs.getDouble("Gross Pay");
+                double netPay = rs.getDouble("Net Pay");
 
-                Payroll payroll = new Payroll(id, date, employeeId, employeeName, timeIn, timeOut, workedHours, regularHours, overTime);
+
+                Payroll payroll = new Payroll(payrollId, employeeId, payPeriodFrom, payPeriodTo, hoursWorked, totalDeduction, totalAllowance, grossPay, netPay);
 
                 payrolls.add(payroll);
             }
@@ -50,5 +47,27 @@ public class PayrollRepository {
             DBUtility.closeConnection(conn);
         }
         return payrolls;
+    }
+
+    public boolean hasPayrollData() throws PayrollException, SQLException {
+        try {
+            conn = DBUtility.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT COUNT(*) FROM motorph.payroll_list;";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            rs.next();
+            int count = rs.getInt(1);
+
+//            boolean check = count > 0 ? true : false;
+//            System.out.println("CHECCCCCCKKKKK MEEEEEEE!!!!!" + check);
+
+            return count > 0;
+        } catch (SQLException e) {
+            throw new PayrollException("Error checking payroll data: " + e.getMessage(),e );
+        } finally {
+            stmt.close();
+            DBUtility.closeConnection(conn);
+        }
     }
 }

@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `motorph` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+CREATE DATABASE  IF NOT EXISTS `motorph` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `motorph`;
--- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
 --
 -- Host: 127.0.0.1    Database: motorph
 -- ------------------------------------------------------
--- Server version	5.7.33
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,15 +25,15 @@ DROP TABLE IF EXISTS `attendance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `attendance` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employeeId` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `employeeId` int DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `timeIn` time DEFAULT NULL,
   `timeOut` time DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `employeeId_idx` (`employeeId`),
   KEY `employeeId_idatt` (`employeeId`),
-  CONSTRAINT `att_e_id` FOREIGN KEY (`employeeId`) REFERENCES `employees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `att_e_id` FOREIGN KEY (`employeeId`) REFERENCES `employees` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,8 +55,8 @@ DROP TABLE IF EXISTS `department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `department` (
-  `dept_id` int(10) NOT NULL AUTO_INCREMENT,
-  `dept_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dept_id` int NOT NULL AUTO_INCREMENT,
+  `dept_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`dept_id`),
   UNIQUE KEY `dept_id_UNIQUE` (`dept_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -132,36 +132,36 @@ DROP TABLE IF EXISTS `employees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employees` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `base_salary` decimal(38,2) DEFAULT NULL,
   `clothing_allowance` decimal(38,2) DEFAULT NULL,
   `dateofbirth` date DEFAULT NULL,
-  `email` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gross_semi_monthlyrate` decimal(38,2) DEFAULT NULL,
   `hourlyrate` decimal(38,2) DEFAULT NULL,
-  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pagibig` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `philhealth` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pagibig` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `philhealth` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_allowance` decimal(38,2) DEFAULT NULL,
-  `phone_number` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rice_sub` decimal(38,2) DEFAULT NULL,
-  `sss` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `supervisor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tin` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sss` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `supervisor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tin` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vacation_hours` double DEFAULT NULL,
   `sick_hours` double DEFAULT NULL,
-  `positionId` int(11) NOT NULL,
-  `deptId` int(11) NOT NULL,
+  `positionId` int NOT NULL,
+  `deptId` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `dept_id_idx` (`deptId`),
   KEY `positionId_idx` (`positionId`),
-  CONSTRAINT `deptId` FOREIGN KEY (`deptId`) REFERENCES `department` (`dept_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `positionId` FOREIGN KEY (`positionId`) REFERENCES `position` (`positionId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `deptId` FOREIGN KEY (`deptId`) REFERENCES `department` (`dept_id`),
+  CONSTRAINT `positionId` FOREIGN KEY (`positionId`) REFERENCES `position` (`positionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -183,24 +183,24 @@ DROP TABLE IF EXISTS `payroll`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payroll` (
-  `payroll_id` int(11) NOT NULL AUTO_INCREMENT,
-  `employeeId` int(11) DEFAULT NULL,
+  `payroll_id` varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `employeeId` int DEFAULT NULL,
+  `pay_period_from` date DEFAULT NULL,
+  `pay_period_to` date DEFAULT NULL,
   `hours_worked` double DEFAULT NULL,
-  `net_pay` decimal(10,0) DEFAULT NULL,
-  `gross_pay` decimal(10,0) DEFAULT NULL,
+  `allowance_clothing` decimal(10,0) DEFAULT NULL,
+  `allowance_phone` decimal(10,0) DEFAULT NULL,
+  `allowance_rice` decimal(10,0) DEFAULT NULL,
   `deduction_philhealth` decimal(10,0) DEFAULT NULL,
   `deduction_pagibig` decimal(10,0) DEFAULT NULL,
   `deduction_tin` decimal(10,0) DEFAULT NULL,
   `deduction_sss` decimal(10,0) DEFAULT NULL,
-  `allowance_clothing` decimal(10,0) DEFAULT NULL,
-  `allowance_phone` decimal(10,0) DEFAULT NULL,
-  `allowance_rice` decimal(10,0) DEFAULT NULL,
-  `pay_period_from` date DEFAULT NULL,
-  `pay_period_to` date DEFAULT NULL,
+  `gross_pay` decimal(10,0) DEFAULT NULL,
+  `net_pay` decimal(10,0) DEFAULT NULL,
   PRIMARY KEY (`payroll_id`),
   UNIQUE KEY `payroll_id_UNIQUE` (`payroll_id`),
   KEY `eid_idx` (`employeeId`),
-  CONSTRAINT `employeeId` FOREIGN KEY (`employeeId`) REFERENCES `employees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `employeeId` FOREIGN KEY (`employeeId`) REFERENCES `employees` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -210,8 +210,29 @@ CREATE TABLE `payroll` (
 
 LOCK TABLES `payroll` WRITE;
 /*!40000 ALTER TABLE `payroll` DISABLE KEYS */;
+INSERT INTO `payroll` VALUES ('31-2023-12-30',15,'2023-12-18','2023-12-31',80,1000,2000,1500,450,100,0,900,26750,29800);
 /*!40000 ALTER TABLE `payroll` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `payroll_list`
+--
+
+DROP TABLE IF EXISTS `payroll_list`;
+/*!50001 DROP VIEW IF EXISTS `payroll_list`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `payroll_list` AS SELECT 
+ 1 AS `PID`,
+ 1 AS `EID`,
+ 1 AS `From`,
+ 1 AS `To`,
+ 1 AS `Total Hours`,
+ 1 AS `Total Deduction`,
+ 1 AS `Total Allowance`,
+ 1 AS `Gross Pay`,
+ 1 AS `Net Pay`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `position`
@@ -221,8 +242,8 @@ DROP TABLE IF EXISTS `position`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `position` (
-  `positionId` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `positionId` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`positionId`),
   UNIQUE KEY `positionId_UNIQUE` (`positionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -246,8 +267,8 @@ DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
-  `roleId` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `roleId` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`roleId`),
   UNIQUE KEY `roleId_UNIQUE` (`roleId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -264,6 +285,36 @@ INSERT INTO `roles` VALUES (1,'Administrator'),(2,'Executive'),(3,'Manager'),(4,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `transaction_logs`
+--
+
+DROP TABLE IF EXISTS `transaction_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transaction_logs` (
+  `transactionId` int NOT NULL AUTO_INCREMENT,
+  `category` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modId` int DEFAULT NULL,
+  `tr_type` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `regdate` datetime DEFAULT NULL,
+  `employeeId` int DEFAULT NULL,
+  PRIMARY KEY (`transactionId`),
+  UNIQUE KEY `transactionId_UNIQUE` (`transactionId`),
+  KEY `eployeeId_transaction_idx` (`employeeId`),
+  CONSTRAINT `eployeeId_transaction` FOREIGN KEY (`employeeId`) REFERENCES `employees` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transaction_logs`
+--
+
+LOCK TABLES `transaction_logs` WRITE;
+/*!40000 ALTER TABLE `transaction_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaction_logs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_roles`
 --
 
@@ -271,14 +322,14 @@ DROP TABLE IF EXISTS `user_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_roles` (
-  `user_roles_id` int(11) NOT NULL AUTO_INCREMENT,
-  `userId` int(11) DEFAULT NULL,
-  `roleId` int(11) DEFAULT NULL,
+  `user_roles_id` int NOT NULL AUTO_INCREMENT,
+  `userId` int DEFAULT NULL,
+  `roleId` int DEFAULT NULL,
   PRIMARY KEY (`user_roles_id`),
   KEY `userId_idx` (`userId`),
   KEY `roleId_idx` (`roleId`),
-  CONSTRAINT `roleId` FOREIGN KEY (`roleId`) REFERENCES `roles` (`roleId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `employees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `roleId` FOREIGN KEY (`roleId`) REFERENCES `roles` (`roleId`),
+  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `employees` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -300,9 +351,9 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`,`id`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`username`, `id`) REFERENCES `employees` (`email`, `id`)
@@ -372,6 +423,24 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `payroll_list`
+--
+
+/*!50001 DROP VIEW IF EXISTS `payroll_list`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `payroll_list` AS select `payroll`.`payroll_id` AS `PID`,`payroll`.`employeeId` AS `EID`,`payroll`.`pay_period_from` AS `From`,`payroll`.`pay_period_to` AS `To`,`payroll`.`hours_worked` AS `Total Hours`,(((`payroll`.`deduction_philhealth` + `payroll`.`deduction_pagibig`) + `payroll`.`deduction_tin`) + `payroll`.`deduction_sss`) AS `Total Deduction`,((`payroll`.`allowance_clothing` + `payroll`.`allowance_phone`) + `payroll`.`allowance_rice`) AS `Total Allowance`,`payroll`.`gross_pay` AS `Gross Pay`,`payroll`.`net_pay` AS `Net Pay` from `payroll` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -382,4 +451,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-17 15:32:44
+-- Dump completed on 2024-02-21 23:30:33

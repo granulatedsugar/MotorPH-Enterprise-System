@@ -1,12 +1,23 @@
 package com.mes.motorph.exception;
 
-public class PayrollException extends Exception {
+import java.sql.SQLException;
 
-    public PayrollException(String message) {
+public class PayrollException extends Exception {
+    private SQLException sqlException;
+
+    public PayrollException(String message, SQLException sqlException) {
         super(message);
+        this.sqlException = sqlException;
     }
 
-    public PayrollException(String message, Throwable cause) {
-        super(message, cause);
+    public PayrollException(String message, Exception exception) {
+        super(message);
+        if (exception instanceof SQLException) {
+            this.sqlException = (SQLException) exception;
+        }
+    }
+
+    public SQLException getSqlException() {
+        return sqlException;
     }
 }
