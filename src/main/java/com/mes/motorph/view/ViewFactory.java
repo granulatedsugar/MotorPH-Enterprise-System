@@ -30,6 +30,25 @@ public class ViewFactory {
         }
     }
 
+    @FXML
+    protected void onClickAttendance() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-view.fxml"));
+            AnchorPane attendanceView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+
+            // Get reference to existing BorderPane:
+            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
+
+            // Set visibility to true (optional if not already visible):
+            attendanceView.setVisible(true);
+
+            // Add the loaded AnchorPane to the center region:
+            borderPane.setCenter(attendanceView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     protected void onClickPayroll() {
@@ -52,19 +71,19 @@ public class ViewFactory {
     }
 
     @FXML
-    protected void onClickAttendance() {
+    protected void onClickCreatePayroll() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-view.fxml"));
-            AnchorPane attendanceView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/payroll-create-view.fxml"));
+            AnchorPane accountingView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:
             BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
 
             // Set visibility to true (optional if not already visible):
-            attendanceView.setVisible(true);
+            accountingView.setVisible(true);
 
             // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(attendanceView);
+            borderPane.setCenter(accountingView);
 
         } catch (IOException e) {
             e.printStackTrace();

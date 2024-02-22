@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="663.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PayrollCreateController">
+    <children>
+        <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="173.0" text="Payroll / New Statement" textFill="#cdd2d6">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="14.0" />
+            </font>
+        </Label>
+        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="60.0" prefHeight="553.0" prefWidth="903.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+         <children>
+              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="903.0" spacing="15.0">
+               <children>
+                  <Label text="Create New Statement" textFill="#24292e">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+              </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="903.0" spacing="15.0" />
+         </children>
+        </VBox>
+      <HBox alignment="CENTER" layoutX="14.0" layoutY="612.0" prefHeight="50.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button mnemonicParsing="false" stylesheets="@../../../css/scenes.css" text="Delete">
+               <styleClass>
+                  <String fx:value="delete-button" />
+                  <String fx:value="reg-button" />
+               </styleClass>
+            </Button>
+            <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" stylesheets="@../../../css/scenes.css" text="New">
+               <styleClass>
+                  <String fx:value="reg-button" />
+                  <String fx:value="new-button" />
+               </styleClass>
+            </Button>
+            <Button mnemonicParsing="false" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
+         </children>
+      </HBox>
+    </children>
+</AnchorPane>

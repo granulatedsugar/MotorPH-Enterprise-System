@@ -15,3 +15,13 @@
     -fx-background-color: #ebf6ff;
     -fx-text-fill: #419ed1;
 }
+
+.new-button:hover {
+    -fx-background-color: #EBF8F4;
+    -fx-text-fill: #16AE7C;
+}
+
+.delete-button:hover {
+    -fx-background-color: #FFEFEF;
+    -fx-text-fill: #FF3232;
+}
