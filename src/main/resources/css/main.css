@@ -44,3 +44,7 @@
     -fx-background-color: #ebf6ff;
     -fx-text-fill: #419ed1;
 }
+
+.scroll-bar {
+    -fx-background-color: #F5F5F5;
+}

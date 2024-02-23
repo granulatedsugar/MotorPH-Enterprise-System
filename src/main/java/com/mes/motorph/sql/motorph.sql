@@ -434,7 +434,7 @@ UNLOCK TABLES;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `payroll_list` AS select `payroll`.`payroll_id` AS `PID`,`payroll`.`employeeId` AS `EID`,`payroll`.`pay_period_from` AS `From`,`payroll`.`pay_period_to` AS `To`,`payroll`.`hours_worked` AS `Total Hours`,(((`payroll`.`deduction_philhealth` + `payroll`.`deduction_pagibig`) + `payroll`.`deduction_tin`) + `payroll`.`deduction_sss`) AS `Total Deduction`,((`payroll`.`allowance_clothing` + `payroll`.`allowance_phone`) + `payroll`.`allowance_rice`) AS `Total Allowance`,`payroll`.`gross_pay` AS `Gross Pay`,`payroll`.`net_pay` AS `Net Pay` from `payroll` */;
