@@ -12,4 +12,14 @@ public class AttendanceService {
     public List<Attendance> fetchAttedance() throws AttendanceException{
         return attendanceRepository.fetchAttendance();
     }
+    public void createAttendance(Attendance attendance) throws AttendanceException{
+         attendanceRepository.createAttedance(attendance);
+    }
+    public void updateAttendance(Attendance attendance) throws AttendanceException{
+        attendanceRepository.updateAttendance(attendance);
+    }
+
+    public void deleteAttendance(Attendance attendance) throws AttendanceException{
+        attendanceRepository.deleteAttendance(attendance);
+    }
 }

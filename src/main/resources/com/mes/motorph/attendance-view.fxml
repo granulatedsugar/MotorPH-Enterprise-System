@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.AttendanceController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.AttendanceController">
    <children>
-      <TableView fx:id="attendanceTableView" layoutX="43.0" layoutY="79.0" prefHeight="242.0" prefWidth="514.0" stylesheets="@../../../css/table.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <TableView fx:id="attendanceTableView" layoutX="10.0" layoutY="66.0" prefHeight="242.0" prefWidth="514.0" stylesheets="@../../../css/table.css" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="66.0">
         <columns>
           <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" styleClass="centered-cell" text="ID" />
           <TableColumn fx:id="empIdColumn" editable="false" prefWidth="75.0" styleClass="centered-cell" text="Employee ID" />
@@ -19,6 +22,15 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="538.0" layoutY="306.0" mnemonicParsing="false" text="Button" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="10.0" />
+      <Button layoutX="469.0" layoutY="361.0" mnemonicParsing="false" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="76.0" />
+      <Button layoutX="10.0" layoutY="36.0" mnemonicParsing="false" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Search" />
+      <TextField alignment="CENTER" layoutX="74.0" layoutY="36.0" promptText="Search Employee Id" />
+      <Button layoutX="534.0" layoutY="361.0" mnemonicParsing="false" stylesheets="@../../../css/scenes.css" text="Delete" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="10.0">
+         <styleClass>
+            <String fx:value="delete-button" />
+            <String fx:value="reg-button" />
+         </styleClass>
+      </Button>
+      <DatePicker layoutX="416.0" layoutY="36.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="36.0" />
    </children>
 </AnchorPane>

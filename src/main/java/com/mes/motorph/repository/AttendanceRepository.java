@@ -4,14 +4,11 @@ import com.mes.motorph.entity.Attendance;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.exception.PayrollException;
 import com.mes.motorph.utils.DBUtility;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
-import java.sql.Time;
 
 public class AttendanceRepository {
     Connection conn = null;
@@ -45,6 +42,66 @@ public class AttendanceRepository {
             DBUtility.closeConnection(conn);
         }
         return attendances;
+    }
+
+    public void createAttedance(Attendance attendance) throws AttendanceException {
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "INSERT INTO motorph.attendance('id', 'employeeId', 'date, 'timeIn', 'timeOut') VALUES (?,?,?,?,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, attendance.getId());
+            stmt.setInt(2, attendance.getEmployeeId());
+            stmt.setDate(3, attendance.getDate());
+            stmt.setTime(4, attendance.getTimeIn());
+            stmt.setTime(5, attendance.getTimeOut());
+
+            int rows = stmt.executeUpdate();
+            if(rows == 0){
+                throw new AttendanceException("Failed to add Attendance!");
+            }else{
+                System.out.println("Attendance Added!");
+            }
+        }catch (Exception e){
+            throw new AttendanceException("Error Connecting to Database " + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+
+    }
+
+    //create another method for create,update, delete
+    //public class createAttendance(), updateAttendance(), deleteAttendance()
+    public void updateAttendance(Attendance attendance) throws  AttendanceException{
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "UPDATE motorph.attendance SET employeeId=?, date=?, timeIn=?, timeOut=? WHERE id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, attendance.getEmployeeId());
+            stmt.setDate(2, attendance.getDate());
+            stmt.setTime(3,attendance.getTimeIn());
+            stmt.setTime(4, attendance.getTimeOut());
+            stmt.setInt(5, attendance.getId());
+            stmt.executeUpdate();
+        }catch (Exception e){
+            throw new AttendanceException("Error Connecting to Database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
+
+    public void deleteAttendance(Attendance attendance) throws AttendanceException{
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "DELETE FROM motorph.attendance WHERE id=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, attendance.getId());
+            stmt.executeUpdate();
+        }catch (Exception e){
+            throw new AttendanceException("Error Connecting to Database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
     }
 
 }
