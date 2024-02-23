@@ -1,7 +1,9 @@
 package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Payroll;
+import com.mes.motorph.exception.EmployeeException;
 import com.mes.motorph.exception.PayrollException;
+import com.mes.motorph.services.EmployeeService;
 import com.mes.motorph.services.PayrollService;
 import com.mes.motorph.utils.AlertUtility;
 import javafx.collections.FXCollections;
@@ -10,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -47,9 +51,13 @@ public class PayrollListController {
 
 
     private PayrollService payrollService = new PayrollService();
+    private EmployeeService employeeService = new EmployeeService();
 
     @FXML
     protected void initialize() throws PayrollException {
+        // Initialize ContextMenu
+        setupContextMenu();
+
         // Initialize columns
         idColumn.setCellValueFactory(new PropertyValueFactory<>("payrollId"));
         employeeIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
@@ -94,6 +102,13 @@ public class PayrollListController {
                 filteredPayrolls = new FilteredList<>(allPayrolls);
                 payrollTableView.setItems(filteredPayrolls);
 
+                // Add listener to txtEmployeeId to reset table when text is cleared
+                txtEmployeeId.textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.isEmpty()) {
+                        filteredPayrolls.setPredicate(null); // Reset the predicate to show all records
+                    }
+                });
+
                 datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
                     if (newValue == null) {
                         filteredPayrolls.setPredicate(null); // Remove the filter
@@ -114,7 +129,7 @@ public class PayrollListController {
     }
 
     @FXML
-    protected void onClickSearchEmployeeId() {
+    protected void onClickSearchEmployeeId() throws EmployeeException {
         String employeeIdText = txtEmployeeId.getText().trim();
 
         // Check if not empty
@@ -123,6 +138,8 @@ public class PayrollListController {
             // Create a predicate to filter the list based on the employee ID
             Predicate<Payroll> filterPredicate = payroll -> payroll.getEmployeeId() == employeeId;
 
+            // TODO: Delete! After Test!
+            System.out.println(employeeService.fetchEmployeeDetails(employeeId).toString());
             // Apply the predicate to the filtered list
             filteredPayrolls.setPredicate(filterPredicate);
 
@@ -133,5 +150,43 @@ public class PayrollListController {
         } catch (NumberFormatException e) {
             AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Please enter a valid Employee ID.");
         }
+    }
+
+    // Right Click ContextMenu
+    private void showContextMenu(MouseEvent event, TableRow<Payroll> row, Payroll rowData) {
+        ContextMenu contextMenu = new ContextMenu();
+
+        // Update  Action
+        MenuItem updateItem = new MenuItem("Update");
+        updateItem.setOnAction(e -> {
+            // TODO: Remove toString after testing
+            System.out.println("Update mee!" + rowData.toString());
+        });
+
+        // Delete Acttion
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction(e -> {
+            // TODO: Remove toString after testing
+            System.out.println("Delete mee!" + rowData.toString());
+        });
+
+        contextMenu.getItems().addAll(updateItem, deleteItem);
+
+        // Show the context menu at the mouse cursor's location
+        contextMenu.show(row, event.getScreenX(), event.getScreenY());
+    }
+
+    // Right Click ContextMenu
+    private void setupContextMenu() {
+        payrollTableView.setRowFactory(tv -> {
+            TableRow<Payroll> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.SECONDARY && !row.isEmpty()) {
+                    Payroll rowData = row.getItem();
+                    showContextMenu(event, row, rowData);
+                }
+            });
+            return  row;
+        });
     }
 }

@@ -1,5 +1,6 @@
 package com.mes.motorph.repository;
 
+import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.exception.PayrollException;
 import com.mes.motorph.utils.DBUtility;
@@ -49,6 +50,7 @@ public class PayrollRepository {
         return payrolls;
     }
 
+    // Check if Payroll has Data
     public boolean hasPayrollData() throws PayrollException, SQLException {
         try {
             conn = DBUtility.getConnection();

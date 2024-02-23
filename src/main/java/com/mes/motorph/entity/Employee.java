@@ -237,4 +237,35 @@ public class Employee {
     public void setDeptId(int deptId) {
         this.deptId = deptId;
     }
+
+    // TODO: Delete after testing!
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", baseSalary=" + baseSalary +
+                ", clothingAllowance=" + clothingAllowance +
+                ", dateOfBirth=" + dateOfBirth +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", grossSemiMonthlyRate=" + grossSemiMonthlyRate +
+                ", hourlyRate=" + hourlyRate +
+                ", pagIbig='" + pagIbig + '\'' +
+                ", philHealth='" + philHealth + '\'' +
+                ", phoneAllowance=" + phoneAllowance +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", riceSubsidy=" + riceSubsidy +
+                ", sss='" + sss + '\'' +
+                ", status='" + status + '\'' +
+                ", supervisor='" + supervisor + '\'' +
+                ", tin='" + tin + '\'' +
+                ", vacationHours=" + vacationHours +
+                ", sickHours=" + sickHours +
+                ", positionId=" + positionId +
+                ", deptId=" + deptId +
+                '}';
+    }
+
 }

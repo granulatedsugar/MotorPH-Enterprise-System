@@ -177,4 +177,12 @@ public class Payroll {
     public void setTotalAllowance(double totalAllowance) {
         this.totalAllowance = totalAllowance;
     }
+
+
+    // Testing predicate results
+    // TODO : Remove for later
+    @Override
+    public String toString() {
+        return "Payroll ID: " + getPayrollId() + ", Employee ID: " + getEmployeeId() + ", Pay Period: " + getPayPeriodFrom() + " to " + getPayPeriodTo();
+    }
 }
