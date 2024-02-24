@@ -18,4 +18,8 @@ public class PayrollService {
     public boolean hasPayrollData() throws PayrollException, SQLException {
         return payrollRepository.hasPayrollData();
     }
+
+    public Payroll fetchEmployeePayrollDetails(String payrollId) throws PayrollException {
+        return payrollRepository.fetchEmployeePayrollDetails(payrollId);
+    }
 }

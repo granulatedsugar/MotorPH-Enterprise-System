@@ -1,5 +1,6 @@
 package com.mes.motorph.controller;
 
+import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.exception.EmployeeException;
 import com.mes.motorph.exception.PayrollException;
@@ -10,12 +11,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -31,11 +37,13 @@ public class PayrollListController {
     @FXML
     private TableColumn<Payroll, Integer> employeeIdColumn;
     @FXML
+    private TableColumn<Payroll, String> employeeNameColumn;
+    @FXML
     private TableColumn<Payroll, Date> fromColumn;
     @FXML
     private TableColumn<Payroll, Date> toColumn;
     @FXML
-    private TableColumn<Payroll, Double> totalHoursColumn;
+    private TableColumn<Payroll, Double> daysWorkedColumn;
     @FXML
     private TableColumn<Payroll, Double> totalDeductionColumn;
     @FXML
@@ -50,8 +58,8 @@ public class PayrollListController {
     private TextField txtEmployeeId;
 
 
+
     private PayrollService payrollService = new PayrollService();
-    private EmployeeService employeeService = new EmployeeService();
 
     @FXML
     protected void initialize() throws PayrollException {
@@ -61,6 +69,7 @@ public class PayrollListController {
         // Initialize columns
         idColumn.setCellValueFactory(new PropertyValueFactory<>("payrollId"));
         employeeIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
+        employeeNameColumn.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
         // For Date columns, use custom cell value factories to format Date objects
         fromColumn.setCellValueFactory(new PropertyValueFactory<>("payPeriodFrom"));
         fromColumn.setCellFactory(column -> new TableCell<Payroll, Date>() {
@@ -86,7 +95,7 @@ public class PayrollListController {
                 }
             }
         });
-        totalHoursColumn.setCellValueFactory(new PropertyValueFactory<>("hoursWorked"));
+        daysWorkedColumn.setCellValueFactory(new PropertyValueFactory<>("daysWorked"));
         totalDeductionColumn.setCellValueFactory(new PropertyValueFactory<>("totalDeduction"));
         totalAllowanceColumn.setCellValueFactory(new PropertyValueFactory<>("totalAllowance"));
         grossPayColumn.setCellValueFactory(new PropertyValueFactory<>("grossPay"));
@@ -129,7 +138,7 @@ public class PayrollListController {
     }
 
     @FXML
-    protected void onClickSearchEmployeeId() throws EmployeeException {
+    protected void onClickSearchEmployeeId() {
         String employeeIdText = txtEmployeeId.getText().trim();
 
         // Check if not empty
@@ -138,8 +147,6 @@ public class PayrollListController {
             // Create a predicate to filter the list based on the employee ID
             Predicate<Payroll> filterPredicate = payroll -> payroll.getEmployeeId() == employeeId;
 
-            // TODO: Delete! After Test!
-            System.out.println(employeeService.fetchEmployeeDetails(employeeId).toString());
             // Apply the predicate to the filtered list
             filteredPayrolls.setPredicate(filterPredicate);
 
@@ -152,6 +159,39 @@ public class PayrollListController {
         }
     }
 
+    @FXML
+    protected void onClickUpdateBtn()  {
+        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedPayroll != null) {
+            String payrollId = selectedPayroll.getPayrollId();
+            navigateToPayrollCreateView(payrollId);
+
+        } else {
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to update.");
+        }
+    }
+
+    // Navigate to update view
+    private void navigateToPayrollCreateView(String payrollId) {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/payroll-create-view.fxml"));
+
+        try {
+            Parent payrollCreateView = loader.load();
+            PayrollCreateController payrollCreateController = loader.getController();
+            payrollCreateController.setPayrollId(payrollId);
+
+            // Get the main BorderPane from your main view
+            BorderPane mainView = (BorderPane) payrollTableView.getScene().getRoot().lookup("#mainView");
+
+            // Replace the center content of the main BorderPane with the payroll-create-view
+            mainView.setCenter(payrollCreateView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Right Click ContextMenu
     private void showContextMenu(MouseEvent event, TableRow<Payroll> row, Payroll rowData) {
         ContextMenu contextMenu = new ContextMenu();
@@ -159,15 +199,16 @@ public class PayrollListController {
         // Update  Action
         MenuItem updateItem = new MenuItem("Update");
         updateItem.setOnAction(e -> {
-            // TODO: Remove toString after testing
-            System.out.println("Update mee!" + rowData.toString());
+            String payrollId = rowData.getPayrollId();
+            navigateToPayrollCreateView(payrollId);
         });
 
-        // Delete Acttion
+        // Delete Action
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(e -> {
             // TODO: Remove toString after testing
-            System.out.println("Delete mee!" + rowData.toString());
+            int employeeId = rowData.getEmployeeId();
+            System.out.println(employeeId);
         });
 
         contextMenu.getItems().addAll(updateItem, deleteItem);

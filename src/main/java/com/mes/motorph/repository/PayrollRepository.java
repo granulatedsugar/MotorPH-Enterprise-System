@@ -27,16 +27,17 @@ public class PayrollRepository {
             while (rs.next()) {
                 String payrollId = rs.getString("PID");
                 int employeeId = rs.getInt("EID");
+                String employeeName = rs.getString("Employee Name");
                 Date payPeriodFrom = rs.getDate("From");
                 Date payPeriodTo = rs.getDate("To");
-                double hoursWorked = rs.getDouble("Total Hours");
+                double daysWorked = rs.getDouble("Days Worked");
                 double totalDeduction = rs.getDouble("Total Deduction");
                 double totalAllowance = rs.getDouble("Total Allowance");
                 double grossPay = rs.getDouble("Gross Pay");
                 double netPay = rs.getDouble("Net Pay");
 
 
-                Payroll payroll = new Payroll(payrollId, employeeId, payPeriodFrom, payPeriodTo, hoursWorked, totalDeduction, totalAllowance, grossPay, netPay);
+                Payroll payroll = new Payroll(payrollId, employeeId, employeeName, payPeriodFrom, payPeriodTo, daysWorked, totalDeduction, totalAllowance, grossPay, netPay);
 
                 payrolls.add(payroll);
             }
@@ -71,5 +72,50 @@ public class PayrollRepository {
             stmt.close();
             DBUtility.closeConnection(conn);
         }
+    }
+
+    public Payroll fetchEmployeePayrollDetails(String payrollId) throws PayrollException {
+        Payroll payroll = null;
+
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "SELECT p.*, CONCAT(e.firstname, ' ', e.lastname) AS employee_name\n" +
+                    "FROM motorph.payroll p \n" +
+                    "JOIN motorph.employees e ON p.employeeId = e.id\n" +
+                    "WHERE p.payroll_id = ?;";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, payrollId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                payroll = new Payroll(
+                        rs.getString("payroll_id"),
+                        rs.getInt("employeeId"),
+                        rs.getDate("pay_period_from"),
+                        rs.getDate("pay_period_to"),
+                        rs.getDouble("days_worked"),
+                        rs.getDouble("allowance_clothing"),
+                        rs.getDouble("allowance_phone"),
+                        rs.getDouble("allowance_rice"),
+                        rs.getDouble("deduction_philhealth"),
+                        rs.getDouble("deduction_pagIbig"),
+                        rs.getDouble("deduction_tin"),
+                        rs.getDouble("deduction_sss"),
+                        rs.getDouble("net_pay"),
+                        rs.getDouble("gross_pay"),
+                        rs.getString("employee_name"),
+                        rs.getDouble("gross_semi_monthlyrate"),
+                        rs.getString("position"),
+                        rs.getString("department")
+                );
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new PayrollException("Error fetching employee details: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+        return payroll;
     }
 }

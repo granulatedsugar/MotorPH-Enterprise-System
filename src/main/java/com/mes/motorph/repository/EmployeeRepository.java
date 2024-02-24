@@ -56,7 +56,6 @@ public class EmployeeRepository {
         } finally {
             DBUtility.closeConnection(conn);
         }
-        System.out.println(employee);
         return employee;
     }
 }

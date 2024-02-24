@@ -40,9 +40,10 @@
                     <columns>
                         <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" styleClass="centered-cell" text="Payslip ID" />
                         <TableColumn fx:id="employeeIdColumn" editable="false" prefWidth="440.0" styleClass="centered-cell" text="Employee ID" />
+                  <TableColumn fx:id="employeeNameColumn" editable="false" prefWidth="440.0" styleClass="centered-cell" text="Name" />
                         <TableColumn fx:id="fromColumn" editable="false" prefWidth="377.0" styleClass="centered-cell" text="From" />
                         <TableColumn fx:id="toColumn" editable="false" prefWidth="377.0" styleClass="centered-cell" text="To" />
-                        <TableColumn fx:id="totalHoursColumn" editable="false" prefWidth="377.0" styleClass="centered-cell" text="Total Hours" />
+                        <TableColumn fx:id="daysWorkedColumn" editable="false" prefWidth="377.0" styleClass="centered-cell" text="Days Worked" />
                         <TableColumn fx:id="totalDeductionColumn" editable="false" prefWidth="377.0" styleClass="centered-cell" text="Total Deduction" />
                         <TableColumn fx:id="totalAllowanceColumn" editable="false" prefWidth="377.0" styleClass="centered-cell" text="Total Allowance" />
                         <TableColumn fx:id="grossPayColumn" editable="false" prefWidth="377.0" styleClass="centered-cell" text="Gross Pay" />
@@ -69,7 +70,7 @@
                   <String fx:value="new-button" />
                </styleClass>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onClickSearchEmployeeId" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
+            <Button mnemonicParsing="false" onAction="#onClickUpdateBtn" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
          </children>
       </HBox>
     </children>

@@ -7,7 +7,7 @@ public class Payroll {
     private int employeeId;
     private Date payPeriodFrom;
     private Date payPeriodTo;
-    private double hoursWorked;
+    private double daysWorked;
     private double allowanceClothing;
     private double allowancePhone;
     private double allowanceRice;
@@ -19,14 +19,17 @@ public class Payroll {
     private double grossPay;
     private double totalDeduction;
     private double totalAllowance;
+    private String employeeName;
+    private double grossSemiMonthlyrate;
+    private String position;
+    private String department;
 
-
-    public Payroll(String payrollId, int employeeId, Date payPeriodFrom, Date payPeriodTo, double hoursWorked, double allowanceClothing, double allowancePhone, double allowanceRice, double deductionPhilHealth, double deductionPagIbig, double deductionTin, double deductionSss, double netPay, double grossPay) {
+    public Payroll(String payrollId, int employeeId, Date payPeriodFrom, Date payPeriodTo, double daysWorked, double allowanceClothing, double allowancePhone, double allowanceRice, double deductionPhilHealth, double deductionPagIbig, double deductionTin, double deductionSss, double netPay, double grossPay, String employeeName, double grossSemiMonthlyrate, String position, String department) {
         this.payrollId = payrollId;
         this.employeeId = employeeId;
         this.payPeriodFrom = payPeriodFrom;
         this.payPeriodTo = payPeriodTo;
-        this.hoursWorked = hoursWorked;
+        this.daysWorked = daysWorked;
         this.allowanceClothing = allowanceClothing;
         this.allowancePhone = allowancePhone;
         this.allowanceRice = allowanceRice;
@@ -36,14 +39,19 @@ public class Payroll {
         this.deductionSss = deductionSss;
         this.netPay = netPay;
         this.grossPay = grossPay;
+        this.employeeName = employeeName;
+        this.grossSemiMonthlyrate = grossSemiMonthlyrate;
+        this.position = position;
+        this.department = department;
     }
 
-    public Payroll(String payrollId, int employeeId, Date payPeriodFrom, Date payPeriodTo, double hoursWorked, double totalDeduction, double totalAllowance, double grossPay, double netPay) {
+    public Payroll(String payrollId, int employeeId, String employeeName, Date payPeriodFrom, Date payPeriodTo, double daysWorked, double totalDeduction, double totalAllowance, double grossPay, double netPay) {
         this.payrollId = payrollId;
         this.employeeId = employeeId;
+        this.employeeName = employeeName;
         this.payPeriodFrom = payPeriodFrom;
         this.payPeriodTo = payPeriodTo;
-        this.hoursWorked = hoursWorked;
+        this.daysWorked = daysWorked;
         this.totalDeduction = totalDeduction;
         this.totalAllowance = totalAllowance;
         this.grossPay = grossPay;
@@ -82,12 +90,12 @@ public class Payroll {
         this.payPeriodTo = payPeriodTo;
     }
 
-    public double getHoursWorked() {
-        return hoursWorked;
+    public double getDaysWorked() {
+        return daysWorked;
     }
 
-    public void setHoursWorked(double hoursWorked) {
-        this.hoursWorked = hoursWorked;
+    public void setDaysWorked(double daysWorked) {
+        this.daysWorked = daysWorked;
     }
 
     public double getAllowanceClothing() {
@@ -178,11 +186,58 @@ public class Payroll {
         this.totalAllowance = totalAllowance;
     }
 
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public double getGrossSemiMonthlyrate() {
+        return grossSemiMonthlyrate;
+    }
+
+    public void setGrossSemiMonthlyrate(double grossSemiMonthlyrate) {
+        this.grossSemiMonthlyrate = grossSemiMonthlyrate;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
     // Testing predicate results
-    // TODO : Remove for later
+    // TODO : Remove for later!
     @Override
     public String toString() {
-        return "Payroll ID: " + getPayrollId() + ", Employee ID: " + getEmployeeId() + ", Pay Period: " + getPayPeriodFrom() + " to " + getPayPeriodTo();
+        return "Payroll{" +
+                "payrollId=" + payrollId +
+                ", employeeId=" + employeeId +
+                ", payPeriodFrom=" + payPeriodFrom +
+                ", payPeriodTo=" + payPeriodTo +
+                ", daysWorked=" + daysWorked +
+                ", allowanceClothing=" + allowanceClothing +
+                ", allowancePhone=" + allowancePhone +
+                ", allowanceRice=" + allowanceRice +
+                ", deductionPhilHealth=" + deductionPhilHealth +
+                ", deductionPagIbig=" + deductionPagIbig +
+                ", deductionTin=" + deductionTin +
+                ", deductionSss=" + deductionSss +
+                ", netPay=" + netPay +
+                ", grossPay=" + grossPay +
+                '}';
     }
+
 }

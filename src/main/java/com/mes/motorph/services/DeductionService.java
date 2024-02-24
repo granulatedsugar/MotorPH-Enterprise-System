@@ -4,7 +4,7 @@ public class DeductionService {
     private double sssDeduction;
     private double philHealthDeduction;
     private double pagIbigDeduction;
-    private double withHoldingTax;
+    private double withholdingTax;
 
     public double calculateSssDeduction(double salary) {
 
@@ -64,13 +64,13 @@ public class DeductionService {
 
         for (int i = 0; i < monthlyRate.length; i++) {
             if (Salary <= monthlyRate[i]) {
-                withHoldingTax = Salary - deduction[i];
-                withHoldingTax = (withHoldingTax * taxRate[i]) + additional[i];
+                withholdingTax = Salary - deduction[i];
+                withholdingTax = (withholdingTax * taxRate[i]) + additional[i];
                 break;
             } else {
-                withHoldingTax = (Salary - monthlyRate[monthlyRate.length - 1]) * taxRate[taxRate.length - 1] + additional[additional.length - 1];
+                withholdingTax = (Salary - monthlyRate[monthlyRate.length - 1]) * taxRate[taxRate.length - 1] + additional[additional.length - 1];
             }
         }
-        return withHoldingTax;
+        return withholdingTax;
     }
 }
