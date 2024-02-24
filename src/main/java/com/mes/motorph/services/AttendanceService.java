@@ -19,7 +19,7 @@ public class AttendanceService {
         attendanceRepository.updateAttendance(attendance);
     }
 
-    public void deleteAttendance(Attendance attendance) throws AttendanceException{
-        attendanceRepository.deleteAttendance(attendance);
+    public void deleteAttendance(int id) throws AttendanceException{
+        attendanceRepository.deleteAttendance(id);
     }
 }
