@@ -1,85 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="663.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PayrollCreateController">
+<AnchorPane prefHeight="959.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PayrollCreateController">
     <children>
         <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="173.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Payroll / New Statement" textFill="#cdd2d6">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />
             </font>
         </Label>
-      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
+      <HBox layoutX="10.0" layoutY="95.0" prefHeight="721.0" prefWidth="903.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="143.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <HBox prefHeight="42.0" prefWidth="911.0" AnchorPane.bottomAnchor="607.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <ScrollPane prefHeight="750.0" prefWidth="836.0" stylesheets="@../../../css/scroll-pane.css" HBox.hgrow="ALWAYS">
+               <content>
+                  <VBox prefHeight="720.0" prefWidth="707.0" style="-fx-background-color: #FFFFFF;">
                      <children>
-                        <Label styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Create New Statement" />
-                     </children>
-                  </HBox>
-                  <HBox layoutY="42.0" prefHeight="492.0" prefWidth="911.0" spacing="20.0">
-                     <children>
-                        <AnchorPane prefHeight="463.0" prefWidth="231.0" style="-fx-border-color: #F0F2F2; -fx-border-radius: 15px;">
+                        <HBox prefHeight="50.0" prefWidth="707.0">
                            <children>
-                              <TextField editable="false" layoutX="16.0" layoutY="54.0" promptText="Employee ID" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label alignment="TOP_LEFT" graphicTextGap="0.0" layoutX="-3.0" nodeOrientation="LEFT_TO_RIGHT" styleClass="txtLabel" stylesheets="@../../../css/text.css" text="Information" />
-                              <DatePicker layoutX="17.0" layoutY="117.0" prefHeight="35.0" prefWidth="198.0" promptText="Start Period" stylesheets="@../../../css/date-picker.css" />
-                              <Label layoutX="17.0" layoutY="37.0" text="Employee ID#" />
-                              <Label layoutX="17.0" layoutY="100.0" text="Start Period" />
-                              <DatePicker layoutX="16.0" layoutY="183.0" prefHeight="35.0" prefWidth="198.0" promptText="Start Period" stylesheets="@../../../css/date-picker.css" />
-                              <Label layoutX="16.0" layoutY="166.0" text="End Period" />
-                              <TextField editable="false" layoutX="16.0" layoutY="248.0" promptText="Total Hours" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="17.0" layoutY="231.0" text="Total Hours" />
-                              <CheckBox layoutX="30.0" layoutY="304.0" mnemonicParsing="false" styleClass="txtLabel" stylesheets="@../../../css/text.css" text="Override Hours" />
+                              <Label styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Create New Payslip" HBox.hgrow="ALWAYS" />
                            </children>
-                        </AnchorPane>
-                        <AnchorPane prefHeight="492.0" prefWidth="508.0" style="-fx-border-color: #F0F2F2; -fx-border-radius: 15px;">
-                           <children>
-                              <Label alignment="TOP_LEFT" graphicTextGap="0.0" nodeOrientation="LEFT_TO_RIGHT" styleClass="txtLabel" stylesheets="@../../../css/text.css" text="Allowance" />
-                              <Label alignment="TOP_LEFT" graphicTextGap="0.0" layoutX="272.0" nodeOrientation="LEFT_TO_RIGHT" styleClass="txtLabel" stylesheets="@../../../css/text.css" text="Deductions" />
-                              <TextField editable="false" layoutX="18.0" layoutY="54.0" promptText="Clothing" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="19.0" layoutY="37.0" text="Clothing Allowance" />
-                              <TextField editable="false" layoutX="18.0" layoutY="116.0" promptText="Phone" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="19.0" layoutY="99.0" text="Phone Allowance" />
-                              <TextField editable="false" layoutX="18.0" layoutY="182.0" promptText="Rice Subsidy" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="19.0" layoutY="165.0" text="Rice Subsidy" />
-                              <TextField editable="false" layoutX="291.0" layoutY="54.0" promptText="Phil Health" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="292.0" layoutY="37.0" text="Phil Health Premium Rate" />
-                              <TextField editable="false" layoutX="291.0" layoutY="116.0" promptText="Pag Ibig" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="292.0" layoutY="99.0" text="Pag Ibig" />
-                              <TextField editable="false" layoutX="291.0" layoutY="182.0" promptText="SSS" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="292.0" layoutY="165.0" text="Social Security Rate" />
-                              <Label alignment="TOP_LEFT" graphicTextGap="0.0" layoutY="250.0" nodeOrientation="LEFT_TO_RIGHT" styleClass="txtLabel" stylesheets="@../../../css/text.css" text="Salary" />
-                              <Label alignment="TOP_LEFT" graphicTextGap="0.0" layoutX="272.0" layoutY="250.0" nodeOrientation="LEFT_TO_RIGHT" styleClass="txtLabel" stylesheets="@../../../css/text.css" text="Tax" />
-                              <TextField editable="false" layoutX="18.0" layoutY="304.0" promptText="Gross" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="19.0" layoutY="287.0" text="Gross Salary" />
-                              <TextField editable="false" layoutX="291.0" layoutY="304.0" promptText="Withholding Tax" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="292.0" layoutY="287.0" text="Withholding Tax" />
-                              <TextField editable="false" layoutX="18.0" layoutY="370.0" promptText="Net" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="19.0" layoutY="353.0" text="Net Salary" />
-                              <Button layoutX="370.0" layoutY="439.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="119.0" stylesheets="@../../../css/scenes.css" text="Submit">
-                                 <styleClass>
-                                    <String fx:value="reg-button" />
-                                    <String fx:value="new-button" />
-                                 </styleClass>
-                              </Button>
-                           </children>
-                        </AnchorPane>
+                        </HBox>
+                        <AnchorPane prefHeight="674.0" prefWidth="707.0" />
                      </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+         </children></HBox>
     </children>
 </AnchorPane>

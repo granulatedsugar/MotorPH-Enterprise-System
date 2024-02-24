@@ -1,0 +1,28 @@
+/* Styling the scroll pane */
+.scroll-pane .viewport {
+    -fx-background-color: white; /* Set the background color of the viewport to white */
+}
+
+.scroll-pane {
+    -fx-background-color: white; /* White background */
+    -fx-border-color: transparent; /* No border */
+    -fx-control-inner-background: white; /* White background for overflow */
+}
+
+/* Styling the scroll bar */
+.scroll-bar:vertical {
+    -fx-background-color: transparent; /* Transparent background */
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #BDBDBD; /* Light gray thumb color */
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #9E9E9E; /* Darker gray hover color */
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent; /* Transparent background for buttons */
+}
