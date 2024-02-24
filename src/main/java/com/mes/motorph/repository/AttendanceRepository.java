@@ -81,7 +81,13 @@ public class AttendanceRepository {
             stmt.setTime(3,attendance.getTimeIn());
             stmt.setTime(4, attendance.getTimeOut());
             stmt.setInt(5, attendance.getId());
-            stmt.executeUpdate();
+
+            int rows = stmt.executeUpdate();
+            if(rows == 0){
+                throw new AttendanceException("Failed to add Attendance!");
+            }else{
+                System.out.println("Attendance Updated!");
+            }
         }catch (Exception e){
             throw new AttendanceException("Error Connecting to Database" + e.getMessage(), e);
         }finally {
@@ -89,14 +95,19 @@ public class AttendanceRepository {
         }
     }
 
-    public void deleteAttendance(Attendance attendance) throws AttendanceException{
+    public void deleteAttendance(int id) throws AttendanceException{
         try{
             conn = DBUtility.getConnection();
             String sql = "DELETE FROM motorph.attendance WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
 
-            stmt.setInt(1, attendance.getId());
-            stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
+            if(rows == 0){
+                throw new AttendanceException("Failed to add Attendance!");
+            }else{
+                System.out.println("Attendance Deleted!");
+            }
         }catch (Exception e){
             throw new AttendanceException("Error Connecting to Database" + e.getMessage(), e);
         }finally {
