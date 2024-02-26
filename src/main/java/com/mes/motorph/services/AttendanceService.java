@@ -29,4 +29,8 @@ public class AttendanceService {
     public void deleteAttendance(int id) throws AttendanceException{
         attendanceRepository.deleteAttendance(id);
     }
+
+    public Attendance fetchAttendanceDataById (String id) throws AttendanceException{
+        return attendanceRepository.fetchAttendanceDataById(id);
+    }
 }
