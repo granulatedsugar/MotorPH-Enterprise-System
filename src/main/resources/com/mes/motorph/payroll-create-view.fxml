@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="1086.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PayrollCreateController">
     <children>
-        <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="173.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Payroll / New Statement" textFill="#cdd2d6">
+        <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="373.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Payroll / New / Payslip" textFill="#cdd2d6">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />
             </font>
@@ -32,7 +32,7 @@
                      <children>
                         <HBox prefHeight="50.0" prefWidth="707.0">
                            <children>
-                              <Label styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Create New Payslip" HBox.hgrow="ALWAYS" />
+                              <Label fx:id="payslipSceneTitle" styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Create New Payslip" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <AnchorPane prefHeight="758.0" prefWidth="864.0" VBox.vgrow="ALWAYS">
@@ -48,7 +48,7 @@
                                     <TextField fx:id="employeeIdField" promptText="Employee ID" styleClass="text-field" stylesheets="@../../../css/text.css" />
                                     <DatePicker fx:id="startDatePicker" promptText="Start Period" stylesheets="@../../../css/date-picker.css" />
                                     <DatePicker fx:id="endDatePicker" promptText="End Period" stylesheets="@../../../css/date-picker.css" />
-                                    <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Run">
+                                    <Button fx:id="runReportBtn" disable="true" mnemonicParsing="false" onAction="#onClickRunReport" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Run">
                                        <styleClass>
                                           <String fx:value="reg-button" />
                                           <String fx:value="new-button" />
@@ -115,29 +115,29 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="netPayLabel" layoutX="702.0" layoutY="794.0" prefHeight="17.0" prefWidth="141.0" text="0.00" textAlignment="RIGHT">
+                              <Label fx:id="netPayLabel" alignment="CENTER_RIGHT" layoutX="702.0" layoutY="794.0" prefHeight="17.0" prefWidth="160.0" text="0.00" textAlignment="RIGHT">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="totalBenefitsLabels" layoutX="702.0" layoutY="743.0" prefHeight="17.0" prefWidth="159.0" text="0.00" textAlignment="RIGHT" />
+                              <Label fx:id="totalBenefitsLabels" alignment="CENTER_RIGHT" layoutX="702.0" layoutY="743.0" prefHeight="17.0" prefWidth="159.0" text="0.00" textAlignment="RIGHT" />
                               <Label fx:id="totalDeductionsLabel" layoutX="432.0" layoutY="743.0" prefHeight="17.0" prefWidth="152.0" text="0.00" textAlignment="RIGHT" />
                               <Label fx:id="grossIncomeLabel" layoutX="118.0" layoutY="743.0" prefHeight="17.0" prefWidth="173.0" text="0.00" textAlignment="RIGHT" />
-                              <Button layoutX="7.0" layoutY="873.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Calculate">
+                              <Button fx:id="calculateSalaryBtn" disable="true" layoutX="7.0" layoutY="873.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Calculate">
                                  <styleClass>
                                     <String fx:value="reg-button" />
                                     <String fx:value="new-button" />
                                  </styleClass>
                               </Button>
-                              <CheckBox layoutX="793.0" layoutY="224.0" mnemonicParsing="false" text="Override" />
+                              <CheckBox fx:id="overrideCheckBox" layoutX="793.0" layoutY="224.0" mnemonicParsing="false" onAction="#onClickOverride" text="Override" />
                               <Button layoutX="720.0" layoutY="873.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Submit">
                                  <styleClass>
                                     <String fx:value="reg-button" />
                                     <String fx:value="new-button" />
                                  </styleClass>
                               </Button>
-                              <TextField fx:id="positionField" disable="true" editable="false" layoutX="440.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <TextField fx:id="deptField" disable="true" editable="false" layoutX="663.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
+                              <TextField fx:id="positionField" disable="true" layoutX="440.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
+                              <TextField fx:id="deptField" disable="true" layoutX="663.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
                            </children></AnchorPane>
                      </children>
                   </VBox>

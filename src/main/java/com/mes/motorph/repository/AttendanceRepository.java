@@ -44,6 +44,37 @@ public class AttendanceRepository {
         return attendances;
     }
 
+    public List<Attendance> fetchAttendanceByEmployeeId(int eid, String fDate, String tDate) throws AttendanceException {
+        List<Attendance> eAttendances = new ArrayList<>();
+
+        try{
+            conn = DBUtility.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM motorph.attendance WHERE employeeId = ? AND date BETWEEN ? AND ?");
+            pstmt.setInt(1, eid);
+            pstmt.setString(2, fDate);
+            pstmt.setString(3, tDate);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int employeeId = rs.getInt("employeeId");
+                Date date = rs.getDate("date");
+                Time timeIn = rs.getTime("timeIn");
+                Time timeOut = rs.getTime("timeOut");
+
+                Attendance attendance = new Attendance(id, employeeId, date, timeIn, timeOut);
+                eAttendances.add(attendance);
+            }
+            rs.close();
+            pstmt.close();
+        }catch (Exception e){
+            throw new AttendanceException("Error Connecting to Database " + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+        return eAttendances;
+    }
+
     public void createAttedance(Attendance attendance) throws AttendanceException {
         try{
             conn = DBUtility.getConnection();

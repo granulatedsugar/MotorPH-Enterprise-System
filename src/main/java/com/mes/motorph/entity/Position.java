@@ -1,0 +1,27 @@
+package com.mes.motorph.entity;
+
+public class Position {
+    private int positionId;
+    private String title;
+
+    public Position(int positionId, String title) {
+        this.positionId = positionId;
+        this.title = title;
+    }
+
+    public int getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+}

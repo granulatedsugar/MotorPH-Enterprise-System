@@ -1,21 +1,29 @@
 package com.mes.motorph.controller;
 
-import com.mes.motorph.entity.Payroll;
-import com.mes.motorph.exception.PayrollException;
-import com.mes.motorph.services.DeductionService;
-import com.mes.motorph.services.PayrollService;
+import com.mes.motorph.entity.*;
+import com.mes.motorph.exception.*;
+import com.mes.motorph.services.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 public class PayrollCreateController {
 
+    @FXML
+    private Label payslipSceneTitle;
+    @FXML
+    private Label breadCrumb;
+    @FXML
+    private CheckBox overrideCheckBox;
+    @FXML
+    private Button runReportBtn;
+    @FXML
+    private Button calculateSalaryBtn;
     @FXML
     private TextField payrollIdField;
     private String payrollId;
@@ -60,14 +68,19 @@ public class PayrollCreateController {
     @FXML
     private Label netPayLabel;
 
-
-
     PayrollService payrollService = new PayrollService();
     DeductionService deductionService = new DeductionService();
+    AttendanceService attendanceService = new AttendanceService();
+    EmployeeService employeeService = new EmployeeService();
+    PositionService positionService = new PositionService();
+    DepartmentService departmentService = new DepartmentService();
 
     public void setPayrollId(String payrollId) {
         this.payrollId = payrollId;
         payrollIdField.setText(payrollId);
+
+        breadCrumb.setText("Payroll / Update / Payslip #" + payrollId);
+        payslipSceneTitle.setText("Update Payslip #" + payrollId);
 
         try {
             Payroll payrollEmployeeData = payrollService.fetchEmployeePayrollDetails(payrollId);
@@ -127,4 +140,93 @@ public class PayrollCreateController {
         }
     }
 
+    // Override IF there is no attendance record for employee
+    @FXML
+    protected void onClickOverride() {
+        boolean isSelected = overrideCheckBox.isSelected();
+        runReportBtn.setDisable(!isSelected);
+        employeeNameField.setDisable(!isSelected);
+        positionField.setDisable(!isSelected);
+        deptField.setDisable(!isSelected);
+        monthlyRateField.setDisable(!isSelected);
+        riceSubField.setDisable(!isSelected);
+        phoneAllowanceField.setDisable(!isSelected);
+        clothingAllowanceField.setDisable(!isSelected);
+        calculateSalaryBtn.setDisable(!isSelected);
+    }
+
+    @FXML
+    protected void onClickRunReport() throws AttendanceException, EmployeeException, PositionException, DepartmentException {
+
+        String eid = employeeIdField.getText();
+
+        Employee employee = employeeService.fetchEmployeeDetails(Integer.parseInt(eid));
+        List<Position> positions = positionService.fetchPositions(); // returns list of positions
+        List<Department> departments = departmentService.fetchDepartments();
+
+        // Get Empployee Position
+        String employeePositionTitle = null;
+        for (Position position : positions) {
+            if (position.getPositionId() == employee.getPositionId()) {
+                employeePositionTitle = position.getTitle();
+                break;
+            }
+        }
+
+        // Get Employee Departments
+        String employeeDepartment = null;
+        for (Department department : departments) {
+            if (department.getDeptId() == employee.getDeptId()) {
+                employeeDepartment = department.getDeptDesc();
+                break;
+            }
+        }
+
+        // Date
+        LocalDate selectedFromDate = startDatePicker.getValue();
+        LocalDate selectedToDate = endDatePicker.getValue();
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fDate = selectedFromDate.format(outputFormatter);
+        String tDate = selectedToDate.format(outputFormatter);
+
+        List<Attendance> attendances = attendanceService.fetchAttendaceByEmployeId(Integer.parseInt(eid), fDate, tDate);
+        int attendanceCount = attendances.size();
+
+        // Emloyee Information
+        employeeNameField.setText(employee.getFirstName() + " " + employee.getLastName());
+        positionField.setText(employeePositionTitle);
+        deptField.setText(employeeDepartment);
+
+        // Earnings
+        double monthlyRate = employee.getGrossSemiMonthlyRate() * 2;
+        monthlyRateField.setText(String.valueOf(monthlyRate));
+        dailyRateField.setText(String.valueOf(monthlyRate / 20));
+        daysWorkedField.setText(String.valueOf(attendanceCount));
+
+        // Benefits
+        double totalBenefits = employee.getRiceSubsidy() + employee.getPhoneAllowance() + employee.getClothingAllowance();
+        riceSubField.setText(String.valueOf(employee.getRiceSubsidy()));
+        phoneAllowanceField.setText(String.valueOf(employee.getPhoneAllowance()));
+        clothingAllowanceField.setText(String.valueOf(employee.getClothingAllowance()));
+        totalBenefitsLabels.setText(String.valueOf(totalBenefits));
+
+        // Gross
+        double grossIncome = (monthlyRate / 20) * attendanceCount;
+        grossIncomeLabel.setText(String.valueOf(grossIncome));
+
+        // Deductions
+        double sssDeduction = deductionService.calculateSssDeduction(grossIncome);
+        double phDeduction = deductionService.calculatePhilHealthDeduction(grossIncome);
+        double pagIbiDeduction = deductionService.calculatePagIbigDeduction(grossIncome);
+        double withholdingTax = deductionService.calculateWithholdingTax(grossIncome);
+        double totalDeductions = sssDeduction + phDeduction + pagIbiDeduction + withholdingTax;
+
+        sssField.setText(String.valueOf(sssDeduction));
+        phField.setText(String.valueOf(phDeduction));
+        pagIbigField.setText(String.valueOf(pagIbiDeduction));
+        withholdingTaxField.setText(String.valueOf(withholdingTax));
+        totalDeductionsLabel.setText(String.valueOf(totalDeductions));
+
+        netPayLabel.setText(String.valueOf(grossIncome - totalDeductions + totalBenefits));
+    }
 }

@@ -7,7 +7,7 @@ import com.mes.motorph.utils.DBUtility;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class PayrollRepository {
@@ -81,7 +81,7 @@ public class PayrollRepository {
             conn = DBUtility.getConnection();
             String sql = "SELECT p.*, CONCAT(e.firstname, ' ', e.lastname) AS employee_name\n" +
                     "FROM motorph.payroll p \n" +
-                    "JOIN motorph.employees e ON p.employeeId = e.id\n" +
+                    "JOIN motorph.employee e ON p.employeeId = e.id\n" +
                     "WHERE p.payroll_id = ?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, payrollId);
@@ -117,5 +117,45 @@ public class PayrollRepository {
             DBUtility.closeConnection(conn);
         }
         return payroll;
+    }
+
+    public void createNewPayslip(Payroll payroll) throws PayrollException {
+
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "INSERT INTO payroll (payroll_id, employeeId, pay_period_from, pay_period_to, days_worked, allowance_clothing, allowance_phone, allowance_rice, deduction_philhealth, deduction_pagibig, deduction_tin, deduction_sss, gross_pay, net_pay, employee_name, gross_semi_monthlyrate, `position`, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, payroll.getPayrollId());
+            pstmt.setInt(2, payroll.getEmployeeId());
+            pstmt.setDate(3, (Date) payroll.getPayPeriodFrom());
+            pstmt.setDate(4, (Date) payroll.getPayPeriodTo());
+            pstmt.setDouble(5, payroll.getDaysWorked());
+            pstmt.setDouble(6, payroll.getAllowanceClothing());
+            pstmt.setDouble(7, payroll.getAllowancePhone());
+            pstmt.setDouble(8, payroll.getAllowanceRice());
+            pstmt.setDouble(9, payroll.getDeductionPhilHealth());
+            pstmt.setDouble(10, payroll.getDeductionPagIbig());
+            pstmt.setDouble(11, payroll.getDeductionTin());
+            pstmt.setDouble(12, payroll.getDeductionSss());
+            pstmt.setDouble(13, payroll.getGrossPay());
+            pstmt.setDouble(14, payroll.getNetPay());
+            pstmt.setString(15, payroll.getEmployeeName());
+            pstmt.setDouble(16, payroll.getGrossSemiMonthlyrate());
+            pstmt.setString(17, payroll.getPosition());
+            pstmt.setString(18, payroll.getDepartment());
+
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted == 0 ) {
+                throw new PayrollException("Error inserting employee into database");
+            } else {
+                System.out.println("Added new employee.");
+            }
+        } catch (Exception e) {
+            throw new PayrollException("Error connection to database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
     }
 }

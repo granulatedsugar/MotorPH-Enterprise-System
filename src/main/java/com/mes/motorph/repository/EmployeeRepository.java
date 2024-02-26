@@ -18,7 +18,7 @@ public class EmployeeRepository {
 
         try {
             conn = DBUtility.getConnection();
-            String sql = "SELECT * FROM motorph.employees  WHERE id = ?";
+            String sql = "SELECT * FROM motorph.employee WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1,employeeId);
             ResultSet rs = stmt.executeQuery();

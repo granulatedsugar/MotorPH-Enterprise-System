@@ -2,19 +2,19 @@ package com.mes.motorph.exception;
 
 import java.sql.SQLException;
 
-public class PayrollException extends Exception {
+public class DepartmentException extends Exception{
     private SQLException sqlException;
 
-    public  PayrollException(String message) {
+    public  DepartmentException(String message) {
         super(message);
     }
 
-    public PayrollException(String message, SQLException sqlException) {
+    public DepartmentException(String message, SQLException sqlException) {
         super(message);
         this.sqlException = sqlException;
     }
 
-    public PayrollException(String message, Exception exception) {
+    public DepartmentException(String message, Exception exception) {
         super(message);
         if (exception instanceof SQLException) {
             this.sqlException = (SQLException) exception;
