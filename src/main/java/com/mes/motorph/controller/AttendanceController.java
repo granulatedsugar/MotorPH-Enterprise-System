@@ -3,11 +3,14 @@ package com.mes.motorph.controller;
 import com.mes.motorph.entity.Attendance;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.services.AttendanceService;
+import com.mes.motorph.utils.AlertUtility;
 import com.mes.motorph.view.ViewFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,8 +23,6 @@ import java.util.Date;
 import java.util.List;
 
 public class AttendanceController {
-    @FXML
-    private AnchorPane newView;
 
     @FXML
     private TableView<Attendance> attendanceTableView;
@@ -61,21 +62,30 @@ public class AttendanceController {
     }
 
     @FXML
-    private void onClickUpdateAttendance() throws AttendanceException{
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-employee-view.fxml"));
-            AnchorPane attendanceView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+    private void onClickUpdateAttendance() throws AttendanceException {
+        Attendance selectedAttendance = attendanceTableView.getSelectionModel().getSelectedItem();
 
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) newView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
+        if(selectedAttendance != null){
+            String attendanceId = String.valueOf(selectedAttendance.getId());
+            navigateToAttendanceEmployee(attendanceId);
+            System.out.println(attendanceId);
+        }else{
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to update");
+        }
 
-            // Set visibility to true (optional if not already visible):
-            attendanceView.setVisible(true);
+    }
+    private void navigateToAttendanceEmployee(String attendanceId){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/attendance-employee-view.fxml"));
 
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(attendanceView);
+        try{
+            Parent attendanceEmployeeView = loader.load();
+            AttendanceEmployeeController attendanceEmployeeController = loader.getController();
+            attendanceEmployeeController.setAttendanceId(attendanceId);
 
-        } catch (IOException e) {
+            BorderPane mainView = (BorderPane) attendanceTableView.getScene().getRoot().lookup("#mainView");
+
+            mainView.setCenter(attendanceEmployeeView);
+        }catch (IOException e){
             e.printStackTrace();
         }
     }

@@ -146,4 +146,26 @@ public class AttendanceRepository {
         }
     }
 
+    public Attendance fetchAttendanceDataById(String id) throws AttendanceException{
+        Attendance attendance = null;
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "SELECT * FROM motorph.attendance where id =?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                attendance = new Attendance(rs.getInt("id"), rs.getInt("employeeId"), rs.getDate("date"),rs.getTime("timeIn"), rs.getTime("timeOut"));
+            }
+            rs.close();
+            stmt.close();
+        }catch (Exception e){
+            throw new AttendanceException("Error fetching attendance data" + e.getMessage(),e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+        return attendance;
+    }
+
 }

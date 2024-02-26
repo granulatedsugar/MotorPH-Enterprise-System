@@ -28,13 +28,15 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </Button>
-            <TextField promptText="Search Employee Id">
+            <TextField prefHeight="25.0" prefWidth="149.0" promptText="Search Employee Id">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
             </TextField>
-            <Pane prefHeight="57.0" prefWidth="222.0" HBox.hgrow="ALWAYS" />
-            <DatePicker prefHeight="35.0" prefWidth="201.0" promptText="Select Date" stylesheets="@../../../css/date-picker.css" />
+            <Pane prefHeight="50.0" prefWidth="105.0" />
+            <DatePicker prefHeight="35.0" prefWidth="204.0" promptText="Select Start Date" stylesheets="@../../../css/date-picker.css" />
+            <Pane prefHeight="50.0" prefWidth="117.0" />
+            <DatePicker prefHeight="35.0" prefWidth="204.0" promptText="Select End Date" stylesheets="@../../../css/date-picker.css" />
          </children>
       </HBox>
       <VBox layoutX="19.0" layoutY="103.0" prefHeight="482.0" prefWidth="889.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0">
