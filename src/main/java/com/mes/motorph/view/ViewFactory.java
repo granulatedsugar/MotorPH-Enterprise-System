@@ -14,7 +14,7 @@ public class ViewFactory {
     @FXML
     protected void onClickEmployees() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/employees-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/employee-view.fxml"));
             AnchorPane employeesView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:
