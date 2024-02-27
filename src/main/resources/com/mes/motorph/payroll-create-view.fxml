@@ -123,14 +123,8 @@
                               <Label fx:id="totalBenefitsLabels" alignment="CENTER_RIGHT" layoutX="702.0" layoutY="743.0" prefHeight="17.0" prefWidth="159.0" text="0.00" textAlignment="RIGHT" />
                               <Label fx:id="totalDeductionsLabel" layoutX="432.0" layoutY="743.0" prefHeight="17.0" prefWidth="152.0" text="0.00" textAlignment="RIGHT" />
                               <Label fx:id="grossIncomeLabel" layoutX="118.0" layoutY="743.0" prefHeight="17.0" prefWidth="173.0" text="0.00" textAlignment="RIGHT" />
-                              <Button fx:id="calculateSalaryBtn" disable="true" layoutX="7.0" layoutY="873.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Calculate">
-                                 <styleClass>
-                                    <String fx:value="reg-button" />
-                                    <String fx:value="new-button" />
-                                 </styleClass>
-                              </Button>
                               <CheckBox fx:id="overrideCheckBox" layoutX="793.0" layoutY="99.0" mnemonicParsing="false" onAction="#onClickOverride" text="Override" />
-                              <Button layoutX="720.0" layoutY="873.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Submit">
+                              <Button fx:id="submitBtn" layoutX="720.0" layoutY="873.0" mnemonicParsing="false" onAction="#onSubmitPayroll" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Submit">
                                  <styleClass>
                                     <String fx:value="reg-button" />
                                     <String fx:value="new-button" />
@@ -138,6 +132,12 @@
                               </Button>
                               <TextField fx:id="positionField" disable="true" layoutX="440.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
                               <TextField fx:id="deptField" disable="true" layoutX="663.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
+                              <Button fx:id="updateBtn" layoutX="720.0" layoutY="873.0" mnemonicParsing="false" onAction="#onUpdatePayroll" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Update" visible="false">
+                                 <styleClass>
+                                    <String fx:value="reg-button" />
+                                    <String fx:value="new-button" />
+                                 </styleClass>
+                              </Button>
                            </children></AnchorPane>
                      </children>
                   </VBox>

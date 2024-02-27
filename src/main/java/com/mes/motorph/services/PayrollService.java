@@ -22,4 +22,16 @@ public class PayrollService {
     public Payroll fetchEmployeePayrollDetails(String payrollId) throws PayrollException {
         return payrollRepository.fetchEmployeePayrollDetails(payrollId);
     }
+
+    public void createNewPayslip(Payroll payroll) throws PayrollException {
+        payrollRepository.createNewPayslip(payroll);
+    }
+
+    public void updatePayroll(Payroll payroll) throws PayrollException {
+        payrollRepository.updatePayslip(payroll);
+    }
+
+    public void deletePayrollById(String payrollId) throws PayrollException {
+        payrollRepository.deletePayrollById(payrollId);
+    }
 }

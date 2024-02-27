@@ -1,6 +1,5 @@
 package com.mes.motorph.repository;
 
-import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.exception.PayrollException;
 import com.mes.motorph.utils.DBUtility;
@@ -120,11 +119,10 @@ public class PayrollRepository {
         return payroll;
     }
 
-    public void createNewPayslip(Payroll payroll) throws PayrollException {
-
+    public void  createNewPayslip(Payroll payroll) throws PayrollException {
         try {
             conn = DBUtility.getConnection();
-            String sql = "INSERT INTO payroll (payroll_id, employeeId, pay_period_from, pay_period_to, days_worked, allowance_clothing, allowance_phone, allowance_rice, deduction_philhealth, deduction_pagibig, deduction_tin, deduction_sss, gross_pay, net_pay, employee_name, gross_semi_monthlyrate, `position`, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO payroll (payroll_id, employeeId, pay_period_from, pay_period_to, days_worked, allowance_clothing, allowance_phone, allowance_rice, deduction_philhealth, deduction_pagibig, deduction_tin, deduction_sss, gross_pay, net_pay, employee_name, gross_semi_monthlyrate, `position`, department, overtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, payroll.getPayrollId());
@@ -145,16 +143,79 @@ public class PayrollRepository {
             pstmt.setDouble(16, payroll.getGrossSemiMonthlyrate());
             pstmt.setString(17, payroll.getPosition());
             pstmt.setString(18, payroll.getDepartment());
+            pstmt.setDouble(19, payroll.getOvertime());
 
             int rowsInserted = pstmt.executeUpdate();
 
             if (rowsInserted == 0 ) {
                 throw new PayrollException("Error inserting employee into database");
             } else {
-                System.out.println("Added new employee.");
+                System.out.println("Added new payslip.");
             }
         } catch (Exception e) {
             throw new PayrollException("Error connection to database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
+
+    public void  updatePayslip(Payroll payroll) throws PayrollException {
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "UPDATE payroll SET employeeId = ?, pay_period_from = ?, pay_period_to = ?, days_worked = ?, allowance_clothing = ?, allowance_phone = ?, allowance_rice = ?, deduction_philhealth = ?, deduction_pagibig = ?, deduction_tin = ?, deduction_sss = ?, gross_pay = ?, net_pay = ?, employee_name = ?, gross_semi_monthlyrate = ?, position = ?, department = ?, overtime = ? WHERE payroll_id = ?;";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, payroll.getEmployeeId());
+            pstmt.setDate(2, (Date) payroll.getPayPeriodFrom());
+            pstmt.setDate(3, (Date) payroll.getPayPeriodTo());
+            pstmt.setDouble(4, payroll.getDaysWorked());
+            pstmt.setDouble(5, payroll.getAllowanceClothing());
+            pstmt.setDouble(6, payroll.getAllowancePhone());
+            pstmt.setDouble(7, payroll.getAllowanceRice());
+            pstmt.setDouble(8, payroll.getDeductionPhilHealth());
+            pstmt.setDouble(9, payroll.getDeductionPagIbig());
+            pstmt.setDouble(10, payroll.getDeductionTin());
+            pstmt.setDouble(11, payroll.getDeductionSss());
+            pstmt.setDouble(12, payroll.getGrossPay());
+            pstmt.setDouble(13, payroll.getNetPay());
+            pstmt.setString(14, payroll.getEmployeeName());
+            pstmt.setDouble(15, payroll.getGrossSemiMonthlyrate());
+            pstmt.setString(16, payroll.getPosition());
+            pstmt.setString(17, payroll.getDepartment());
+            pstmt.setDouble(18, payroll.getOvertime());
+            pstmt.setString(19, payroll.getPayrollId());
+
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted == 0 ) {
+                throw new PayrollException("Error updating employee into database");
+            } else {
+                System.out.println("Updated payslip.");
+            }
+        } catch (Exception e) {
+            throw new PayrollException("Error connection to database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
+
+    public void deletePayrollById(String payrollId) throws PayrollException{
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "DELETE FROM motorph.payroll WHERE payroll_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, payrollId);
+
+            int rowsUpdated = pstmt.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new PayrollException("Error deleting employee in database.");
+            } else {
+                System.out.println("Deleted employee");
+            }
+        } catch (Exception e) {
+            throw new PayrollException("Error connecting to database: " + e.getMessage(), e);
         } finally {
             DBUtility.closeConnection(conn);
         }

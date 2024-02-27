@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 public class PayrollCreateController {
@@ -69,7 +68,10 @@ public class PayrollCreateController {
     private Label totalBenefitsLabels;
     @FXML
     private Label netPayLabel;
-
+    @FXML
+    private Button submitBtn;
+    @FXML
+    private Button updateBtn;
     private String payrollId;
 
     PayrollService payrollService = new PayrollService();
@@ -87,6 +89,8 @@ public class PayrollCreateController {
         payrollIdField.setText(payrollId);
         breadCrumb.setText("Payroll / Update / Payslip #" + payrollId);
         payslipSceneTitle.setText("Update Payslip #" + payrollId);
+        submitBtn.setVisible(false);
+        updateBtn.setVisible(true);
 
         try {
             Payroll payrollEmployeeData = payrollService.fetchEmployeePayrollDetails(payrollId);
@@ -160,12 +164,6 @@ public class PayrollCreateController {
         employeeNameField.setDisable(!isSelected);
         positionField.setDisable(!isSelected);
         deptField.setDisable(!isSelected);
-        monthlyRateField.setDisable(!isSelected);
-        daysWorkedField.setDisable(!isSelected);
-        riceSubField.setDisable(!isSelected);
-        phoneAllowanceField.setDisable(!isSelected);
-        clothingAllowanceField.setDisable(!isSelected);
-        calculateSalaryBtn.setDisable(!isSelected);
     }
 
 
@@ -194,6 +192,8 @@ public class PayrollCreateController {
         try {
             List<Position> positions = positionService.fetchPositions();
             List<Department> departments = departmentService.fetchDepartments();
+
+
 
             String employeePositionTitle = null;
             for (Position position : positions) {
@@ -241,6 +241,7 @@ public class PayrollCreateController {
             // Count Days
             int attendanceCount = attendances.size();
 
+            // Calculate Late and Overtime
             for (Attendance attendance : attendances) {
                 double overtime = attendance.getOvertime();
                 totalOvertime += overtime;
@@ -249,7 +250,7 @@ public class PayrollCreateController {
                 totalLate += late;
             }
 
-            double overtimeAmount = totalOvertime;
+            double overtimeAmount = (employee.getHourlyRate() * 1.25 ) * totalOvertime;
             double lateAmount = totalLate * employee.getHourlyRate();
 
             // Earnings
@@ -257,16 +258,17 @@ public class PayrollCreateController {
             monthlyRateField.setText(String.valueOf(monthlyRate));
             dailyRateField.setText(String.valueOf(monthlyRate / 20));
             daysWorkedField.setText(String.valueOf(attendanceCount));
+            overtimeField.setText(String.valueOf(totalOvertime));
 
             // Benefits
             double totalBenefits = salaryCalculationService.calculateTotalBenefits(employee.getRiceSubsidy(), employee.getPhoneAllowance(), employee.getClothingAllowance());
-            riceSubField.setText(String.valueOf(employee.getRiceSubsidy()));
-            phoneAllowanceField.setText(String.valueOf(employee.getPhoneAllowance()));
-            clothingAllowanceField.setText(String.valueOf(employee.getClothingAllowance()));
+            riceSubField.setText(String.valueOf(employee.getRiceSubsidy() / 2));
+            phoneAllowanceField.setText(String.valueOf(employee.getPhoneAllowance() /2 ));
+            clothingAllowanceField.setText(String.valueOf(employee.getClothingAllowance() / 2));
 
             // Gross
             double grossIncome = salaryCalculationService.calculateGrossIncome(monthlyRate, attendanceCount);
-            double totalGrossIncome = grossIncome + totalOvertime - lateAmount;
+            double totalGrossIncome = grossIncome + overtimeAmount - lateAmount;
 
             if (attendanceCount != 0) {
                 // Deductions
@@ -282,9 +284,9 @@ public class PayrollCreateController {
                 withholdingTaxField.setText(String.valueOf(withholdingTax));
 
                 totalBenefitsLabels.setText(String.valueOf(totalBenefits));
-                grossIncomeLabel.setText(String.valueOf(grossIncome));
+                grossIncomeLabel.setText(String.valueOf(totalGrossIncome));
                 totalDeductionsLabel.setText(String.valueOf(totalDeductions));
-                double totalNetPay = salaryCalculationService.calculateNetPay(grossIncome, totalDeductions, totalBenefits);
+                double totalNetPay = salaryCalculationService.calculateNetPay(totalGrossIncome, totalDeductions, totalBenefits);
                 netPayLabel.setText(String.valueOf(totalNetPay));
             } else {
                 // Handle if no attendance data exists
@@ -292,7 +294,139 @@ public class PayrollCreateController {
             }
         } catch (AttendanceException | PayrollException e) {
             e.printStackTrace();
-            // Handle exception
         }
     }
+
+//    @FXML
+//    protected void onSubmitPayroll() {
+//        try {
+//            payrollService.createNewPayslip(fetchFromInput());
+//        } catch (PayrollException e) {
+//           AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Error creating Payroll #" + fetchFromInput().getPayrollId());
+//        }
+//
+//    }
+//
+//    @FXML
+//    protected void onUpdatePayroll() {
+//        try {
+//            payrollService.updatePayroll(fetchFromInput());
+//        } catch (PayrollException e) {
+//            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Error updating Payroll #" + fetchFromInput().getPayrollId());
+//        }
+//    }
+//
+//    private Payroll fetchFromInput() {
+//        String payrollId = payrollIdField.getText();
+//        int employeeId = Integer.parseInt(employeeIdField.getText());
+//
+//        // Date
+//        LocalDate selectedFromDate = startDatePicker.getValue();
+//        LocalDate selectedToDate = endDatePicker.getValue();
+//        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//        // Convert LocalDate to java.sql.Date using the formatter
+//        java.sql.Date sqlFDate = java.sql.Date.valueOf(selectedFromDate);
+//        java.sql.Date sqlTDate = java.sql.Date.valueOf(selectedToDate);
+//
+//        // Employee Information
+//        String employeeName = employeeNameField.getText();
+//        String title = positionField.getText();
+//        String department = deptField.getText();
+//
+//        // Earnings
+//        double monthlyRate = Double.parseDouble(monthlyRateField.getText());
+//        double semiMonthlyRate = monthlyRate / 2;
+//        double daysWorked = Integer.parseInt(daysWorkedField.getText());
+//        double overtime = Double.parseDouble(overtimeField.getText());
+//
+//        // Deductions
+//        double sssDeduction = Double.parseDouble(sssField.getText());
+//        double philHealth = Double.parseDouble(phField.getText());
+//        double pagIbig = Double.parseDouble(pagIbigField.getText());
+//        double tin = 0;
+//
+//        // Benefits
+//        double riceSub = Double.parseDouble(riceSubField.getText());
+//        double phoneAllowance = Double.parseDouble(phoneAllowanceField.getText());
+//        double clothingAllowance = Double.parseDouble(clothingAllowanceField.getText());
+//
+//        // Summary
+//        double grossIncome = Double.parseDouble(grossIncomeLabel.getText());
+//        double netPay = Double.parseDouble(netPayLabel.getText());
+//
+//        Payroll payroll = new Payroll(payrollId, employeeId, sqlFDate, sqlTDate, daysWorked, clothingAllowance, phoneAllowance, riceSub, philHealth, pagIbig, tin, sssDeduction, netPay, grossIncome, employeeName, semiMonthlyRate, title, department, overtime);
+//
+//        return payroll;
+//    }
+
+    @FXML
+    protected void onSubmitPayroll() {
+        processPayrollSubmission(true);
+    }
+
+    @FXML
+    protected void onUpdatePayroll() {
+        processPayrollSubmission(false);
+    }
+
+    private void processPayrollSubmission(boolean isNew) {
+        try {
+            Payroll payroll = fetchFromInput();
+            if (isNew) {
+                payrollService.createNewPayslip(payroll);
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Created new payslip.");
+            } else {
+                payrollService.updatePayroll(payroll);
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Updated payslip.");
+            }
+        } catch (PayrollException e) {
+            String action = isNew ? "creating" : "updating";
+            String payrollId = fetchFromInput().getPayrollId();
+            String errorMessage = "Error " + action + " Payroll #" + payrollId + " | Reason: " + e.getLocalizedMessage();
+            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, errorMessage);
+        }
+    }
+
+    private Payroll fetchFromInput() {
+        String payrollId = payrollIdField.getText();
+        int employeeId = Integer.parseInt(employeeIdField.getText());
+
+        // Date
+        LocalDate selectedFromDate = startDatePicker.getValue();
+        LocalDate selectedToDate = endDatePicker.getValue();
+
+        // Convert LocalDate to java.sql.Date using the formatter
+        java.sql.Date sqlFDate = java.sql.Date.valueOf(selectedFromDate);
+        java.sql.Date sqlTDate = java.sql.Date.valueOf(selectedToDate);
+
+        // Employee Information
+        String employeeName = employeeNameField.getText();
+        String title = positionField.getText();
+        String department = deptField.getText();
+
+        // Earnings
+        double monthlyRate = Double.parseDouble(monthlyRateField.getText());
+        double semiMonthlyRate = monthlyRate / 2;
+        double daysWorked = Double.parseDouble(daysWorkedField.getText());
+        double overtime = Double.parseDouble(overtimeField.getText());
+
+        // Deductions
+        double sssDeduction = Double.parseDouble(sssField.getText());
+        double philHealth = Double.parseDouble(phField.getText());
+        double pagIbig = Double.parseDouble(pagIbigField.getText());
+        double tin = 0;
+
+        // Benefits
+        double riceSub = Double.parseDouble(riceSubField.getText());
+        double phoneAllowance = Double.parseDouble(phoneAllowanceField.getText());
+        double clothingAllowance = Double.parseDouble(clothingAllowanceField.getText());
+
+        // Summary
+        double grossIncome = Double.parseDouble(grossIncomeLabel.getText());
+        double netPay = Double.parseDouble(netPayLabel.getText());
+
+        return new Payroll(payrollId, employeeId, sqlFDate, sqlTDate, daysWorked, clothingAllowance, phoneAllowance, riceSub, philHealth, pagIbig, tin, sssDeduction, netPay, grossIncome, employeeName, semiMonthlyRate, title, department, overtime);
+    }
+
 }

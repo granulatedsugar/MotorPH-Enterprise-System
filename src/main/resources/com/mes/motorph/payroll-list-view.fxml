@@ -57,14 +57,14 @@
         </VBox>
       <HBox alignment="CENTER" layoutX="14.0" layoutY="612.0" prefHeight="50.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onClickSearchEmployeeId" stylesheets="@../../../css/scenes.css" text="Delete">
+            <Button mnemonicParsing="false" onAction="#onClickDeletePayroll" stylesheets="@../../../css/scenes.css" text="Delete">
                <styleClass>
                   <String fx:value="delete-button" />
                   <String fx:value="reg-button" />
                </styleClass>
             </Button>
             <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#onClickSearchEmployeeId" stylesheets="@../../../css/scenes.css" text="New">
+            <Button mnemonicParsing="false" onAction="#onClickNewPayroll" stylesheets="@../../../css/scenes.css" text="New">
                <styleClass>
                   <String fx:value="reg-button" />
                   <String fx:value="new-button" />

@@ -1,10 +1,7 @@
 package com.mes.motorph.controller;
 
-import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.Payroll;
-import com.mes.motorph.exception.EmployeeException;
 import com.mes.motorph.exception.PayrollException;
-import com.mes.motorph.services.EmployeeService;
 import com.mes.motorph.services.PayrollService;
 import com.mes.motorph.utils.AlertUtility;
 import javafx.collections.FXCollections;
@@ -13,18 +10,17 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class PayrollListController {
@@ -206,13 +202,32 @@ public class PayrollListController {
         // Delete Action
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(e -> {
-            // TODO: Remove toString after testing
-            int employeeId = rowData.getEmployeeId();
-            System.out.println(employeeId);
+            String payrollId = rowData.getPayrollId();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete Payslip #" + payrollId + " ?");
+
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == okButton) {
+                // User clicked OK, proceed with deletion
+                try {
+                    payrollService.deletePayrollById(payrollId);
+                    initialize();
+                } catch (PayrollException ex) {
+                    // Handle exception
+                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
+                }
+            } else {
+                // User clicked Cancel or closed the dialog, do nothing
+            }
         });
-
         contextMenu.getItems().addAll(updateItem, deleteItem);
-
         // Show the context menu at the mouse cursor's location
         contextMenu.show(row, event.getScreenX(), event.getScreenY());
     }
@@ -229,5 +244,57 @@ public class PayrollListController {
             });
             return  row;
         });
+    }
+
+    @FXML
+    protected void onClickNewPayroll() {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/payroll-create-view.fxml"));
+
+        try {
+            Parent payrollCreateView = loader.load();
+            // Get the main BorderPane from your main view
+            BorderPane mainView = (BorderPane) payrollTableView.getScene().getRoot().lookup("#mainView");
+
+            // Replace the center content of the main BorderPane with the payroll-create-view
+            mainView.setCenter(payrollCreateView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onClickDeletePayroll() throws PayrollException {
+        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedPayroll != null) {
+            String payrollId = selectedPayroll.getPayrollId();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete Payslip #" + payrollId + " ?");
+
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == okButton) {
+                // User clicked OK, proceed with deletion
+                try {
+                    payrollService.deletePayrollById(payrollId);
+                    initialize();
+                } catch (PayrollException ex) {
+                    // Handle exception
+                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
+                }
+            } else {
+                // User clicked Cancel or closed the dialog, do nothing
+            }
+        } else {
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
+        }
     }
 }
