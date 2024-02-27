@@ -5,6 +5,9 @@ import com.mes.motorph.exception.EmployeeException;
 import com.mes.motorph.utils.DBUtility;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class EmployeeRepository {
 
@@ -58,4 +61,51 @@ public class EmployeeRepository {
         }
         return employee;
     }
+
+    public List<Employee> fetchAllEmployees() throws EmployeeException{
+        List<Employee> employees = new ArrayList<>();
+        try {
+            conn = DBUtility.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM motorph.employee";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String address = rs.getString("address");
+                double baseSalary = rs.getDouble("base_salary");
+                double clothingAllowance = rs.getDouble("clothing_allowance");
+                Date dateOfBirth = rs.getDate("dateofbirth");
+                String email = rs.getString("email");
+                String firstName = rs.getString("firstname");
+                double grossSemiMonthlyRate = rs.getDouble("gross_semi_monthlyrate");
+                double hourlyRate = rs.getDouble("hourlyrate");
+                String lastName = rs.getString("lastname");
+                String pagIbig = rs.getString("pagibig");
+                String philhealth = rs.getString("philhealth");
+                double phoneAllowance = rs.getDouble("phone_allowance");
+                String phoneNumber = rs.getString("phone_number");
+                double riceSubsidy = rs.getDouble("rice_sub");
+                String sss = rs.getString("sss");
+                String status = rs.getString("status");
+                String supervisor = rs.getString("supervisor");
+                String tin = rs.getString("tin");
+                double vacationHours = rs.getDouble("vacation_hours");
+                double sickHours = rs.getDouble("sick_hours");
+                int positionId = rs.getInt("positionId");
+                int deptId = rs.getInt("deptId");
+
+                Employee employee = new Employee(id,address,baseSalary,clothingAllowance,dateOfBirth,email,firstName,lastName,grossSemiMonthlyRate,hourlyRate,pagIbig,philhealth,phoneAllowance,phoneNumber,riceSubsidy,sss,status,supervisor,tin,vacationHours,sickHours,positionId,deptId);
+                employees.add(employee);
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new EmployeeException("Error connecting to database " + e.getMessage(), e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+        return employees;
+    }
+
 }
