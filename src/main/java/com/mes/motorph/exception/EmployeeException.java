@@ -6,6 +6,10 @@ public class EmployeeException extends Exception{
 
     private SQLException sqlException;
 
+    public EmployeeException(String message) {
+        super(message);
+    }
+
     public EmployeeException(String message, SQLException sqlException) {
         super(message);
         this.sqlException = sqlException;
