@@ -49,20 +49,25 @@ public class AttendanceRepository {
 
         try{
             conn = DBUtility.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM motorph.attendance WHERE employeeId = ? AND date BETWEEN ? AND ?");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM motorph.employee_hours WHERE `Employee ID` = ? AND `Date` BETWEEN ? AND  ?;");
             pstmt.setInt(1, eid);
             pstmt.setString(2, fDate);
             pstmt.setString(3, tDate);
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
-                int id = rs.getInt("id");
-                int employeeId = rs.getInt("employeeId");
-                Date date = rs.getDate("date");
-                Time timeIn = rs.getTime("timeIn");
-                Time timeOut = rs.getTime("timeOut");
+                int id = rs.getInt("Log ID");
+                Date regDate = rs.getDate("Date");
+                int employeeId = rs.getInt("Employee ID");
+                String employeeName = rs.getString("Employee Name");
+                Time timeIn = rs.getTime("Punch In");
+                Time timeOut = rs.getTime("Punch Out");
+                double workedHours = rs.getDouble("Worked Hours");
+                int regularWorkHours = rs.getInt("Regular Work Hours");
+                int overtime = rs.getInt("overtime");
+                int late = rs.getInt("late");
 
-                Attendance attendance = new Attendance(id, employeeId, date, timeIn, timeOut);
+                Attendance attendance = new Attendance(id, regDate, employeeId, employeeName, timeIn, timeOut, workedHours, regularWorkHours, overtime, late);
                 eAttendances.add(attendance);
             }
             rs.close();

@@ -46,6 +46,8 @@ public class PayrollCreateController {
     @FXML
     private TextField daysWorkedField;
     @FXML
+    private TextField overtimeField;
+    @FXML
     private TextField sssField;
     @FXML
     private TextField phField;
@@ -78,6 +80,8 @@ public class PayrollCreateController {
     DepartmentService departmentService = new DepartmentService();
     SalaryCalculationService salaryCalculationService = new SalaryCalculationService();
 
+
+    // UPDATE data
     public void setPayrollId(String payrollId) {
         this.payrollId = payrollId;
         payrollIdField.setText(payrollId);
@@ -120,6 +124,7 @@ public class PayrollCreateController {
         double dailyRateCalc = salaryCalculationService.calculateDailyRate(grossSemiMonthly);
         dailyRateField.setText(String.valueOf(dailyRateCalc));
         daysWorkedField.setText(String.valueOf(payrollEmployeeData.getDaysWorked()));
+        overtimeField.setText(String.valueOf(payrollEmployeeData.getOvertime()));
     }
 
     private void setDeductions(Payroll payrollEmployeeData) {
@@ -163,6 +168,8 @@ public class PayrollCreateController {
         calculateSalaryBtn.setDisable(!isSelected);
     }
 
+
+    // Generate new payslip
     @FXML
     protected void onClickRunReport() {
         String eid = employeeIdField.getText();
@@ -182,6 +189,7 @@ public class PayrollCreateController {
         }
     }
 
+    // Update UI
     private void updateEmployeeUI(Employee employee) {
         try {
             List<Position> positions = positionService.fetchPositions();
@@ -224,8 +232,25 @@ public class PayrollCreateController {
         payrollIdField.setText(payslipIdValue + "-" + employee.getId());
 
         try {
+
+            // Check Attendance
             List<Attendance> attendances = attendanceService.fetchAttendaceByEmployeId(employee.getId(), fDate, tDate);
+            double totalOvertime = 0;
+            int totalLate = 0;
+
+            // Count Days
             int attendanceCount = attendances.size();
+
+            for (Attendance attendance : attendances) {
+                double overtime = attendance.getOvertime();
+                totalOvertime += overtime;
+
+                int late = attendance.getLate();
+                totalLate += late;
+            }
+
+            double overtimeAmount = totalOvertime;
+            double lateAmount = totalLate * employee.getHourlyRate();
 
             // Earnings
             double monthlyRate = salaryCalculationService.calculateMonthlyRate(employee.getGrossSemiMonthlyRate());
@@ -241,6 +266,7 @@ public class PayrollCreateController {
 
             // Gross
             double grossIncome = salaryCalculationService.calculateGrossIncome(monthlyRate, attendanceCount);
+            double totalGrossIncome = grossIncome + totalOvertime - lateAmount;
 
             if (attendanceCount != 0) {
                 // Deductions

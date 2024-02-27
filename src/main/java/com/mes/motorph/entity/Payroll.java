@@ -23,8 +23,9 @@ public class Payroll {
     private double grossSemiMonthlyrate;
     private String position;
     private String department;
+    private double overtime;
 
-    public Payroll(String payrollId, int employeeId, Date payPeriodFrom, Date payPeriodTo, double daysWorked, double allowanceClothing, double allowancePhone, double allowanceRice, double deductionPhilHealth, double deductionPagIbig, double deductionTin, double deductionSss, double netPay, double grossPay, String employeeName, double grossSemiMonthlyrate, String position, String department) {
+    public Payroll(String payrollId, int employeeId, Date payPeriodFrom, Date payPeriodTo, double daysWorked, double allowanceClothing, double allowancePhone, double allowanceRice, double deductionPhilHealth, double deductionPagIbig, double deductionTin, double deductionSss, double netPay, double grossPay, String employeeName, double grossSemiMonthlyrate, String position, String department, double overtime) {
         this.payrollId = payrollId;
         this.employeeId = employeeId;
         this.payPeriodFrom = payPeriodFrom;
@@ -43,6 +44,7 @@ public class Payroll {
         this.grossSemiMonthlyrate = grossSemiMonthlyrate;
         this.position = position;
         this.department = department;
+        this.overtime = overtime;
     }
 
     public Payroll(String payrollId, int employeeId, String employeeName, Date payPeriodFrom, Date payPeriodTo, double daysWorked, double totalDeduction, double totalAllowance, double grossPay, double netPay) {
@@ -216,6 +218,14 @@ public class Payroll {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public double getOvertime() {
+        return overtime;
+    }
+
+    public void setOvertime(double overtime) {
+        this.overtime = overtime;
     }
 
     // Testing predicate results

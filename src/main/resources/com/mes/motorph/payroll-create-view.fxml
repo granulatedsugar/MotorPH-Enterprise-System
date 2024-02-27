@@ -76,7 +76,7 @@
                               <Label layoutX="8.0" layoutY="475.0" prefHeight="17.0" prefWidth="98.0" text="Daily Rate" />
                               <TextField fx:id="daysWorkedField" disable="true" layoutX="10.0" layoutY="559.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
                               <Label layoutX="9.0" layoutY="541.0" prefHeight="17.0" prefWidth="98.0" text="Days Worked" />
-                              <TextField disable="true" layoutX="11.0" layoutY="628.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
+                              <TextField fx:id="overtimeField" disable="true" layoutX="11.0" layoutY="628.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
                               <Label layoutX="10.0" layoutY="610.0" prefHeight="17.0" prefWidth="98.0" text="Overtime" />
                               <Label alignment="TOP_LEFT" layoutX="257.0" layoutY="355.0" prefHeight="37.0" prefWidth="231.0" styleClass="txtLabel" text="Deductions" />
                               <TextField fx:id="sssField" disable="true" layoutX="279.0" layoutY="425.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
@@ -129,7 +129,7 @@
                                     <String fx:value="new-button" />
                                  </styleClass>
                               </Button>
-                              <CheckBox fx:id="overrideCheckBox" layoutX="793.0" layoutY="224.0" mnemonicParsing="false" onAction="#onClickOverride" text="Override" />
+                              <CheckBox fx:id="overrideCheckBox" layoutX="793.0" layoutY="99.0" mnemonicParsing="false" onAction="#onClickOverride" text="Override" />
                               <Button layoutX="720.0" layoutY="873.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Submit">
                                  <styleClass>
                                     <String fx:value="reg-button" />

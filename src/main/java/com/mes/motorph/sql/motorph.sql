@@ -43,7 +43,7 @@ CREATE TABLE `attendance` (
 
 LOCK TABLES `attendance` WRITE;
 /*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
-INSERT INTO `attendance` VALUES (1,1,'2024-01-29 00:00:00','08:30:00','16:00:00'),(2,1,'2024-01-30 00:00:00','08:30:00','16:30:00'),(3,1,'2024-01-31 00:00:00','08:00:00','17:00:00'),(4,1,'2024-02-01 00:00:00','08:00:00','17:00:00'),(5,1,'2024-02-02 00:00:00','08:00:00','17:00:00'),(6,1,'2024-02-05 00:00:00','08:00:00','17:00:00'),(7,1,'2024-02-06 00:00:00','08:00:00','17:00:00'),(8,1,'2024-02-07 00:00:00','08:00:00','17:00:00'),(9,1,'2024-02-08 00:00:00','08:00:00','17:00:00'),(10,1,'2024-02-09 00:00:00','08:00:00','17:00:00');
+INSERT INTO `attendance` VALUES (1,1,'2024-01-29 00:00:00','08:30:00','16:00:00'),(2,1,'2024-01-30 00:00:00','08:30:00','16:30:00'),(3,1,'2024-01-31 00:00:00','08:40:00','17:00:00'),(4,1,'2024-02-01 00:00:00','08:00:00','17:00:00'),(5,1,'2024-02-02 00:00:00','08:00:00','17:00:00'),(6,1,'2024-02-05 00:00:00','08:00:00','17:00:00'),(7,1,'2024-02-06 00:00:00','08:00:00','17:00:00'),(8,1,'2024-02-07 00:00:00','08:00:00','17:00:00'),(9,1,'2024-02-08 00:00:00','08:00:00','17:00:00'),(10,1,'2024-02-09 00:00:00','08:00:00','17:00:00');
 /*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,8 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `Punch Out`,
  1 AS `Worked Hours`,
  1 AS `Regular Work Hours`,
- 1 AS `Overtime`*/;
+ 1 AS `Overtime`,
+ 1 AS `Late`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -201,6 +202,7 @@ CREATE TABLE `payroll` (
   `gross_semi_monthlyrate` decimal(10,0) DEFAULT NULL,
   `position` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `department` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `overtime` decimal(2,0) DEFAULT NULL,
   PRIMARY KEY (`payroll_id`),
   UNIQUE KEY `payroll_id_UNIQUE` (`payroll_id`),
   KEY `eid_idx` (`employeeId`),
@@ -214,7 +216,7 @@ CREATE TABLE `payroll` (
 
 LOCK TABLES `payroll` WRITE;
 /*!40000 ALTER TABLE `payroll` DISABLE KEYS */;
-INSERT INTO `payroll` VALUES ('31-2023-12-30',15,'2023-12-18','2023-12-31',10,1000,2000,1500,450,100,0,900,26750,29800,'Fredrick  Romualdez',26750,'Manager','Operations');
+INSERT INTO `payroll` VALUES ('31-2023-12-30',15,'2023-12-18','2023-12-31',10,1000,2000,1500,450,100,0,900,26750,29800,'Fredrick  Romualdez',26750,'Manager','Operations',2);
 /*!40000 ALTER TABLE `payroll` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -406,7 +408,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `employee_hours` AS select `a`.`id` AS `Log ID`,`a`.`date` AS `Date`,`a`.`employeeId` AS `Employee ID`,concat(`e`.`firstname`,' ',`e`.`lastname`) AS `Employee Name`,`a`.`timeIn` AS `Punch In`,`a`.`timeOut` AS `Punch Out`,(case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (time_to_sec('09:00:00') / 3600) else (time_to_sec(timediff(`a`.`timeOut`,'08:00:00')) / 3600) end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (time_to_sec(timediff('17:00:00',`a`.`timeIn`)) / 3600) else (time_to_sec(timediff(`a`.`timeOut`,`a`.`timeIn`)) / 3600) end) end) AS `Worked Hours`,(case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then 8 else 8 end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then 8 else 8 end) end) AS `Regular Work Hours`,(case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then ((time_to_sec('09:00:00') / 3600) - 8) else 0 end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then ((time_to_sec(timediff('17:00:00',`a`.`timeIn`)) / 3600) - 8) when (cast(`a`.`timeOut` as time) > '08:00:00') then ((time_to_sec(timediff(`a`.`timeOut`,'08:00:00')) / 3600) - 8) else 0 end) end) AS `Overtime` from (`attendance` `a` join `employee` `e` on((`a`.`employeeId` = `e`.`id`))) order by `a`.`date` desc */;
+/*!50001 VIEW `employee_hours` AS select `a`.`id` AS `Log ID`,`a`.`date` AS `Date`,`a`.`employeeId` AS `Employee ID`,concat(`e`.`firstname`,' ',`e`.`lastname`) AS `Employee Name`,`a`.`timeIn` AS `Punch In`,`a`.`timeOut` AS `Punch Out`,(case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (((time_to_sec('17:00:00') - time_to_sec('08:00:00')) - time_to_sec('01:00:00')) / 3600) else (((time_to_sec(`a`.`timeOut`) - time_to_sec('08:00:00')) - time_to_sec('01:00:00')) / 3600) end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (((time_to_sec('17:00:00') - time_to_sec(`a`.`timeIn`)) - time_to_sec('01:00:00')) / 3600) else (((time_to_sec(`a`.`timeOut`) - time_to_sec(`a`.`timeIn`)) - time_to_sec('01:00:00')) / 3600) end) end) AS `Worked Hours`,(case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then 8 else 8 end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then 8 else 8 end) end) AS `Regular Work Hours`,(case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then ((((time_to_sec('17:00:00') - time_to_sec('08:00:00')) - time_to_sec('01:00:00')) / 3600) - 8) else 0 end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then ((((time_to_sec('17:00:00') - time_to_sec(`a`.`timeIn`)) - time_to_sec('01:00:00')) / 3600) - 8) else 0 end) end) AS `Overtime`,round((case when ((8 - (case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (((time_to_sec('17:00:00') - time_to_sec('08:00:00')) - time_to_sec('01:00:00')) / 3600) else (((time_to_sec(`a`.`timeOut`) - time_to_sec('08:00:00')) - time_to_sec('01:00:00')) / 3600) end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (((time_to_sec('17:00:00') - time_to_sec(`a`.`timeIn`)) - time_to_sec('01:00:00')) / 3600) else (((time_to_sec(`a`.`timeOut`) - time_to_sec(`a`.`timeIn`)) - time_to_sec('01:00:00')) / 3600) end) end)) > 0) then (8 - (case when (cast(`a`.`timeIn` as time) < '08:00:00') then (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (((time_to_sec('17:00:00') - time_to_sec('08:00:00')) - time_to_sec('01:00:00')) / 3600) else (((time_to_sec(`a`.`timeOut`) - time_to_sec('08:00:00')) - time_to_sec('01:00:00')) / 3600) end) else (case when (cast(`a`.`timeOut` as time) > '17:00:00') then (((time_to_sec('17:00:00') - time_to_sec(`a`.`timeIn`)) - time_to_sec('01:00:00')) / 3600) else (((time_to_sec(`a`.`timeOut`) - time_to_sec(`a`.`timeIn`)) - time_to_sec('01:00:00')) / 3600) end) end)) else 0 end),0) AS `Late` from (`attendance` `a` join `employee` `e` on((`a`.`employeeId` = `e`.`id`))) order by `a`.`date` desc */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -456,4 +458,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-25 19:54:11
+-- Dump completed on 2024-02-26 20:45:57

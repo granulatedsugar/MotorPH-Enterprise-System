@@ -106,7 +106,8 @@ public class PayrollRepository {
                         rs.getString("employee_name"),
                         rs.getDouble("gross_semi_monthlyrate"),
                         rs.getString("position"),
-                        rs.getString("department")
+                        rs.getString("department"),
+                        rs.getDouble("overtime")
                 );
             }
             rs.close();
