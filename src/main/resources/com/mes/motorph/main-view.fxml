@@ -64,7 +64,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Button alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Dashboard">
+                  <Button alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickDashboard" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Dashboard">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>

@@ -45,9 +45,9 @@
                               <HBox alignment="CENTER" layoutX="1.0" layoutY="125.0" prefHeight="85.0" prefWidth="862.0" spacing="20.0" styleClass="h-box" stylesheets="@../../../css/scenes.css">
                                  <children>
                                     <TextField fx:id="payrollIdField" disable="true" promptText="Payslip No." styleClass="text-field" stylesheets="@../../../css/text.css" HBox.hgrow="ALWAYS" />
-                                    <TextField fx:id="employeeIdField" promptText="Employee ID" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                                    <DatePicker fx:id="startDatePicker" promptText="Start Period" stylesheets="@../../../css/date-picker.css" />
-                                    <DatePicker fx:id="endDatePicker" promptText="End Period" stylesheets="@../../../css/date-picker.css" />
+                                    <TextField fx:id="employeeIdField" disable="true" promptText="Employee ID" styleClass="text-field" stylesheets="@../../../css/text.css" />
+                                    <DatePicker fx:id="startDatePicker" disable="true" promptText="Start Period" stylesheets="@../../../css/date-picker.css" />
+                                    <DatePicker fx:id="endDatePicker" disable="true" promptText="End Period" stylesheets="@../../../css/date-picker.css" />
                                     <Button fx:id="runReportBtn" disable="true" mnemonicParsing="false" onAction="#onClickRunReport" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Run">
                                        <styleClass>
                                           <String fx:value="reg-button" />

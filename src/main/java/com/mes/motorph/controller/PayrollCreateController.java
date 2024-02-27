@@ -4,9 +4,11 @@ import com.mes.motorph.entity.*;
 import com.mes.motorph.exception.*;
 import com.mes.motorph.services.*;
 import com.mes.motorph.utils.AlertUtility;
+import com.mes.motorph.utils.CurrencyUtility;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -83,6 +85,17 @@ public class PayrollCreateController {
     SalaryCalculationService salaryCalculationService = new SalaryCalculationService();
 
 
+    // Implement next phase : continuous improvement
+    // NumberFormat philippinesFormat = CurrencyUtility.getPhilippinesCurrencyFormatter();
+
+    @FXML
+    protected void initialize() {
+        startDatePicker.setDisable(false);
+        endDatePicker.setDisable(false);
+        employeeIdField.setDisable(false);
+        runReportBtn.setDisable(false);
+    }
+
     // UPDATE data
     public void setPayrollId(String payrollId) {
         this.payrollId = payrollId;
@@ -91,6 +104,10 @@ public class PayrollCreateController {
         payslipSceneTitle.setText("Update Payslip #" + payrollId);
         submitBtn.setVisible(false);
         updateBtn.setVisible(true);
+        startDatePicker.setDisable(true);
+        endDatePicker.setDisable(true);
+        employeeIdField.setDisable(true);
+        runReportBtn.setDisable(true);
 
         try {
             Payroll payrollEmployeeData = payrollService.fetchEmployeePayrollDetails(payrollId);
@@ -161,9 +178,6 @@ public class PayrollCreateController {
     protected void onClickOverride() {
         boolean isSelected = overrideCheckBox.isSelected();
         runReportBtn.setDisable(!isSelected);
-        employeeNameField.setDisable(!isSelected);
-        positionField.setDisable(!isSelected);
-        deptField.setDisable(!isSelected);
     }
 
 
@@ -173,13 +187,15 @@ public class PayrollCreateController {
         String eid = employeeIdField.getText();
 
         try {
-            Employee employee = employeeService.fetchEmployeeDetails(Integer.parseInt(eid));
-
-            // Update UI with employee information
-            updateEmployeeUI(employee);
-
-            // Calculate salary details
-            calculateSalaryDetails(employee);
+            if (eid.isEmpty() || startDatePicker.getValue() == null || endDatePicker.getValue() == null) {
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "Please check the any missing information Employee ID, Start Date, End Date.");
+            } else {
+                Employee employee = employeeService.fetchEmployeeDetails(Integer.parseInt(eid));
+                // Update UI with employee information
+                updateEmployeeUI(employee);
+                // Calculate salary details
+                calculateSalaryDetails(employee);
+            }
 
         } catch (EmployeeException e) {
             e.printStackTrace();
@@ -288,6 +304,7 @@ public class PayrollCreateController {
                 totalDeductionsLabel.setText(String.valueOf(totalDeductions));
                 double totalNetPay = salaryCalculationService.calculateNetPay(totalGrossIncome, totalDeductions, totalBenefits);
                 netPayLabel.setText(String.valueOf(totalNetPay));
+
             } else {
                 // Handle if no attendance data exists
                 AlertUtility.showAlert(Alert.AlertType.WARNING, "No Data", null, "No attendance found for " + employee.getFirstName() + " " + employee.getLastName());
@@ -296,69 +313,6 @@ public class PayrollCreateController {
             e.printStackTrace();
         }
     }
-
-//    @FXML
-//    protected void onSubmitPayroll() {
-//        try {
-//            payrollService.createNewPayslip(fetchFromInput());
-//        } catch (PayrollException e) {
-//           AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Error creating Payroll #" + fetchFromInput().getPayrollId());
-//        }
-//
-//    }
-//
-//    @FXML
-//    protected void onUpdatePayroll() {
-//        try {
-//            payrollService.updatePayroll(fetchFromInput());
-//        } catch (PayrollException e) {
-//            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Error updating Payroll #" + fetchFromInput().getPayrollId());
-//        }
-//    }
-//
-//    private Payroll fetchFromInput() {
-//        String payrollId = payrollIdField.getText();
-//        int employeeId = Integer.parseInt(employeeIdField.getText());
-//
-//        // Date
-//        LocalDate selectedFromDate = startDatePicker.getValue();
-//        LocalDate selectedToDate = endDatePicker.getValue();
-//        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//
-//        // Convert LocalDate to java.sql.Date using the formatter
-//        java.sql.Date sqlFDate = java.sql.Date.valueOf(selectedFromDate);
-//        java.sql.Date sqlTDate = java.sql.Date.valueOf(selectedToDate);
-//
-//        // Employee Information
-//        String employeeName = employeeNameField.getText();
-//        String title = positionField.getText();
-//        String department = deptField.getText();
-//
-//        // Earnings
-//        double monthlyRate = Double.parseDouble(monthlyRateField.getText());
-//        double semiMonthlyRate = monthlyRate / 2;
-//        double daysWorked = Integer.parseInt(daysWorkedField.getText());
-//        double overtime = Double.parseDouble(overtimeField.getText());
-//
-//        // Deductions
-//        double sssDeduction = Double.parseDouble(sssField.getText());
-//        double philHealth = Double.parseDouble(phField.getText());
-//        double pagIbig = Double.parseDouble(pagIbigField.getText());
-//        double tin = 0;
-//
-//        // Benefits
-//        double riceSub = Double.parseDouble(riceSubField.getText());
-//        double phoneAllowance = Double.parseDouble(phoneAllowanceField.getText());
-//        double clothingAllowance = Double.parseDouble(clothingAllowanceField.getText());
-//
-//        // Summary
-//        double grossIncome = Double.parseDouble(grossIncomeLabel.getText());
-//        double netPay = Double.parseDouble(netPayLabel.getText());
-//
-//        Payroll payroll = new Payroll(payrollId, employeeId, sqlFDate, sqlTDate, daysWorked, clothingAllowance, phoneAllowance, riceSub, philHealth, pagIbig, tin, sssDeduction, netPay, grossIncome, employeeName, semiMonthlyRate, title, department, overtime);
-//
-//        return payroll;
-//    }
 
     @FXML
     protected void onSubmitPayroll() {
@@ -376,6 +330,8 @@ public class PayrollCreateController {
             if (isNew) {
                 payrollService.createNewPayslip(payroll);
                 AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Created new payslip.");
+                // Reset Form
+                resetForm();
             } else {
                 payrollService.updatePayroll(payroll);
                 AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Updated payslip.");
@@ -427,6 +383,31 @@ public class PayrollCreateController {
         double netPay = Double.parseDouble(netPayLabel.getText());
 
         return new Payroll(payrollId, employeeId, sqlFDate, sqlTDate, daysWorked, clothingAllowance, phoneAllowance, riceSub, philHealth, pagIbig, tin, sssDeduction, netPay, grossIncome, employeeName, semiMonthlyRate, title, department, overtime);
+    }
+
+    protected void resetForm() {
+        payrollIdField.setText("");
+        employeeIdField.setText("");
+        startDatePicker.setValue(null);
+        endDatePicker.setValue(null);
+        employeeNameField.setText("");
+        positionField.setText("");
+        deptField.setText("");
+        monthlyRateField.setText("");
+        dailyRateField.setText("");
+        daysWorkedField.setText("");
+        overtimeField.setText("");
+        sssField.setText("");
+        phField.setText("");
+        pagIbigField.setText("");
+        withholdingTaxField.setText("");
+        riceSubField.setText("");
+        phoneAllowanceField.setText("");
+        clothingAllowanceField.setText("");
+        grossIncomeLabel.setText("0.00");
+        totalBenefitsLabels.setText("0.00");
+        totalDeductionsLabel.setText("0.00");
+        netPayLabel.setText("0.00");
     }
 
 }

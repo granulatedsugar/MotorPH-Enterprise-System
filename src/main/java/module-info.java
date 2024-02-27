@@ -10,11 +10,11 @@ module com.mes.motorph {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
-//    requires eu.hansolo.tilesfx;
-//    requires eu.hansolo.toolbox;
-//    requires eu.hansolo.toolboxfx;
-//    requires eu.hansolo.fx.countries;
-//    requires eu.hansolo.fx.heatmap;
+    requires eu.hansolo.tilesfx;
+    requires eu.hansolo.toolbox;
+    requires eu.hansolo.toolboxfx;
+    requires eu.hansolo.fx.countries;
+    requires eu.hansolo.fx.heatmap;
 
     opens com.mes.motorph to javafx.fxml;
     opens com.mes.motorph.entity to javafx.base;
