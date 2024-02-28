@@ -98,28 +98,28 @@
             <groupId>eu.hansolo.fx</groupId>
             <artifactId>countries</artifactId>
             <version>17.0.35</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/eu.hansolo.fx/heatmap -->
         <dependency>
             <groupId>eu.hansolo.fx</groupId>
             <artifactId>heatmap</artifactId>
             <version>17.0.25</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/eu.hansolo/toolboxfx -->
         <dependency>
             <groupId>eu.hansolo</groupId>
             <artifactId>toolboxfx</artifactId>
             <version>17.0.41</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/eu.hansolo/toolbox -->
         <dependency>
             <groupId>eu.hansolo</groupId>
             <artifactId>toolbox</artifactId>
             <version>17.0.55</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
