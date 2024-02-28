@@ -14,7 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -41,6 +41,12 @@ public class DashboardController {
     private PieChart statusPieChart;
     @FXML
     private Label breadCrumb;
+    @FXML
+    private BarChart<String, Number> expenseBreakdown;
+    @FXML
+    private CategoryAxis xAxis; // Assuming this is your CategoryAxis
+    @FXML
+    private NumberAxis yAxis;   // Assuming this is your NumberAxis
 
 
     EmployeeService employeeService = new EmployeeService();
@@ -97,9 +103,38 @@ public class DashboardController {
             }
             pieChartData.add(data);
         }
-
         // Set data to the pie chart
         statusPieChart.setData(pieChartData);
         statusPieChart.setTitle("Employee Status Breakdown");
+
+        Map<String, Double> departmentExpenseMap = new HashMap<>();
+        for (Payroll payroll : payrolls) {
+            String deptId = payroll.getDepartment();
+            if (deptId != null) { // Add a null check here
+                double netPay = payroll.getNetPay();
+                departmentExpenseMap.put(deptId, departmentExpenseMap.getOrDefault(deptId, 0.0) + netPay);
+            }
+        }
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+
+        for (Map.Entry<String, Double> entry : departmentExpenseMap.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
+        // Set the name of the series (optional)
+        series.setName("Expense Breakdown");
+
+        // Set the same color for all bars
+        String barColorStyle = "-fx-bar-fill: #03d578;";
+        // Set the axes for the bar chart
+        expenseBreakdown.setCategoryGap(10); // Set the gap between categories
+        expenseBreakdown.setBarGap(2);       // Set the gap between bars
+        expenseBreakdown.setLegendVisible(true); // Show legend
+        expenseBreakdown.setStyle(barColorStyle);
+        expenseBreakdown.getData().add(series);
+
+        // Set labels for X and Y axis (optional)
+        xAxis.setLabel("Department");
+        yAxis.setLabel("Net Pay");
     }
 }

@@ -34,9 +34,9 @@ public class PayrollRepository {
                 double totalAllowance = rs.getDouble("Total Allowance");
                 double grossPay = rs.getDouble("Gross Pay");
                 double netPay = rs.getDouble("Net Pay");
+                String department = rs.getString("Department");
 
-
-                Payroll payroll = new Payroll(payrollId, employeeId, employeeName, payPeriodFrom, payPeriodTo, daysWorked, totalDeduction, totalAllowance, grossPay, netPay);
+                Payroll payroll = new Payroll(payrollId, employeeId, employeeName, payPeriodFrom, payPeriodTo, daysWorked, totalDeduction, totalAllowance, grossPay, netPay, department);
 
                 payrolls.add(payroll);
             }

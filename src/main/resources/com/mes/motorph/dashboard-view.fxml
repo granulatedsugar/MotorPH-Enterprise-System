@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
@@ -32,118 +32,121 @@
                 <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
-      <GridPane fx:id="gridPane" hgap="10.0" layoutX="10.0" layoutY="129.0" prefHeight="150.0" prefWidth="903.0" vgap="10.0" AnchorPane.bottomAnchor="473.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="129.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="250.0" minHeight="150.0" prefHeight="150.0" vgrow="ALWAYS" />
-        </rowConstraints>
+      <VBox layoutX="14.0" layoutY="161.0" prefHeight="164.0" prefWidth="903.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #D3F5FA;" styleClass="card" stylesheets="@../../../css/cards.css">
+            <GridPane fx:id="gridPane" hgap="10.0" prefHeight="150.0" prefWidth="903.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="250.0" minHeight="150.0" prefHeight="150.0" vgrow="ALWAYS" />
+              </rowConstraints>
                <children>
-                  <StackPane prefHeight="156.0" prefWidth="293.0">
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #D3F5FA;" styleClass="card" stylesheets="@../../../css/cards.css">
                      <children>
-                        <Text fx:id="employeeCount" fill="#003768" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" translateY="12.0" wrappingWidth="226.13665771484375" StackPane.alignment="CENTER">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="36.0" />
-                           </font>
-                        </Text>
-                        <Text fill="#4d7c9c" strokeType="OUTSIDE" strokeWidth="0.0" text="Employees" textAlignment="CENTER" translateY="-15.0" wrappingWidth="173.47003173828125" StackPane.alignment="BOTTOM_CENTER">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="14.0" />
-                           </font>
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </Text>
-                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-                           <image>
-                              <Image url="@../../../images/ic_glass_users.png" />
-                           </image>
-                        </ImageView>
+                        <StackPane prefHeight="156.0" prefWidth="293.0">
+                           <children>
+                              <Text fx:id="employeeCount" fill="#003768" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" translateY="12.0" wrappingWidth="226.13665771484375" StackPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="36.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#4d7c9c" strokeType="OUTSIDE" strokeWidth="0.0" text="Employees" textAlignment="CENTER" translateY="-15.0" wrappingWidth="173.47003173828125" StackPane.alignment="BOTTOM_CENTER">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="14.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </Text>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+                                 <image>
+                                    <Image url="@../../../images/ic_glass_users.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </StackPane>
                      </children>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                  </StackPane>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFF2D4;" styleClass="card" stylesheets="@../../../css/cards.css" GridPane.columnIndex="1">
-               <children>
-                  <StackPane prefHeight="156.0" prefWidth="293.0">
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFF2D4;" styleClass="card" stylesheets="@../../../css/cards.css" GridPane.columnIndex="1">
                      <children>
-                        <Text fill="#7a4100" strokeType="OUTSIDE" strokeWidth="0.0" text="40" textAlignment="CENTER" translateY="12.0" wrappingWidth="226.13665771484375" StackPane.alignment="CENTER">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="36.0" />
-                           </font>
-                        </Text>
-                        <Text fill="#aa814c" strokeType="OUTSIDE" strokeWidth="0.0" text="Products" textAlignment="CENTER" translateY="-15.0" wrappingWidth="173.47003173828125" StackPane.alignment="BOTTOM_CENTER">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="14.0" />
-                           </font>
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </Text>
-                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-                           <image>
-                              <Image url="@../../../images/ic_glass_buy.png" />
-                           </image>
-                        </ImageView>
+                        <StackPane prefHeight="156.0" prefWidth="293.0">
+                           <children>
+                              <Text fill="#7a4100" strokeType="OUTSIDE" strokeWidth="0.0" text="40" textAlignment="CENTER" translateY="12.0" wrappingWidth="226.13665771484375" StackPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="36.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#aa814c" strokeType="OUTSIDE" strokeWidth="0.0" text="Products" textAlignment="CENTER" translateY="-15.0" wrappingWidth="173.47003173828125" StackPane.alignment="BOTTOM_CENTER">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="14.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </Text>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+                                 <image>
+                                    <Image url="@../../../images/ic_glass_buy.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </StackPane>
                      </children>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                  </StackPane>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFE3DB;" styleClass="card" stylesheets="@../../../css/cards.css" GridPane.columnIndex="2">
-               <children>
-                  <StackPane prefHeight="156.0" prefWidth="293.0">
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFE3DB;" styleClass="card" stylesheets="@../../../css/cards.css" GridPane.columnIndex="2">
                      <children>
-                        <Text fx:id="payrollExpense" fill="#7a0916" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" translateY="12.0" wrappingWidth="226.13665771484375" StackPane.alignment="CENTER">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="36.0" />
-                           </font>
-                        </Text>
-                        <Text fill="#aa595e" strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll Expense" textAlignment="CENTER" translateY="-15.0" wrappingWidth="173.47003173828125" StackPane.alignment="BOTTOM_CENTER">
-                           <font>
-                              <Font name="Arial Rounded MT Bold" size="14.0" />
-                           </font>
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </Text>
-                        <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-                           <image>
-                              <Image url="@../../../images/ic_glass_message.png" />
-                           </image>
-                        </ImageView>
+                        <StackPane prefHeight="156.0" prefWidth="293.0">
+                           <children>
+                              <Text fx:id="payrollExpense" fill="#7a0916" strokeType="OUTSIDE" strokeWidth="0.0" text="-" textAlignment="CENTER" translateY="12.0" wrappingWidth="226.13665771484375" StackPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="36.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#aa595e" strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll Expense" textAlignment="CENTER" translateY="-15.0" wrappingWidth="173.47003173828125" StackPane.alignment="BOTTOM_CENTER">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="14.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin>
+                              </Text>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+                                 <image>
+                                    <Image url="@../../../images/ic_glass_message.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </StackPane>
                      </children>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                  </StackPane>
+                  </VBox>
                </children>
-            </VBox>
+            </GridPane>
          </children>
-      </GridPane>
-      <PieChart fx:id="statusPieChart" labelLineLength="10.0" layoutX="14.0" layoutY="306.0" prefHeight="299.0" prefWidth="362.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-      <HBox alignment="CENTER" layoutX="14.0" layoutY="612.0" prefHeight="50.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      </VBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="339.0" prefHeight="326.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="339.0">
          <children>
-            <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
+            <PieChart fx:id="statusPieChart" labelLineLength="10.0" prefHeight="299.0" prefWidth="362.0" HBox.hgrow="ALWAYS" />
+            <BarChart fx:id="expenseBreakdown" prefHeight="345.0" prefWidth="686.0" style="-fx-background-color: white;" titleSide="RIGHT" HBox.hgrow="ALWAYS">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" style="-fx-background-color: #FFFFFF;" fx:id="xAxis" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="yAxis" side="LEFT" style="-fx-background-color: #FFFFFF;" />
+              </yAxis>
+            </BarChart>
          </children>
       </HBox>
-      <LineChart layoutX="494.0" layoutY="438.0" prefHeight="299.0" prefWidth="415.0" AnchorPane.bottomAnchor="14.666666666666742" AnchorPane.leftAnchor="494.0" AnchorPane.rightAnchor="14.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </LineChart>
     </children>
 </AnchorPane>

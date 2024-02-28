@@ -47,7 +47,7 @@ public class Payroll {
         this.overtime = overtime;
     }
 
-    public Payroll(String payrollId, int employeeId, String employeeName, Date payPeriodFrom, Date payPeriodTo, double daysWorked, double totalDeduction, double totalAllowance, double grossPay, double netPay) {
+    public Payroll(String payrollId, int employeeId, String employeeName, Date payPeriodFrom, Date payPeriodTo, double daysWorked, double totalDeduction, double totalAllowance, double grossPay, double netPay, String department) {
         this.payrollId = payrollId;
         this.employeeId = employeeId;
         this.employeeName = employeeName;
@@ -58,6 +58,7 @@ public class Payroll {
         this.totalAllowance = totalAllowance;
         this.grossPay = grossPay;
         this.netPay = netPay;
+        this.department = department;
     }
 
     public String getPayrollId() {

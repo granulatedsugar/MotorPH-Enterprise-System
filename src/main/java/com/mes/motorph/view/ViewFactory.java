@@ -128,4 +128,24 @@ public class ViewFactory {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    protected void onClickUsers() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/user-list-view.fxml"));
+            AnchorPane usersView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+
+            // Get reference to existing BorderPane:
+            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
+
+            // Set visibility to true (optional if not already visible):
+            usersView.setVisible(true);
+
+            // Add the loaded AnchorPane to the center region:
+            borderPane.setCenter(usersView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
