@@ -38,7 +38,7 @@
       </HBox>
       <VBox layoutX="19.0" layoutY="103.0" prefHeight="482.0" prefWidth="889.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0">
          <children>
-            <TableView fx:id="employeeTableView" prefHeight="421.0" prefWidth="903.0" stylesheets="@../../../css/table.css">
+            <TableView fx:id="employeeTableView" prefHeight="463.0" prefWidth="903.0" stylesheets="@../../../css/table.css">
               <columns>
                 <TableColumn fx:id="firstNameField" prefWidth="75.0" text="First Name" />
                 <TableColumn fx:id="lastNameField" prefWidth="75.0" text="Last Name" />
@@ -56,7 +56,16 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="341.0" prefHeight="74.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Pane prefHeight="50.0" prefWidth="279.0" HBox.hgrow="ALWAYS" />
+            <Pane prefHeight="74.0" prefWidth="631.0" />
+            <Button mnemonicParsing="false" onAction="#onClickAdd" stylesheets="@../../../css/scenes.css" text="Add">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="reg-button" />
+                  <String fx:value="new-button" />
+               </styleClass>
+            </Button>
             <Button fx:id="employeeUpdate" mnemonicParsing="false" prefHeight="30.0" prefWidth="102.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update">
                <HBox.margin>
                   <Insets right="10.0" />
