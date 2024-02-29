@@ -6,11 +6,15 @@ import com.mes.motorph.services.EmployeeService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
 import java.util.List;
 
 public class EmployeeController {
@@ -59,9 +63,23 @@ public class EmployeeController {
         } catch (EmployeeException e) {
             e.printStackTrace();
         }
-
     }
 
+    @FXML
+    protected void onClickAdd() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/employee-add-view.fxml"));
 
+        try {
+            Parent employeeAddView = loader.load();
+            EmployeeAddController employeeAddController = loader.getController();
 
+            // Get the main BorderPane from your main view
+            BorderPane mainView = (BorderPane) employeeTableView.getScene().getRoot().lookup("#mainView");
+
+            // Replace the center content of the main BorderPane with the payroll-create-view
+            mainView.setCenter(employeeAddView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

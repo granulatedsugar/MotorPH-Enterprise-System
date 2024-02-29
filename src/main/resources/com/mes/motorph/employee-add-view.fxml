@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="newView" prefHeight="700.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.EmployeeAddController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="57.0" prefWidth="195.0" text="Employees / Add / Employee" textFill="#cdd2d6">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <HBox layoutX="24.0" layoutY="64.0" prefHeight="37.0" prefWidth="879.0">
+         <children>
+            <Label styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Add New Employee" />
+         </children>
+      </HBox>
+      <VBox layoutX="19.0" layoutY="106.0" prefHeight="609.0" prefWidth="903.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="106.0">
+         <children>
+            <AnchorPane prefHeight="635.0" prefWidth="903.0">
+               <children>
+                  <Label styleClass="txtLabel" stylesheets="@../../../css/main.css" text="Employee Information" />
+                  <TextField fx:id="firstNameAdd" layoutX="17.0" layoutY="58.0" prefHeight="30.0" prefWidth="267.0" />
+                  <TextField fx:id="lastNameAdd" layoutX="321.0" layoutY="57.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="17.0" layoutY="41.0" text="First Name" />
+                  <Label layoutX="321.0" layoutY="40.0" text="Last Name" />
+                  <Label layoutX="623.0" layoutY="36.0" text="Date of Birth" />
+                  <DatePicker fx:id="dobAdd" layoutX="623.0" layoutY="56.0" prefHeight="30.0" prefWidth="189.0" />
+                  <TextField fx:id="addressAdd" layoutX="17.0" layoutY="115.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="17.0" layoutY="98.0" text="Address" />
+                  <TextField fx:id="emailAdd" layoutX="321.0" layoutY="115.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="321.0" layoutY="98.0" text="Email" />
+                  <TextField fx:id="vacationHoursAdd" layoutX="17.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
+                  <Label layoutX="17.0" layoutY="412.0" text="Vacation Hours" />
+                  <TextField fx:id="phoneNumAdd" layoutX="623.0" layoutY="115.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="623.0" layoutY="98.0" text="Phone Number" />
+                  <TextField fx:id="clothingAllowanceAdd" layoutX="18.0" layoutY="176.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="18.0" layoutY="159.0" text="Clothing Allowance" />
+                  <TextField fx:id="phoneAllowanceAdd" layoutX="322.0" layoutY="176.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="322.0" layoutY="159.0" text="Phone Allowance" />
+                  <TextField fx:id="riceSubAdd" layoutX="624.0" layoutY="176.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="624.0" layoutY="159.0" text="Rice Subsidy" />
+                  <TextField fx:id="pagIbigAdd" layoutX="19.0" layoutY="241.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="19.0" layoutY="224.0" text="Pag-Ibig ID" />
+                  <TextField fx:id="philHealthAdd" layoutX="323.0" layoutY="241.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="323.0" layoutY="224.0" text="PhilHealth ID" />
+                  <TextField fx:id="sssAdd" layoutX="625.0" layoutY="241.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="625.0" layoutY="224.0" text="Social Security System ID" />
+                  <TextField fx:id="tinAdd" layoutX="19.0" layoutY="304.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="19.0" layoutY="287.0" text="TIN ID" />
+                  <TextField fx:id="supervisorAdd" layoutX="323.0" layoutY="304.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="323.0" layoutY="287.0" text="Immediate Supervisor" />
+                  <TextField fx:id="statusAdd" layoutX="625.0" layoutY="304.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="625.0" layoutY="287.0" text="Employment Status" />
+                  <TextField fx:id="sickHoursAdd" layoutX="231.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
+                  <Label layoutX="231.0" layoutY="412.0" text="Sick Hours" />
+                  <Label layoutX="443.0" layoutY="412.0" text="Position ID" />
+                  <Label layoutX="657.0" layoutY="412.0" text="Department ID" />
+                  <TextField fx:id="basicSalaryAdd" layoutX="18.0" layoutY="366.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="18.0" layoutY="349.0" text="Basic Salary" />
+                  <TextField fx:id="grossSemiMonthlyRateAdd" layoutX="322.0" layoutY="366.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="322.0" layoutY="349.0" text="Gross Semi Monthly Rate" />
+                  <TextField fx:id="hourlyRateAdd" layoutX="624.0" layoutY="366.0" prefHeight="30.0" prefWidth="267.0" />
+                  <Label layoutX="624.0" layoutY="349.0" text="Hourly Rate" />
+                  <ComboBox fx:id="positionAdd" layoutX="443.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
+                  <ComboBox fx:id="departmentAdd" layoutX="656.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="341.0" prefHeight="74.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Pane prefHeight="74.0" prefWidth="806.0" />
+            <Button fx:id="employeeAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" stylesheets="@../../../css/scenes.css" text="Add">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+               <styleClass>
+                  <String fx:value="reg-button" />
+                  <String fx:value="new-button" />
+               </styleClass>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
