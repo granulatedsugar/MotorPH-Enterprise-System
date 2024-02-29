@@ -83,13 +83,12 @@ public class AttendanceRepository {
     public void createAttedance(Attendance attendance) throws AttendanceException {
         try{
             conn = DBUtility.getConnection();
-            String sql = "INSERT INTO motorph.attendance('id', 'employeeId', 'date, 'timeIn', 'timeOut') VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO motorph.attendance(employeeId, date, timeIn, timeOut) VALUES (?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, attendance.getId());
-            stmt.setInt(2, attendance.getEmployeeId());
-            stmt.setDate(3, attendance.getDate());
-            stmt.setTime(4, attendance.getTimeIn());
-            stmt.setTime(5, attendance.getTimeOut());
+            stmt.setInt(1, attendance.getEmployeeId());
+            stmt.setDate(2, attendance.getDate());
+            stmt.setTime(3, attendance.getTimeIn());
+            stmt.setTime(4, attendance.getTimeOut());
 
             int rows = stmt.executeUpdate();
             if(rows == 0){
@@ -151,26 +150,6 @@ public class AttendanceRepository {
         }
     }
 
-    public Attendance fetchAttendanceDataById(String id) throws AttendanceException{
-        Attendance attendance = null;
-        try{
-            conn = DBUtility.getConnection();
-            String sql = "SELECT * FROM motorph.attendance where id =?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, id);
-            ResultSet rs = stmt.executeQuery();
 
-            if(rs.next()){
-                attendance = new Attendance(rs.getInt("id"), rs.getInt("employeeId"), rs.getDate("date"),rs.getTime("timeIn"), rs.getTime("timeOut"));
-            }
-            rs.close();
-            stmt.close();
-        }catch (Exception e){
-            throw new AttendanceException("Error fetching attendance data" + e.getMessage(),e);
-        }finally {
-            DBUtility.closeConnection(conn);
-        }
-        return attendance;
-    }
 
 }

@@ -23,31 +23,35 @@
       </Label>
       <HBox alignment="CENTER_LEFT" layoutY="46.0" prefHeight="50.0" prefWidth="580.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="103.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Search">
+            <Button mnemonicParsing="false" onAction="#onClickSearchEmpId" prefHeight="30.0" prefWidth="103.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Search">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
             </Button>
-            <TextField prefHeight="25.0" prefWidth="149.0" promptText="Search Employee Id">
+            <TextField fx:id="empIdField" prefHeight="25.0" prefWidth="149.0" promptText="Search Employee Id">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
             </TextField>
             <Pane prefHeight="50.0" prefWidth="105.0" />
-            <DatePicker prefHeight="35.0" prefWidth="204.0" promptText="Select Start Date" stylesheets="@../../../css/date-picker.css" />
             <Pane prefHeight="50.0" prefWidth="117.0" />
-            <DatePicker prefHeight="35.0" prefWidth="204.0" promptText="Select End Date" stylesheets="@../../../css/date-picker.css" />
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="415.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Pane prefHeight="50.0" prefWidth="190.0" HBox.hgrow="ALWAYS" />
+                  <DatePicker fx:id="startDatePicker" prefHeight="35.0" prefWidth="215.0" promptText="Select Start Date" stylesheets="@../../../css/date-picker.css" />
+               </children>
+            </HBox>
          </children>
       </HBox>
       <VBox layoutX="19.0" layoutY="103.0" prefHeight="482.0" prefWidth="889.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0">
          <children>
             <TableView fx:id="attendanceTableView" prefHeight="421.0" prefWidth="903.0" stylesheets="@../../../css/table.css">
               <columns>
-                <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="empIdColumn" prefWidth="75.0" text="Employee Id" />
-                  <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
-                  <TableColumn fx:id="timeInColumn" prefWidth="75.0" text="Time In" />
-                  <TableColumn fx:id="timeOutColumn" prefWidth="75.0" text="Time Out" />
+                <TableColumn fx:id="idColumn" prefWidth="75.0" styleClass="centered-cell" text="ID" />
+                <TableColumn fx:id="empIdColumn" prefWidth="75.0" styleClass="centered-cell" text="Employee Id" />
+                  <TableColumn fx:id="dateColumn" prefWidth="75.0" styleClass="centered-cell" text="Date" />
+                  <TableColumn fx:id="timeInColumn" prefWidth="75.0" styleClass="centered-cell" text="Time In" />
+                  <TableColumn fx:id="timeOutColumn" prefWidth="75.0" styleClass="centered-cell" text="Time Out" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -57,7 +61,15 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="341.0" prefHeight="74.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Pane prefHeight="50.0" prefWidth="279.0" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#onClickAddManageAttendance" stylesheets="@../../../css/scenes.css" text="Add">
+               <styleClass>
+                  <String fx:value="reg-button" />
+                  <String fx:value="new-button" />
+               </styleClass>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
             <Button mnemonicParsing="false" onAction="#onClickUpdateAttendance" prefHeight="30.0" prefWidth="102.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update">
                <HBox.margin>
                   <Insets right="10.0" />
