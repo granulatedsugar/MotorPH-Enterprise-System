@@ -6,21 +6,25 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="663.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.UserListController">
     <children>
-        <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="173.0" text="-" textFill="#cdd2d6">
+        <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="412.0" text="-" textFill="#cdd2d6">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" prefHeight="50.0" prefWidth="580.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
+        <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" prefHeight="50.0" prefWidth="580.0" spacing="5.0" stylesheets="@../../../css/scenes.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
             <children>
+            <Text fx:id="sceneTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="scene-title" text="-" />
                 <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
                 <Button mnemonicParsing="false" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Search">
                <font>
@@ -32,27 +36,9 @@
                </font></TextField>
             </children>
         </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-      <HBox alignment="CENTER" layoutX="14.0" layoutY="612.0" prefHeight="50.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <HBox alignment="CENTER" layoutX="14.0" layoutY="612.0" prefHeight="50.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+        <VBox alignment="TOP_CENTER" layoutX="668.0" layoutY="117.0" prefHeight="537.0" prefWidth="244.0" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="117.0">
          <children>
-            <Button mnemonicParsing="false" stylesheets="@../../../css/scenes.css" text="Delete">
-               <styleClass>
-                  <String fx:value="delete-button" />
-                  <String fx:value="reg-button" />
-               </styleClass>
-            </Button>
-            <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" stylesheets="@../../../css/scenes.css" text="New">
-               <styleClass>
-                  <String fx:value="reg-button" />
-                  <String fx:value="new-button" />
-               </styleClass>
-            </Button>
-            <Button mnemonicParsing="false" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
-         </children>
-      </HBox>
-        <VBox alignment="TOP_CENTER" layoutX="668.0" layoutY="117.0" prefHeight="498.0" prefWidth="244.0">
-            <children>
                 <TableView fx:id="usersTableView" prefHeight="498.0" prefWidth="465.0" stylesheets="@../../../css/table.css" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="usernameColumn" editable="false" prefWidth="440.0" styleClass="centered-cell" text="Username" />
@@ -61,7 +47,30 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
-            </children>
+         </children>
         </VBox>
+      <Label layoutX="14.0" layoutY="172.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Username" />
+      <TextField layoutX="14.0" layoutY="190.0" prefHeight="29.0" prefWidth="268.0" stylesheets="@../../../css/text.css" />
+      <Label layoutX="14.0" layoutY="234.0" prefHeight="17.0" prefWidth="136.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Password" />
+      <TextField layoutX="14.0" layoutY="252.0" prefHeight="29.0" prefWidth="268.0" stylesheets="@../../../css/text.css" />
+      <Button layoutX="14.0" layoutY="310.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="268.0" stylesheets="@../../../css/scenes.css" text="New">
+         <styleClass>
+            <String fx:value="reg-button" />
+            <String fx:value="new-button" />
+         </styleClass>
+      </Button>
+      <Button layoutX="16.0" layoutY="347.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="268.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
+      <Button layoutX="16.0" layoutY="424.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="268.0" stylesheets="@../../../css/scenes.css" text="Delete">
+         <styleClass>
+            <String fx:value="delete-button" />
+            <String fx:value="reg-button" />
+         </styleClass>
+      </Button>
+      <Text layoutX="137.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- OR -" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="387.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/avatar.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

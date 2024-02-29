@@ -10,6 +10,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -26,12 +27,15 @@ public class UserListController {
     private TableColumn<User, String> usernameColumn;
     @FXML
     private TextField usernameField;
+    @FXML
+    private Text sceneTitle;
 
     private UserService userService = new UserService();
 
     @FXML
     protected void initialize() throws UserException {
-        breadCrumb.setText("Administration / Users");
+        breadCrumb.setText("Administration / Manage / Users");
+        sceneTitle.setText("Manager Users");
 
         fetchList();
     }
