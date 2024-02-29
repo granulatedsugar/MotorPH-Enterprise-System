@@ -30,7 +30,4 @@ public class AttendanceService {
         attendanceRepository.deleteAttendance(id);
     }
 
-    public Attendance fetchAttendanceDataById (String id) throws AttendanceException{
-        return attendanceRepository.fetchAttendanceDataById(id);
-    }
 }

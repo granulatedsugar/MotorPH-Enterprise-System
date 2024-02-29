@@ -4,8 +4,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -22,36 +20,34 @@
          <font>
             <Font name="Arial Rounded MT Bold" size="15.0" />
          </font></Label>
-      <VBox layoutX="219.0" layoutY="101.0" prefHeight="200.0" prefWidth="162.0">
+      <VBox layoutX="108.0" layoutY="94.0" prefHeight="200.0" prefWidth="162.0">
          <children>
             <Label text="Attendance Id" />
-            <TextField fx:id="attendanceIdField" />
+            <TextField fx:id="attendanceIdField" disable="true" />
             <Label text="Employee Id" />
             <TextField fx:id="empIdField" />
             <Label text="Date" />
             <DatePicker fx:id="dateField" stylesheets="@../../../css/date-picker.css" />
          </children>
       </VBox>
-      <VBox layoutX="414.0" layoutY="101.0" prefHeight="200.0" prefWidth="162.0">
+      <VBox layoutX="300.0" layoutY="94.0" prefHeight="200.0" prefWidth="162.0">
          <children>
             <Label text="Time In" />
-            <TextField fx:id="timeInField" />
+            <TextField fx:id="timeInField" disable="true" />
             <Label text="Time Out" />
-            <TextField fx:id="timeOutField" />
+            <TextField fx:id="timeOutField" disable="true" />
          </children>
       </VBox>
-      <HBox alignment="BOTTOM_RIGHT" layoutY="331.0" prefHeight="68.0" prefWidth="600.0" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="0.0">
+      <HBox alignment="BOTTOM_RIGHT" layoutY="260.0" prefHeight="68.0" prefWidth="600.0" AnchorPane.bottomAnchor="72.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Add" />
-            <Pane prefHeight="68.0" prefWidth="14.0" />
-            <Button mnemonicParsing="false" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
-            <Pane prefHeight="68.0" prefWidth="14.0" />
+            <Pane prefHeight="68.0" prefWidth="205.0">
+               <children>
+                  <Button fx:id="updateBtn" layoutX="69.0" layoutY="34.0" mnemonicParsing="false" onAction="#onClickUpdateCreateAttendance" prefHeight="32.0" prefWidth="108.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
+                  <Button fx:id="addBtn" layoutX="69.0" layoutY="34.0" mnemonicParsing="false" onAction="#onClickAddCreateAttendance" prefHeight="32.0" prefWidth="108.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Add" />
+               </children></Pane>
          </children>
       </HBox>
-      <ImageView fitHeight="181.0" fitWidth="141.0" layoutX="23.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../../../../../Downloads/people.png" />
-         </image>
-      </ImageView>
+      <Button fx:id="timeInBtn" layoutX="473.0" layoutY="111.0" mnemonicParsing="false" onAction="#onClickTimeInBtn" onMouseClicked="#onTimeInMouseClicked" prefHeight="25.0" prefWidth="65.0" text="Time In" />
+      <Button fx:id="timeOutBtn" layoutX="473.0" layoutY="154.0" mnemonicParsing="false" onAction="#onClickTimeOutBtn" onMouseClicked="#onTimeOutMouseClicked" text="Time Out" />
    </children>
 </AnchorPane>

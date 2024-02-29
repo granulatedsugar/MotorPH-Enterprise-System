@@ -115,4 +115,11 @@ public class Attendance {
         this.timeIn = timeIn;
         this.timeOut = timeOut;
     }
+
+    public Attendance(int employeeId, Date date, Time timeIn, Time timeOut) {
+        this.employeeId = employeeId;
+        this.date = date;
+        this.timeIn = timeIn;
+        this.timeOut = timeOut;
+    }
 }
