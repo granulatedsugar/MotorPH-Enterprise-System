@@ -12,4 +12,16 @@ public class UserService {
     public List<User> fetchAllUsers() throws UserException {
         return userRepository.fetchAllUsers();
     }
+
+    public void createNewUser(User user) throws UserException {
+        userRepository.createNewUser(user);
+    }
+
+    public void updateUser(User user) throws UserException {
+        userRepository.updateUser(user);
+    }
+
+    public void deleteUser(String username) throws UserException {
+        userRepository.deleteUser(username);
+    }
 }

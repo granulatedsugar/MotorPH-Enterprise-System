@@ -1,10 +1,12 @@
 package com.mes.motorph.repository;
 
 import com.mes.motorph.entity.User;
+import com.mes.motorph.exception.PayrollException;
 import com.mes.motorph.exception.UserException;
 import com.mes.motorph.utils.DBUtility;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -21,15 +23,14 @@ public class UserRepository {
         try {
             conn = DBUtility.getConnection();
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM motorph.user;";
+            String sql = "SELECT username, password FROM motorph.user;";
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()) {
-                int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String hashPassword = rs.getString("password");
 
-                User user = new User(id, username, hashPassword);
+                User user = new User(username, hashPassword);
                 users.add(user);
             }
             rs.close();
@@ -40,5 +41,74 @@ public class UserRepository {
             DBUtility.closeConnection(conn);
         }
         return users;
+    }
+
+    public void createNewUser(User user) throws UserException {
+
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "INSERT INTO user (user, password) VALUES (?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getHashPassword());
+
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted == 0) {
+                throw new UserException("Error adding new user.");
+            } else {
+                System.out.println("Added new user.");
+            }
+        } catch (Exception e) {
+            throw new UserException("Error writing into database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
+
+    public void updateUser(User user) throws UserException {
+
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "UPDATE motorph.user SET username = ?, password = ? WHERE username = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getHashPassword());
+
+            int rowsUpdated = pstmt.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new PayrollException("Error updating user data.");
+            } else {
+                System.out.println("Updated user");
+            }
+        } catch (Exception e) {
+            throw new UserException("Error updating user database: " + e.getMessage(), e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
+
+    public void deleteUser(String username) throws UserException {
+
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "DELETE FROM motorph.user WHERE username = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, username);
+
+            int rowsDeleted = pstmt.executeUpdate();
+
+            if (rowsDeleted == 0) {
+                throw new UserException("Error deleting user from database: ");
+            }
+        } catch (Exception e) {
+            throw new UserException("Error user from database: " + e.getMessage(), e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
     }
 }

@@ -38,7 +38,6 @@ public class UserListController {
 
     @FXML
     protected void fetchList() throws UserException {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         try {
