@@ -2,12 +2,12 @@ package com.mes.motorph.repository;
 
 import com.mes.motorph.entity.Position;
 import com.mes.motorph.exception.PositionException;
+import com.mes.motorph.utils.AlertUtility;
 import com.mes.motorph.utils.DBUtility;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +40,69 @@ public class PositionRepository {
              DBUtility.closeConnection(conn);
         }
         return positions;
+    }
+
+    public void createPosition(Position position) throws PositionException{
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "INSERT INTO motorph.position(title) VALUES (?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, position.getTitle());
+
+            int rows = pstmt.executeUpdate();
+
+            if (rows == 0) {
+                throw new PositionException("Failed to create new Position");
+            } else {
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Position", null, "Added a new Position!");
+            }
+
+        }catch (SQLException e) {
+            throw new RuntimeException("Error Connecting to Database " + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+
+    }
+
+    public void deleteAttendance(int id) throws PositionException{
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "DELETE FROM motorph.position WHERE positionId =?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setInt(1, id);
+
+            int rows = pstmt.executeUpdate();
+
+            if(rows == 0){
+                throw new PositionException("Failed to delete Position");
+            }else{
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Position", null, "Deleted Position");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void updateAttendance(Position position) throws PositionException{
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "UPDATE motorph.position SET title =? WHERE positionId=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, position.getTitle());
+            pstmt.setInt(2, position.getPositionId());
+            int rows = pstmt.executeUpdate();
+
+            if(rows == 0){
+                System.out.println("Failed to update Position");
+            }else{
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Position", null, "Updated Position");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

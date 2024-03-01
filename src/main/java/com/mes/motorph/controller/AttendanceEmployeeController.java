@@ -99,10 +99,10 @@ public class AttendanceEmployeeController {
 
     //create a method that resets everything
     private void resetFields(){
-        empIdField.setText(null);
+        empIdField.setText("");
         dateField.setValue(null);
-        timeInField.setText(null);
-        timeOutField.setText(null);
+        timeInField.setText("");
+        timeOutField.setText("");
         timeInBtn.setDisable(false);
         timeOutBtn.setDisable(false);
 

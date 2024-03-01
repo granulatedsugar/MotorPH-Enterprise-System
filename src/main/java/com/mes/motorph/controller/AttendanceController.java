@@ -151,7 +151,7 @@ public class AttendanceController {
                     AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
                 }
             }else{
-                System.out.println("CANCEL!");
+
             }
         }else{
             AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
@@ -160,7 +160,7 @@ public class AttendanceController {
     }
 
     @FXML
-    private void onClickUpdateAttendance() throws AttendanceException {
+    private void onClickUpdate() throws AttendanceException {
         Attendance selectedAttendance = attendanceTableView.getSelectionModel().getSelectedItem();
 
         if(selectedAttendance != null){
@@ -170,7 +170,6 @@ public class AttendanceController {
             Time timeIn = selectedAttendance.getTimeIn();
             Time timeOut = selectedAttendance.getTimeOut();
             navigateToAttendanceEmployee(attendanceId, employeedId, date, timeIn, timeOut);
-            System.out.println(attendanceId);
         }else{
             AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to update");
         }
@@ -193,7 +192,7 @@ public class AttendanceController {
     }
 
     @FXML
-    private void onClickAddManageAttendance(){
+    private void onClickAdd(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/attendance-employee-view.fxml"));
         try{
             Parent attendanceEmployeeView = loader.load();
