@@ -1,6 +1,6 @@
 package com.mes.motorph.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Employee {
 
@@ -267,5 +267,29 @@ public class Employee {
                 ", deptId=" + deptId +
                 '}';
     }
-
+    //Employee constructor without ID
+    public Employee(String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, double grossSemiMonthlyRate, double hourlyRate, String lastName, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
+        this.address = address;
+        this.baseSalary = baseSalary;
+        this.clothingAllowance = clothingAllowance;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.firstName = firstName;
+        this.grossSemiMonthlyRate = grossSemiMonthlyRate;
+        this.hourlyRate = hourlyRate;
+        this.lastName = lastName;
+        this.pagIbig = pagIbig;
+        this.philHealth = philHealth;
+        this.phoneAllowance = phoneAllowance;
+        this.phoneNumber = phoneNumber;
+        this.riceSubsidy = riceSubsidy;
+        this.sss = sss;
+        this.status = status;
+        this.supervisor = supervisor;
+        this.tin = tin;
+        this.vacationHours = vacationHours;
+        this.sickHours = sickHours;
+        this.positionId = positionId;
+        this.deptId = deptId;
+    }
 }

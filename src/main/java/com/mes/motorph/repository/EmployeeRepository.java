@@ -6,7 +6,7 @@ import com.mes.motorph.utils.DBUtility;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class EmployeeRepository {
@@ -108,4 +108,46 @@ public class EmployeeRepository {
         return employees;
     }
 
+    public void createNewEmployee(Employee employee) throws EmployeeException {
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "INSERT INTO motorph.employee(address, base_salary, clothing_allowance, dateofbirth, email, firstname, gross_semi_monthlyrate, hourlyrate, lastname, pagibig, philhealth, phone_allowance, phone_number, rice_sub, sss, status, supervisor, tin, vacation_hours, sick_hours, positionId, deptId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, employee.getAddress());
+            pstmt.setDouble(2, employee.getBaseSalary());
+            pstmt.setDouble(3, employee.getClothingAllowance());
+            pstmt.setDate(4, employee.getDateOfBirth());
+            pstmt.setString(5, employee.getEmail());
+            pstmt.setString(6, employee.getFirstName());
+            pstmt.setDouble(7, employee.getGrossSemiMonthlyRate());
+            pstmt.setDouble(8, employee.getHourlyRate());
+            pstmt.setString(9, employee.getLastName());
+            pstmt.setString(10, employee.getPagIbig());
+            pstmt.setString(11, employee.getPhilHealth());
+            pstmt.setDouble(12, employee.getPhoneAllowance());
+            pstmt.setString(13, employee.getPhoneNumber());
+            pstmt.setDouble(14, employee.getRiceSubsidy());
+            pstmt.setString(15, employee.getSss());
+            pstmt.setString(16, employee.getStatus());
+            pstmt.setString(17, employee.getSupervisor());
+            pstmt.setString(18, employee.getTin());
+            pstmt.setDouble(19, employee.getVacationHours());
+            pstmt.setDouble(20, employee.getSickHours());
+            pstmt.setInt(21, employee.getPositionId());
+            pstmt.setInt(22, employee.getDeptId());
+
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted == 0 ) {
+                throw new EmployeeException("Error adding employee into database.");
+            } else {
+                System.out.println("Added new employee into database.");
+            }
+        } catch (Exception e) {
+            throw new EmployeeException("Error connecting to database " + e.getMessage(), e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
 }
