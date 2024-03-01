@@ -24,4 +24,7 @@ public class Department {
     public void setDeptDesc(String deptDesc) {
         this.deptDesc = deptDesc;
     }
+
+    @Override
+    public String toString() { return deptDesc; }
 }

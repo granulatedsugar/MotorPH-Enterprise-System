@@ -15,4 +15,9 @@ public class EmployeeService {
     public List<Employee> fetchAllEmployees() throws EmployeeException {
         return employeeRepository.fetchAllEmployees();
     }
+
+    public void createNewEmployee(Employee employee) throws EmployeeException {
+        employeeRepository.createNewEmployee(employee);
+
+    }
 }
