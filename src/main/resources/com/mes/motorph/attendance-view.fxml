@@ -38,7 +38,7 @@
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="415.0" HBox.hgrow="ALWAYS">
                <children>
                   <Pane prefHeight="50.0" prefWidth="190.0" HBox.hgrow="ALWAYS" />
-                  <DatePicker fx:id="startDatePicker" prefHeight="35.0" prefWidth="215.0" promptText="Select Start Date" stylesheets="@../../../css/date-picker.css" />
+                  <DatePicker fx:id="datePicker" prefHeight="35.0" prefWidth="215.0" promptText="Select Date" stylesheets="@../../../css/date-picker.css" />
                </children>
             </HBox>
          </children>

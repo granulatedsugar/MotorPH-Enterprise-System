@@ -99,7 +99,7 @@ public class PositionRepository {
             if(rows == 0){
                 System.out.println("Failed to update Position");
             }else{
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Position", null, "Updated Position");
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
