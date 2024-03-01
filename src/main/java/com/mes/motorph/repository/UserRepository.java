@@ -104,10 +104,10 @@ public class UserRepository {
             int rowsDeleted = pstmt.executeUpdate();
 
             if (rowsDeleted == 0) {
-                throw new UserException("Error deleting user from database: ");
+                throw new UserException("Error deleting user from database.");
             }
         } catch (Exception e) {
-            throw new UserException("Error user from database: " + e.getMessage(), e);
+            throw new UserException("Error deleting user from database: " + e.getMessage(), e);
         } finally {
             DBUtility.closeConnection(conn);
         }

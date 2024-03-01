@@ -45,11 +45,11 @@ public class UserListController {
         sceneTitle.setText("Manager Users");
 
         setupContextMenu();
-        fetchList();
+        fetchUsers();
     }
 
     @FXML
-    protected void fetchList() throws UserException {
+    protected void fetchUsers() throws UserException {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         try {
@@ -62,7 +62,7 @@ public class UserListController {
                 filteredUsers = new FilteredList<>(allUsers);
                 usersTableView.setItems(filteredUsers);
 
-                usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
+                usernameSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
                     if (newValue.isEmpty()) {
                         filteredUsers.setPredicate(null);
                     }

@@ -186,7 +186,7 @@
                         <Insets left="25.0" />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickEmployees" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Roles">
+                  <Button alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickRole" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Roles">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
