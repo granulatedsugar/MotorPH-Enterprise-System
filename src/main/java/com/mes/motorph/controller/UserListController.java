@@ -99,13 +99,13 @@ public class UserListController {
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem editItem = new MenuItem("Edit");
-        editItem.setOnAction(event1 -> {
+        editItem.setOnAction(e -> {
             String username = rowData.getUsername();
             setUserDetails(username);
         });
 
         MenuItem deleteItem = new MenuItem("Delete");
-        deleteItem.setOnAction(event1 -> {
+        deleteItem.setOnAction(e -> {
             String username = rowData.getUsername();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
