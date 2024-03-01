@@ -4,11 +4,9 @@ import com.mes.motorph.entity.*;
 import com.mes.motorph.exception.*;
 import com.mes.motorph.services.*;
 import com.mes.motorph.utils.AlertUtility;
-import com.mes.motorph.utils.CurrencyUtility;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

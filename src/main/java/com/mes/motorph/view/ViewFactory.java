@@ -150,22 +150,42 @@ public class ViewFactory {
     }
 
     @FXML
-    protected void onClickPosition() {
+    protected void onClickRole() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/position-view.fxml"));
-            AnchorPane positionView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/role-list-view.fxml"));
+            AnchorPane rolesView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:
             BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
 
             // Set visibility to true (optional if not already visible):
-            positionView.setVisible(true);
+            rolesView.setVisible(true);
 
             // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(positionView);
+            borderPane.setCenter(rolesView);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+  
+  @FXML
+  protected void onClickPosition() {
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/position-view.fxml"));
+        AnchorPane positionView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+
+        // Get reference to existing BorderPane:
+        BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
+
+        // Set visibility to true (optional if not already visible):
+        positionView.setVisible(true);
+
+        // Add the loaded AnchorPane to the center region:
+        borderPane.setCenter(positionView);
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 }
