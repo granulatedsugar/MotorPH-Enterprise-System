@@ -9,6 +9,10 @@ public class Position {
         this.title = title;
     }
 
+    public Position(String title){
+        this.title = title;
+    }
+
     public int getPositionId() {
         return positionId;
     }

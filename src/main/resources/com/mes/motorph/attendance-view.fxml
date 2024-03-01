@@ -61,7 +61,7 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="341.0" prefHeight="74.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onClickAddManageAttendance" stylesheets="@../../../css/scenes.css" text="Add">
+            <Button mnemonicParsing="false" onAction="#onClickAdd" stylesheets="@../../../css/scenes.css" text="Add">
                <styleClass>
                   <String fx:value="reg-button" />
                   <String fx:value="new-button" />
@@ -70,7 +70,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onClickUpdateAttendance" prefHeight="30.0" prefWidth="102.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update">
+            <Button mnemonicParsing="false" onAction="#onClickUpdate" prefHeight="30.0" prefWidth="102.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

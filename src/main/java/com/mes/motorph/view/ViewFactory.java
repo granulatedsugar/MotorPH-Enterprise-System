@@ -168,4 +168,24 @@ public class ViewFactory {
             e.printStackTrace();
         }
     }
+  
+  @FXML
+  protected void onClickPosition() {
+    try {
+        FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/position-view.fxml"));
+        AnchorPane positionView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+
+        // Get reference to existing BorderPane:
+        BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
+
+        // Set visibility to true (optional if not already visible):
+        positionView.setVisible(true);
+
+        // Add the loaded AnchorPane to the center region:
+        borderPane.setCenter(positionView);
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 }

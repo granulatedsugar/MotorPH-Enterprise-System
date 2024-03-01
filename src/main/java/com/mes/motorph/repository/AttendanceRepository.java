@@ -119,7 +119,7 @@ public class AttendanceRepository {
 
             int rows = stmt.executeUpdate();
             if(rows == 0){
-                throw new AttendanceException("Failed to add Attendance!");
+                throw new AttendanceException("Failed to update Attendance!");
             }else{
                 System.out.println("Attendance Updated!");
             }
@@ -130,16 +130,16 @@ public class AttendanceRepository {
         }
     }
 
-    public void deleteAttendance(int id) throws AttendanceException{
+    public void deleteAttendance(int positionId) throws AttendanceException{
         try{
             conn = DBUtility.getConnection();
             String sql = "DELETE FROM motorph.attendance WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
+            stmt.setInt(1, positionId);
 
             int rows = stmt.executeUpdate();
             if(rows == 0){
-                throw new AttendanceException("Failed to add Attendance!");
+                throw new AttendanceException("Failed to delete Attendance!");
             }else{
                 System.out.println("Attendance Deleted!");
             }
@@ -149,6 +149,7 @@ public class AttendanceRepository {
             DBUtility.closeConnection(conn);
         }
     }
+
 
 
 
