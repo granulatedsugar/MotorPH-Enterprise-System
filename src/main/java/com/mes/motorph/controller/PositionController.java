@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PositionController {
-    private String positionTitle;
-    private int positionId;
 
     @FXML
     private TableView<Position> positionTableView;
@@ -50,15 +48,11 @@ public class PositionController {
 
     @FXML
     protected void onClickAdd(){
-        try {
-            String title = posField.getText();
-            Position position = new Position(title);
-            positionService.createPosition(position);
-            initialize();
-        } catch (PositionException e) {
-            throw new RuntimeException(e);
+        if(posField.getText().isEmpty()){
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please put a position");
+        }else{
+            processInput(true);
         }
-
     }
 
     @FXML
@@ -80,23 +74,45 @@ public class PositionController {
 
     @FXML
     protected void onClickUpdate(){
-        Position selectedRow = positionTableView.getSelectionModel().getSelectedItem();
-        try{
-            String newPosition= posField.getText();
-            if(newPosition.isEmpty()){
-                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please enter a new position");
-            }else{
-                this.positionId = selectedRow.getPositionId();
-                this.positionTitle = newPosition;
-                Position position = new Position(positionId,positionTitle);
-                positionService.updatePosition(position);
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Update", null, "Updated Position");
-            }
-        } catch (PositionException e) {
-            throw new RuntimeException(e);
+        if(posField.getText().isEmpty()){
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please put a new position");
+        }else{
+            processInput(false);
         }
 
+    }
 
+    protected void processInput(boolean isNew){
+        try{
+            Position position = fetchPosition();
+
+            if(isNew){
+                positionService.createPosition(position);
+                initialize();
+                resetTextField();
+            }else{
+                int id = positionTableView.getSelectionModel().getSelectedItem().getPositionId();
+                String updPos = position.getTitle();
+                Position updPosition = new Position(id, updPos);
+                positionService.updatePosition(updPosition);
+                initialize();
+                resetTextField();
+
+            }
+        } catch (PositionException e) {
+            String action = isNew ? "creating" : "updating";
+            String position = fetchPosition().getTitle();
+            String errorMessage = "error " + action + " the" + position + "| Reason: " + e.getMessage();
+            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, errorMessage);
+        }
+    }
+
+    private Position fetchPosition(){
+        String positionTitle = posField.getText();
+        return new Position(positionTitle);
+    }
+    private void resetTextField(){
+        posField.setText("");
     }
 
 

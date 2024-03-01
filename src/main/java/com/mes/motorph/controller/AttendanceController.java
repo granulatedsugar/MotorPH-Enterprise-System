@@ -46,16 +46,14 @@ public class AttendanceController {
     @FXML
     private TextField empIdField;
     @FXML
-    private DatePicker startDatePicker;
-    @FXML
-    private DatePicker endDatePicker;
-
+    private DatePicker datePicker;
     private AttendanceService attendanceService = new AttendanceService();
 
     @FXML
     protected void initialize(){
         setupContextMenu();
 
+        //we set values to each column
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         empIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -91,7 +89,7 @@ public class AttendanceController {
                     }
                 } );
                 //Datepicker
-                startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+                datePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
                     if(newValue == null){
                         filteredList.setPredicate(null);
                     }else{
