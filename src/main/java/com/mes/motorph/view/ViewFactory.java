@@ -1,5 +1,6 @@
 package com.mes.motorph.view;
 
+import com.mes.motorph.entity.UserRole;
 import com.mes.motorph.services.PasswordService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ViewFactory {
     @FXML
@@ -18,6 +20,22 @@ public class ViewFactory {
     @FXML
     private Button dashboardBtn;
 
+
+    private List<UserRole> userRoles;
+
+    @FXML
+    protected void initialize() {
+        // Initialization code, if needed
+    }
+
+    // Method to initialize user roles
+    public void initData(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
+        // Perform any additional initialization based on user roles
+        System.out.println(userRoles);
+        // For example, hide/show buttons or menu items based on user roles
+
+    }
 
     @FXML
     protected void onClickDashboard() {
