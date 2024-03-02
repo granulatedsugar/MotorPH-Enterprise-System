@@ -9,6 +9,10 @@ public class Department {
         this.deptDesc = deptDesc;
     }
 
+    public Department(String deptDesc){
+        this.deptDesc= deptDesc;
+    }
+
     public int getDeptId() {
         return deptId;
     }

@@ -21,7 +21,7 @@ public class PositionService {
     }
 
     public void deletePosition(int positionId) throws PositionException{
-        positionRepository.deleteAttendance(positionId);
+        positionRepository.deletePosition(positionId);
     }
 
     public void updatePosition(Position position) throws PositionException{

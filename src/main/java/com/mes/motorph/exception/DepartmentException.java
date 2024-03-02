@@ -5,11 +5,11 @@ import java.sql.SQLException;
 public class DepartmentException extends Exception{
     private SQLException sqlException;
 
-    public  DepartmentException(String message) {
+    public DepartmentException(String message){
         super(message);
     }
 
-    public DepartmentException(String message, SQLException sqlException) {
+    public DepartmentException(String message, SQLException sqlException){
         super(message);
         this.sqlException = sqlException;
     }
