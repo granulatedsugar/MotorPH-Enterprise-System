@@ -11,11 +11,12 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 768, 746);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
+        //Scene scene = new Scene(fxmlLoader.load(), 768, 746);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
         stage.setTitle("MotorPH Enterprise System V20240214");
-        stage.setMaxWidth(746);
-        stage.setMaxHeight(768);
+//        stage.setMaxWidth(746);
+//        stage.setMaxHeight(768);
         stage.setScene(scene);
 
         // Load the application icon
