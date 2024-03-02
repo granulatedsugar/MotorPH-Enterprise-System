@@ -65,7 +65,7 @@ public class PositionRepository {
 
     }
 
-    public void deleteAttendance(int id) throws PositionException{
+    public void deletePosition(int id) throws PositionException{
         try{
             conn = DBUtility.getConnection();
             String sql = "DELETE FROM motorph.position WHERE positionId =?";
@@ -78,7 +78,7 @@ public class PositionRepository {
             if(rows == 0){
                 throw new PositionException("Failed to delete Position");
             }else{
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Position", null, "Deleted Position");
+                System.out.println("Position Deleted");
             }
 
         } catch (SQLException e) {
