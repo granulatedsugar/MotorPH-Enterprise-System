@@ -21,7 +21,8 @@ public class UserRole {
         this.roleId = userId;
     }
 
-    public UserRole(String username, int roleId) {
+    public UserRole(int id, String username, int roleId) {
+        this.id = id;
         this.username = username;
         this.roleId = roleId;
     }
@@ -56,5 +57,10 @@ public class UserRole {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee ID: " + id + " / Username: " + username + " / Role ID: " + roleId;
     }
 }
