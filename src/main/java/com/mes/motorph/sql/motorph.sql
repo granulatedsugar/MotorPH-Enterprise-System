@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `motorph` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `motorph` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `motorph`;
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: motorph
 -- ------------------------------------------------------
--- Server version	8.0.30
+-- Server version	5.7.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `attendance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `attendance` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `employeeId` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `employeeId` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   `timeIn` time DEFAULT NULL,
   `timeOut` time DEFAULT NULL,
@@ -55,8 +55,8 @@ DROP TABLE IF EXISTS `department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `department` (
-  `dept_id` int NOT NULL AUTO_INCREMENT,
-  `dept_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dept_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dept_desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`dept_id`),
   UNIQUE KEY `dept_id_UNIQUE` (`dept_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -80,29 +80,29 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employee` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `base_salary` decimal(38,2) DEFAULT NULL,
   `clothing_allowance` decimal(38,2) DEFAULT NULL,
   `dateofbirth` date DEFAULT NULL,
-  `email` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `firstname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gross_semi_monthlyrate` decimal(38,2) DEFAULT NULL,
   `hourlyrate` decimal(38,2) DEFAULT NULL,
-  `lastname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pagibig` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `philhealth` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pagibig` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `philhealth` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone_allowance` decimal(38,2) DEFAULT NULL,
-  `phone_number` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rice_sub` decimal(38,2) DEFAULT NULL,
-  `sss` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `supervisor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tin` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sss` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `supervisor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tin` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vacation_hours` double DEFAULT NULL,
   `sick_hours` double DEFAULT NULL,
-  `positionId` int NOT NULL,
-  `deptId` int NOT NULL,
+  `positionId` int(11) NOT NULL,
+  `deptId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
@@ -172,7 +172,6 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `employee_roles` AS SELECT 
  1 AS `Employee ID`,
- 1 AS `Employee Name`,
  1 AS `Email`,
  1 AS `Roles`*/;
 SET character_set_client = @saved_cs_client;
@@ -185,8 +184,8 @@ DROP TABLE IF EXISTS `payroll`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payroll` (
-  `payroll_id` varchar(13) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `employeeId` int DEFAULT NULL,
+  `payroll_id` varchar(13) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `employeeId` int(11) DEFAULT NULL,
   `pay_period_from` date DEFAULT NULL,
   `pay_period_to` date DEFAULT NULL,
   `days_worked` double DEFAULT NULL,
@@ -199,10 +198,10 @@ CREATE TABLE `payroll` (
   `deduction_sss` decimal(10,0) DEFAULT NULL,
   `gross_pay` decimal(10,0) DEFAULT NULL,
   `net_pay` decimal(10,0) DEFAULT NULL,
-  `employee_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `employee_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gross_semi_monthlyrate` decimal(10,0) DEFAULT NULL,
-  `position` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `department` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `position` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `department` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `overtime` decimal(2,0) DEFAULT NULL,
   PRIMARY KEY (`payroll_id`),
   UNIQUE KEY `payroll_id_UNIQUE` (`payroll_id`),
@@ -251,8 +250,8 @@ DROP TABLE IF EXISTS `position`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `position` (
-  `positionId` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `positionId` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`positionId`),
   UNIQUE KEY `positionId_UNIQUE` (`positionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -276,8 +275,8 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role` (
-  `roleId` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `roleId` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`roleId`),
   UNIQUE KEY `roleId_UNIQUE` (`roleId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -301,12 +300,12 @@ DROP TABLE IF EXISTS `transaction_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transaction_logs` (
-  `transactionId` int NOT NULL AUTO_INCREMENT,
-  `category` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `modId` int DEFAULT NULL,
-  `tr_type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transactionId` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modId` int(11) DEFAULT NULL,
+  `tr_type` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `regdate` datetime DEFAULT NULL,
-  `employeeId` int DEFAULT NULL,
+  `employeeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`transactionId`),
   UNIQUE KEY `transactionId_UNIQUE` (`transactionId`),
   KEY `eployeeId_transaction_idx` (`employeeId`),
@@ -331,13 +330,13 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` char(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` char(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
-  CONSTRAINT `user_ibfk_1` FOREIGN KEY (`username`) REFERENCES `employee` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `user_ibfuserk_1` FOREIGN KEY (`username`) REFERENCES `employee` (`email`) ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -346,7 +345,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'mgarcia@motorph.com',NULL),(2,'alim@motorph.com',NULL),(3,'baquino@motorph.com',NULL),(4,'ireyes@motorph.com',NULL),(5,'ehernandez@motorph.com',NULL),(6,'avillanueva@motorph.com',NULL),(7,'bsan jose@motorph.com',NULL),(8,'aromualdez@motorph.com',NULL),(9,'ratienza@motorph.com',NULL),(10,'ralvaro@motorph.com',NULL),(11,'asalcedo@motorph.com',NULL),(12,'jlopez@motorph.com',NULL),(13,'mfarala@motorph.com',NULL),(14,'lmartinez@motorph.com',NULL),(15,'fromualdez@motorph.com',NULL),(16,'cmata@motorph.com',NULL),(17,'sdeleon@motorph.com',NULL),(18,'asanjose@motorph.com',NULL),(19,'crosario@motorph.com',NULL),(20,'mbautista@motorph.com',NULL),(21,'dlazaro@motorph.com',NULL),(22,'kdelossantos@motorph.com',NULL),(23,'vsantos@motorph.com',NULL),(24,'tdelrosario@motorph.com',NULL),(25,'jtolentino@motorph.com',NULL),(26,'pgutierrez@motorph.com',NULL),(27,'gmanalaysay@motorph.com',NULL),(28,'lvillegas@motorph.com',NULL),(29,'cramos@motorph.com',NULL),(30,'emaceda@motorph.com',NULL),(31,'daguilar@motorph.com',NULL),(32,'jcastro@motorph.com',NULL),(33,'cmartinez@motorph.com',NULL),(34,'bsantos@motorph.com','P+zG2NSimyvY/TVgTZqQWw=='),(40,'nroque@motorph.com','Ei6V+0hsUnxr8otBAQIy3w==');
+INSERT INTO `user` VALUES (1,'mgarcia@motorph.com',NULL),(2,'alim@motorph.com',NULL),(3,'baquino@motorph.com',NULL),(4,'ireyes@motorph.com',NULL),(5,'ehernandez@motorph.com',NULL),(6,'avillanueva@motorph.com',NULL),(7,'bsan jose@motorph.com',NULL),(8,'aromualdez@motorph.com',NULL),(9,'ratienza@motorph.com',NULL),(10,'ralvaro@motorph.com',NULL),(11,'asalcedo@motorph.com',NULL),(12,'jlopez@motorph.com',NULL),(13,'mfarala@motorph.com',NULL),(14,'lmartinez@motorph.com',NULL),(15,'fromualdez@motorph.com',NULL),(16,'cmata@motorph.com',NULL),(17,'sdeleon@motorph.com',NULL),(18,'asanjose@motorph.com',NULL),(19,'crosario@motorph.com',NULL),(20,'mbautista@motorph.com',NULL),(21,'dlazaro@motorph.com',NULL),(22,'kdelossantos@motorph.com',NULL),(23,'vsantos@motorph.com',NULL),(24,'tdelrosario@motorph.com',NULL),(25,'jtolentino@motorph.com',NULL),(26,'pgutierrez@motorph.com',NULL),(27,'gmanalaysay@motorph.com',NULL),(28,'lvillegas@motorph.com',NULL),(29,'cramos@motorph.com',NULL),(30,'emaceda@motorph.com',NULL),(31,'daguilar@motorph.com',NULL),(32,'jcastro@motorph.com',NULL),(33,'cmartinez@motorph.com',NULL),(34,'bsantos@motorph.com',NULL),(40,'nroque@motorph.com','helloworld');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,9 +357,9 @@ DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_role` (
-  `user_roles_id` int NOT NULL AUTO_INCREMENT,
-  `userId` int DEFAULT NULL,
-  `roleId` int DEFAULT NULL,
+  `user_roles_id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `roleId` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_roles_id`),
   KEY `userId_idx` (`userId`),
   KEY `roleId_idx` (`roleId`),
@@ -425,10 +424,10 @@ UNLOCK TABLES;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `employee_roles` AS select `employee`.`id` AS `Employee ID`,concat(`employee`.`firstname`,' ',`employee`.`lastname`) AS `Employee Name`,`user`.`username` AS `Email`,`role`.`name` AS `Roles` from (((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) join `employee` on((`employee`.`email` = `user`.`username`))) */;
+/*!50001 VIEW `employee_roles` AS select `user`.`id` AS `Employee ID`,`user`.`username` AS `Email`,`role`.`name` AS `Roles` from ((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -443,7 +442,7 @@ UNLOCK TABLES;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `payroll_list` AS select `payroll`.`payroll_id` AS `PID`,`payroll`.`employeeId` AS `EID`,`payroll`.`employee_name` AS `Employee Name`,`payroll`.`pay_period_from` AS `From`,`payroll`.`pay_period_to` AS `To`,`payroll`.`days_worked` AS `Days Worked`,(((`payroll`.`deduction_philhealth` + `payroll`.`deduction_pagibig`) + `payroll`.`deduction_tin`) + `payroll`.`deduction_sss`) AS `Total Deduction`,((`payroll`.`allowance_clothing` + `payroll`.`allowance_phone`) + `payroll`.`allowance_rice`) AS `Total Allowance`,`payroll`.`gross_pay` AS `Gross Pay`,`payroll`.`net_pay` AS `Net Pay`,`payroll`.`department` AS `Department` from `payroll` */;
@@ -460,4 +459,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-01 17:32:24
+-- Dump completed on 2024-03-01 21:05:20

@@ -4,6 +4,7 @@ public class UserRole {
     private int id;
     private int userId;
     private int roleId;
+    private String username;
 
     public UserRole(int id, int userId, int roleId) {
         this.id = id;
@@ -18,6 +19,11 @@ public class UserRole {
 
     public UserRole(int userId) {
         this.roleId = userId;
+    }
+
+    public UserRole(String username, int roleId) {
+        this.username = username;
+        this.roleId = roleId;
     }
 
     public int getId() {
@@ -42,5 +48,13 @@ public class UserRole {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

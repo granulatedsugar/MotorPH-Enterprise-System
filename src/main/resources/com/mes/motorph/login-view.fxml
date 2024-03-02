@@ -1,257 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.LoginController">
-   <top>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" styleClass="post-background" stylesheets="@../../../css/main.css" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/logo.png" />
-               </image>
-            </ImageView>
-            <Pane prefHeight="50.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="no-bg-button" stylesheets="@../../../css/main.css">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../images/active.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="round-button" stylesheets="@../../../css/main.css">
-               <graphic>
-                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../images/avatar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </HBox>
-   </top>
-   <left>
-      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="718.0" prefWidth="243.0" stylesheets="@../../../css/scroll-pane.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
-         <content>
-            <VBox alignment="TOP_CENTER" prefWidth="219.0" styleClass="sidebar-container" stylesheets="@../../../css/main.css">
-               <children>
-                  <Pane prefHeight="20.0" prefWidth="218.0" />
-                  <Label fx:id="overviewLabel" prefHeight="18.0" prefWidth="153.0" text="OVERVIEW" textFill="#627280a1">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Button fx:id="dashboardBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickDashboard" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Dashboard">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/dashboard-interface.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Label prefHeight="18.0" prefWidth="153.0" text="MANAGEMENT" textFill="#627280a1">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Button alignment="TOP_LEFT" disable="true" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickEmployees" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Employees">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/group.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickEmployees" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Details">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/driver-license.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Attendance">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/calendar.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickAttendance" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Manage">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/layers.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Payroll">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/bill.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Statements">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/money.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickCreatePayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Create">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/writing.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Admin">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/user.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickUsers" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Users">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/group.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickRole" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Roles">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/student-card.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickPosition" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Position">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/title.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickEmployees" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Department">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/framework.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Pane prefHeight="59.0" prefWidth="217.0" VBox.vgrow="ALWAYS" />
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="153.0" text="FIVE LLC." textFill="#627280a1">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="194.0" text="All Rights Reserved | Copyright 2024" textFill="#627280a1">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <font>
-                        <Font name="Arial Narrow" size="10.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </left>
+<BorderPane fx:id="mainView" maxHeight="768.0" maxWidth="746.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="746.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.view.LoginApp">
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding></AnchorPane>
+         </padding>
+         <children>
+            <TextField fx:id="usernameField" layoutX="115.0" layoutY="309.0" prefHeight="50.0" prefWidth="250.0" promptText="Username" stylesheets="@../../../css/text.css" />
+            <TextField fx:id="passworldField" layoutX="115.0" layoutY="376.0" prefHeight="50.0" prefWidth="250.0" promptText="Password" stylesheets="@../../../css/text.css" />
+            <Button layoutX="115.0" layoutY="451.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" stylesheets="@../../../css/scenes.css" text="LOGIN">
+               <styleClass>
+                  <String fx:value="reg-button" />
+                  <String fx:value="new-button" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="93.0" fitWidth="127.0" layoutX="185.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/logo.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="762.0" fitWidth="338.0" layoutX="473.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/hero_img_2.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="762.0" fitWidth="429.0" layoutX="641.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/hero_img_1.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
    </center>
    <right>
       <AnchorPane prefHeight="718.0" prefWidth="4.0" BorderPane.alignment="CENTER" />

@@ -14,6 +14,10 @@ public class UserRoleService {
         return userRoleRepository.fetchAllUserRoles();
     }
 
+    public List<UserRole> fetchUserRole(String username) throws UserRoleException {
+        return userRoleRepository.fetchUserRoles(username);
+    }
+
     public void createNewUserRole(UserRole userRole) throws UserRoleException {
         userRoleRepository.createUserRole(userRole);
     }

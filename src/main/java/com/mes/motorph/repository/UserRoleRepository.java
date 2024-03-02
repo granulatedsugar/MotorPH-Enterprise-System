@@ -44,6 +44,33 @@ public class UserRoleRepository {
         return userRoles;
     }
 
+    public List<UserRole> fetchUserRoles(String username) throws UserRoleException {
+        List<UserRole> userRoles = new ArrayList<>();
+
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "SELECT e.email AS Email, u.roleId AS Role FROM motorph.user_role u JOIN motorph.employee e ON u.userId = e.id   WHERE  e.email = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String uname = rs.getString("Email");
+                int rId = rs.getInt("Role");
+
+                UserRole userRole = new UserRole(uname, rId);
+                userRoles.add(userRole);
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            throw new UserRoleException("Error connecting to database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+        return userRoles;
+    }
+
     public void createUserRole(UserRole userRole) throws UserRoleException {
 
         try {
