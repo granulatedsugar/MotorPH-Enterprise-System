@@ -2,6 +2,7 @@ package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.User;
 import com.mes.motorph.exception.UserException;
+import com.mes.motorph.services.PasswordService;
 import com.mes.motorph.services.UserService;
 import com.mes.motorph.utils.AlertUtility;
 import javafx.collections.FXCollections;
@@ -151,16 +152,16 @@ public class UserListController {
     }
 
     @FXML
-    protected void onClickNewUser() {
+    protected void onClickNewUser() throws Exception {
         processUserSubmission(true);
     }
 
     @FXML
-    protected void onClickUpdateUser() {
+    protected void onClickUpdateUser() throws Exception {
         processUserSubmission(false);
     }
 
-    protected void processUserSubmission(boolean isNew) {
+    protected void processUserSubmission(boolean isNew) throws Exception {
         try {
             User user = fetchFromInput();
             if (isNew) {
@@ -183,9 +184,9 @@ public class UserListController {
         }
     }
 
-    private User fetchFromInput() {
+    private User fetchFromInput() throws Exception {
         String username = usernameField.getText();
-        String password = passwordField.getText();
+        String password = PasswordService.encrypt(passwordField.getText());
 
         return new User(username, password);
     }

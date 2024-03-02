@@ -172,6 +172,7 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `employee_roles` AS SELECT 
  1 AS `Employee ID`,
+ 1 AS `Employee Name`,
  1 AS `Email`,
  1 AS `Roles`*/;
 SET character_set_client = @saved_cs_client;
@@ -345,7 +346,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'mgarcia@motorph.com',NULL),(2,'alim@motorph.com',NULL),(3,'baquino@motorph.com',NULL),(4,'ireyes@motorph.com',NULL),(5,'ehernandez@motorph.com',NULL),(6,'avillanueva@motorph.com',NULL),(7,'bsan jose@motorph.com',NULL),(8,'aromualdez@motorph.com',NULL),(9,'ratienza@motorph.com',NULL),(10,'ralvaro@motorph.com',NULL),(11,'asalcedo@motorph.com',NULL),(12,'jlopez@motorph.com',NULL),(13,'mfarala@motorph.com',NULL),(14,'lmartinez@motorph.com',NULL),(15,'fromualdez@motorph.com',NULL),(16,'cmata@motorph.com',NULL),(17,'sdeleon@motorph.com',NULL),(18,'asanjose@motorph.com',NULL),(19,'crosario@motorph.com',NULL),(20,'mbautista@motorph.com',NULL),(21,'dlazaro@motorph.com',NULL),(22,'kdelossantos@motorph.com',NULL),(23,'vsantos@motorph.com',NULL),(24,'tdelrosario@motorph.com',NULL),(25,'jtolentino@motorph.com',NULL),(26,'pgutierrez@motorph.com',NULL),(27,'gmanalaysay@motorph.com',NULL),(28,'lvillegas@motorph.com',NULL),(29,'cramos@motorph.com',NULL),(30,'emaceda@motorph.com',NULL),(31,'daguilar@motorph.com',NULL),(32,'jcastro@motorph.com',NULL),(33,'cmartinez@motorph.com',NULL),(34,'bsantos@motorph.com',NULL),(40,'nroque@motorph.com','hello!');
+INSERT INTO `user` VALUES (1,'mgarcia@motorph.com',NULL),(2,'alim@motorph.com',NULL),(3,'baquino@motorph.com',NULL),(4,'ireyes@motorph.com',NULL),(5,'ehernandez@motorph.com',NULL),(6,'avillanueva@motorph.com',NULL),(7,'bsan jose@motorph.com',NULL),(8,'aromualdez@motorph.com',NULL),(9,'ratienza@motorph.com',NULL),(10,'ralvaro@motorph.com',NULL),(11,'asalcedo@motorph.com',NULL),(12,'jlopez@motorph.com',NULL),(13,'mfarala@motorph.com',NULL),(14,'lmartinez@motorph.com',NULL),(15,'fromualdez@motorph.com',NULL),(16,'cmata@motorph.com',NULL),(17,'sdeleon@motorph.com',NULL),(18,'asanjose@motorph.com',NULL),(19,'crosario@motorph.com',NULL),(20,'mbautista@motorph.com',NULL),(21,'dlazaro@motorph.com',NULL),(22,'kdelossantos@motorph.com',NULL),(23,'vsantos@motorph.com',NULL),(24,'tdelrosario@motorph.com',NULL),(25,'jtolentino@motorph.com',NULL),(26,'pgutierrez@motorph.com',NULL),(27,'gmanalaysay@motorph.com',NULL),(28,'lvillegas@motorph.com',NULL),(29,'cramos@motorph.com',NULL),(30,'emaceda@motorph.com',NULL),(31,'daguilar@motorph.com',NULL),(32,'jcastro@motorph.com',NULL),(33,'cmartinez@motorph.com',NULL),(34,'bsantos@motorph.com','P+zG2NSimyvY/TVgTZqQWw=='),(40,'nroque@motorph.com','Ei6V+0hsUnxr8otBAQIy3w==');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -424,10 +425,10 @@ UNLOCK TABLES;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `employee_roles` AS select `user`.`id` AS `Employee ID`,`user`.`username` AS `Email`,`role`.`name` AS `Roles` from ((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) */;
+/*!50001 VIEW `employee_roles` AS select `employee`.`id` AS `Employee ID`,concat(`employee`.`firstname`,' ',`employee`.`lastname`) AS `Employee Name`,`user`.`username` AS `Email`,`role`.`name` AS `Roles` from (((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) join `employee` on((`employee`.`email` = `user`.`username`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -459,4 +460,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-29 15:06:17
+-- Dump completed on 2024-03-01 17:32:24

@@ -147,7 +147,7 @@ public class PayrollRepository {
 
             int rowsInserted = pstmt.executeUpdate();
 
-            if (rowsInserted == 0 ) {
+            if (rowsInserted == 0) {
                 throw new PayrollException("Error inserting employee into database");
             } else {
                 System.out.println("Added new payslip.");
