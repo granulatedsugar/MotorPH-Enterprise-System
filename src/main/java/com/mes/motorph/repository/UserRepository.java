@@ -72,11 +72,10 @@ public class UserRepository {
 
         try {
             conn = DBUtility.getConnection();
-            String sql = "INSERT INTO motorph.user (username, password) VALUES (?,?)";
+            String sql = "INSERT INTO motorph.user (username) VALUES (?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, user.getUsername());
-            pstmt.setString(2, user.getHashPassword());
 
             int rowsInserted = pstmt.executeUpdate();
 
