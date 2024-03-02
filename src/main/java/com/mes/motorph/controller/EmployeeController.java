@@ -1,7 +1,6 @@
 package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Employee;
-import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.exception.EmployeeException;
 import com.mes.motorph.exception.UserException;
 import com.mes.motorph.services.EmployeeService;
@@ -114,7 +113,7 @@ public class EmployeeController {
                     AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
                 }
             }else{
-
+                // Do nothing
             }
         }else{
             AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
@@ -151,14 +150,13 @@ public class EmployeeController {
         int positionId = selectedEmployee.getPositionId();
         int departmentId = selectedEmployee.getDeptId();
 
-        navigateToAddView(id, address, basicSalary, clothingAllowance, dob, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
+        Employee employee = new Employee(id, address, basicSalary, clothingAllowance, dob, email, firstName, lastName, grossSemiMonthlyRate, hourlyRate, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
 
+        navigateToAddView(employee);
 
     }
 
-    protected void navigateToAddView(int id, String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, double grossSemiMonthlyRate, double hourlyRate, String lastName, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
-
-
+    protected void navigateToAddView(Employee employee) {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/employee-add-view.fxml"));
 
@@ -166,7 +164,7 @@ public class EmployeeController {
             Parent employeeAddView = loader.load();
             EmployeeAddController employeeAddController = loader.getController();
 
-            employeeAddController.employeeUpdate(id, address, baseSalary, clothingAllowance, dateOfBirth, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbig, philHealth, phoneAllowance, phoneNumber, riceSubsidy, sss, status, supervisor, tin, vacationHours, sickHours, positionId, deptId);
+            employeeAddController.employeeUpdate(employee);
 
             BorderPane mainView = (BorderPane) employeeTableView.getScene().getRoot().lookup("#mainView");
 

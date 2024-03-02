@@ -13,8 +13,6 @@ import com.mes.motorph.services.EmployeeService;
 import com.mes.motorph.services.PositionService;
 import com.mes.motorph.services.UserService;
 import com.mes.motorph.utils.AlertUtility;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -24,6 +22,10 @@ import java.util.List;
 
 public class EmployeeAddController {
 
+    @FXML
+    private Label sceneTitle;
+    @FXML
+    private Label empIdLabel;
     @FXML
     private TextField firstNameAdd;
     @FXML
@@ -108,28 +110,19 @@ public class EmployeeAddController {
     protected void initialize() throws PositionException, DepartmentException {
         positionComboBox();
         departmentComboBox();
-
-
-
     }
 
     protected void positionComboBox() {
-
         try {
             List<Position> positions = positionService.fetchPositions();
-
             positionAdd.setPromptText("Select a position");
-
             // Add items to the ComboBox
             positionAdd.getItems().addAll(positions);
-
             // Set a listener to handle selection
             positionAdd.setOnAction(event -> {
                 Position selectedPosition = positionAdd.getSelectionModel().getSelectedItem();
                 System.out.println("Selected Position: " + selectedPosition.getPositionId());
-
             });
-
         } catch (PositionException e) {
             e.printStackTrace();
         }
@@ -155,18 +148,8 @@ public class EmployeeAddController {
 
     //Creates new employee
     @FXML
-    protected void onClickCreate() throws PositionException, DepartmentException {
-        employeeAddChecker();
-
-
-    }
-
-
-
-    private void employeeAddChecker() {
-        if (firstNameAdd.getText().isEmpty() || lastNameAdd.getText().isEmpty() || dobAdd.getValue() == null || addressAdd.getText().isEmpty() || emailAdd.getText().isEmpty() || phoneNumAdd.getText().isEmpty() || clothingAllowanceAdd.getText().isEmpty() || phoneAllowanceAdd.getText().isEmpty() || riceSubAdd.getText().isEmpty() || pagIbigAdd.getText().isEmpty() || philHealthAdd.getText().isEmpty() || sssAdd.getText().isEmpty() || tinAdd.getText().isEmpty() || supervisorAdd.getText().isEmpty() || statusAdd.getText().isEmpty() || basicSalaryAdd.getText().isEmpty() || grossSemiMonthlyRateAdd.getText().isEmpty() || hourlyRateAdd.getText().isEmpty() || vacationHoursAdd.getText().isEmpty() || sickHoursAdd.getText().isEmpty() || positionAdd.getValue() == null || departmentAdd.getValue() == null) {
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please check if there are any empty fields");
-        }else{
+    protected void onClickCreate() throws EmployeeException, UserException {
+        if (!checkFields()) {
             String firstName = firstNameAdd.getText();
             String lastName = lastNameAdd.getText();
             Date dob = Date.valueOf(dobAdd.getValue());
@@ -190,76 +173,83 @@ public class EmployeeAddController {
             int positionId = positionAdd.getSelectionModel().getSelectedItem().getPositionId();
             int departmentId = departmentAdd.getSelectionModel().getSelectedItem().getDeptId();
 
-            Employee employee = new Employee(address, basicSalary, clothingAllowance, dob, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
+            Employee employee = new Employee(address, basicSalary, clothingAllowance, dob, email, firstName, lastName, grossSemiMonthlyRate, hourlyRate, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
 
-            try {
-                User user = new User(email);
-                employeeService.createNewEmployee(employee);
-                userService.createNewUser(user);
-                resetForm();
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Employee added successfully");
-            } catch (EmployeeException |
-                     UserException e) {
-                throw new RuntimeException(e);
-            }
+            User user = new User(email);
+            employeeService.createNewEmployee(employee);
+            userService.createNewUser(user);
+            resetForm();
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Employee added successfully");
+        } else {
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please check if there are any empty fields");
         }
     }
 
-    @FXML
-    protected void onClickUpdate() throws EmployeeException, UserException {
-        Employee employee = new Employee(id, address, basicSalary, clothingAllowance, dob, email, firstName,  lastName, grossSemiMonthlyRate, hourlyRate, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
 
-        User user = new User(email, null);
 
-        userService.updateUser(user);
-        employeeService.updateEmployee(employee);
+    private Employee employeeAddChecker() {
+        Employee employee = null;
+
+            int empId = Integer.parseInt(empIdLabel.getText());
+            String firstName = firstNameAdd.getText();
+            String lastName = lastNameAdd.getText();
+            Date dob = Date.valueOf(dobAdd.getValue());
+            String address = addressAdd.getText();
+            String email = emailAdd.getText();
+            String phoneNumber = phoneNumAdd.getText();
+            double clothingAllowance = Double.parseDouble(clothingAllowanceAdd.getText());
+            double phoneAllowance = Double.parseDouble(phoneAllowanceAdd.getText());
+            double riceSubsidy = Double.parseDouble(riceSubAdd.getText());
+            String pagIbigId = pagIbigAdd.getText();
+            String philHealthId = philHealthAdd.getText();
+            String sssId = sssAdd.getText();
+            String tinId = tinAdd.getText();
+            String supervisor = supervisorAdd.getText();
+            String status = statusAdd.getText();
+            double basicSalary = Double.parseDouble(basicSalaryAdd.getText());
+            double grossSemiMonthlyRate = Double.parseDouble(grossSemiMonthlyRateAdd.getText());
+            double hourlyRate = Double.parseDouble(hourlyRateAdd.getText());
+            double vacationHours = Double.parseDouble(vacationHoursAdd.getText());
+            double sickHours = Double.parseDouble(sickHoursAdd.getText());
+            int positionId = positionAdd.getSelectionModel().getSelectedItem().getPositionId();
+            int departmentId = departmentAdd.getSelectionModel().getSelectedItem().getDeptId();
+
+            employee = new Employee(empId, address, basicSalary, clothingAllowance, dob, email, firstName, lastName, grossSemiMonthlyRate, hourlyRate, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
+
+        return employee;
     }
 
-    public void employeeUpdate(int id, String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, double grossSemiMonthlyRate, double hourlyRate, String lastName, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
+    private boolean checkFields() {
+        if (firstNameAdd.getText().isEmpty() || lastNameAdd.getText().isEmpty() || dobAdd.getValue() == null || addressAdd.getText().isEmpty() || emailAdd.getText().isEmpty() || phoneNumAdd.getText().isEmpty() || clothingAllowanceAdd.getText().isEmpty() || phoneAllowanceAdd.getText().isEmpty() || riceSubAdd.getText().isEmpty() || pagIbigAdd.getText().isEmpty() || philHealthAdd.getText().isEmpty() || sssAdd.getText().isEmpty() || tinAdd.getText().isEmpty() || supervisorAdd.getText().isEmpty() || statusAdd.getText().isEmpty() || basicSalaryAdd.getText().isEmpty() || grossSemiMonthlyRateAdd.getText().isEmpty() || hourlyRateAdd.getText().isEmpty() || vacationHoursAdd.getText().isEmpty() || sickHoursAdd.getText().isEmpty() || positionAdd.getValue() == null || departmentAdd.getValue() == null) {
+            return true;
+        } else {
+            return false;
+        }
 
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dateOfBirth;
-        this.address = address;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.clothingAllowance = clothingAllowance;
-        this.phoneAllowance = phoneAllowance;
-        this.riceSubsidy = riceSubsidy;
-        this.pagIbigId = pagIbig;
-        this.philHealthId = philHealth;
-        this.sssId = sss;
-        this.tinId = tin;
-        this.supervisor = supervisor;
-        this.status = status;
-        this.basicSalary = baseSalary;
-        this.grossSemiMonthlyRate = grossSemiMonthlyRate;
-        this.hourlyRate = hourlyRate;
-        this.vacationHours = vacationHours;
-        this.sickHours = sickHours;
-        this.positionId = positionId;
-        this.departmentId = deptId;
+    }
 
-        firstNameAdd.setDisable(true);
-        lastNameAdd.setDisable(true);
-        dobAdd.setDisable(true);
+
+    @FXML
+    protected void onClickUpdate() throws EmployeeException {
+        employeeService.updateEmployee(employeeAddChecker());
+    }
+
+    public void employeeUpdate(Employee employee) {
         emailAdd.setDisable(true);
+        dobAdd.setDisable(true);
         pagIbigAdd.setDisable(true);
         philHealthAdd.setDisable(true);
         sssAdd.setDisable(true);
         tinAdd.setDisable(true);
         employeeAdd.setVisible(false);
 
-
-        // TODO : @Taylor, please review constructor.
-        Employee employee = new Employee(id, address, baseSalary, clothingAllowance, dateOfBirth, email, firstName, lastName, grossSemiMonthlyRate, hourlyRate,  pagIbig, philHealth, phoneAllowance, phoneNumber, riceSubsidy, sss, status, supervisor, tin, vacationHours, sickHours, positionId, deptId);
         setEmployeeDataFields(employee);
-
-
     }
 
     private void setEmployeeDataFields(Employee employee) {
+        String empId = String.valueOf(employee.getId());
+        sceneTitle.setText("Update Employee " + employee.getFirstName() + " " + employee.getLastName());
+        empIdLabel.setText(empId);
         firstNameAdd.setText(employee.getFirstName());
         lastNameAdd.setText(employee.getLastName());
         dobAdd.setValue(LocalDate.parse(String.valueOf(employee.getDateOfBirth())));
