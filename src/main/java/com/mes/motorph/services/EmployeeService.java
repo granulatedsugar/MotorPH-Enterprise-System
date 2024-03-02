@@ -20,4 +20,12 @@ public class EmployeeService {
         employeeRepository.createNewEmployee(employee);
 
     }
+
+    public void deleteEmployee(int employeeId) throws EmployeeException {
+        employeeRepository.deleteEmployee(employeeId);
+    }
+
+    public void updateEmployee(Employee employee) throws EmployeeException {
+        employeeRepository.updateEmployee(employee);
+    }
 }
