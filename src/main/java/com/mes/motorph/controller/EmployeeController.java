@@ -127,6 +127,7 @@ public class EmployeeController {
     protected void onClickUpdate(){
         Employee selectedEmployee = employeeTableView.getSelectionModel().getSelectedItem();
 
+        int id = selectedEmployee.getId();
         String firstName = selectedEmployee.getFirstName();
         String lastName = selectedEmployee.getLastName();
         Date dob = selectedEmployee.getDateOfBirth();
@@ -150,12 +151,12 @@ public class EmployeeController {
         int positionId = selectedEmployee.getPositionId();
         int departmentId = selectedEmployee.getDeptId();
 
-        navigateToAddView(address, basicSalary, clothingAllowance, dob, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
+        navigateToAddView(id, address, basicSalary, clothingAllowance, dob, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
 
 
     }
 
-    protected void navigateToAddView(String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, double grossSemiMonthlyRate, double hourlyRate, String lastName, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
+    protected void navigateToAddView(int id, String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, double grossSemiMonthlyRate, double hourlyRate, String lastName, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
 
 
 
@@ -165,7 +166,7 @@ public class EmployeeController {
             Parent employeeAddView = loader.load();
             EmployeeAddController employeeAddController = loader.getController();
 
-            employeeAddController.employeeUpdate(address, baseSalary, clothingAllowance, dateOfBirth, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbig, philHealth, phoneAllowance, phoneNumber, riceSubsidy, sss, status, supervisor, tin, vacationHours, sickHours, positionId, deptId);
+            employeeAddController.employeeUpdate(id, address, baseSalary, clothingAllowance, dateOfBirth, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbig, philHealth, phoneAllowance, phoneNumber, riceSubsidy, sss, status, supervisor, tin, vacationHours, sickHours, positionId, deptId);
 
             BorderPane mainView = (BorderPane) employeeTableView.getScene().getRoot().lookup("#mainView");
 

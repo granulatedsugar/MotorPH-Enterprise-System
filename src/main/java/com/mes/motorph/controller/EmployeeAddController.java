@@ -73,6 +73,7 @@ public class EmployeeAddController {
     @FXML
     private Button employeeUpdate;
 
+    private int id;
     private String firstName;
     private String lastName;
     private Date dob;
@@ -195,8 +196,6 @@ public class EmployeeAddController {
                 User user = new User(email);
                 employeeService.createNewEmployee(employee);
                 userService.createNewUser(user);
-
-
                 resetForm();
                 AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Employee added successfully");
             } catch (EmployeeException |
@@ -208,18 +207,17 @@ public class EmployeeAddController {
 
     @FXML
     protected void onClickUpdate() throws EmployeeException, UserException {
-        Employee employee = new Employee(address, basicSalary, clothingAllowance, dob, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
+        Employee employee = new Employee(id, address, basicSalary, clothingAllowance, dob, email, firstName,  lastName, grossSemiMonthlyRate, hourlyRate, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
 
         User user = new User(email, null);
 
         userService.updateUser(user);
         employeeService.updateEmployee(employee);
-
-
     }
 
-    public void employeeUpdate(String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, double grossSemiMonthlyRate, double hourlyRate, String lastName, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
+    public void employeeUpdate(int id, String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, double grossSemiMonthlyRate, double hourlyRate, String lastName, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
 
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dateOfBirth;
@@ -254,7 +252,8 @@ public class EmployeeAddController {
         employeeAdd.setVisible(false);
 
 
-        Employee employee = new Employee(address, baseSalary, clothingAllowance, dateOfBirth, email, firstName, grossSemiMonthlyRate, hourlyRate, lastName, pagIbig, philHealth, phoneAllowance, phoneNumber, riceSubsidy, sss, status, supervisor, tin, vacationHours, sickHours, positionId, deptId);
+        // TODO : @Taylor, please review constructor.
+        Employee employee = new Employee(id, address, baseSalary, clothingAllowance, dateOfBirth, email, firstName, lastName, grossSemiMonthlyRate, hourlyRate,  pagIbig, philHealth, phoneAllowance, phoneNumber, riceSubsidy, sss, status, supervisor, tin, vacationHours, sickHours, positionId, deptId);
         setEmployeeDataFields(employee);
 
 

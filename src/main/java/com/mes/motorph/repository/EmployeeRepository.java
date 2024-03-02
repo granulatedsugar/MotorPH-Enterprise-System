@@ -175,7 +175,7 @@ public class EmployeeRepository {
     public void updateEmployee(Employee employee) throws EmployeeException {
         try {
             conn = DBUtility.getConnection();
-            String sql = "UPDATE motorph.employee SET address=?, base_salary=?, clothing_allowance=?, dateofbirth=?, email=?, firstname=?, gross_semi_monthlyrate=?, hourlyrate=?, lastname=?, pagibig=?, philhealth=?, phone_allowance=?, phone_number=?, rice_sub=?, sss=?, status=?, supervisor=?, tin=?, vacation_hours=?, sick_hours=?, positionId=?, deptId=?";
+            String sql = "UPDATE motorph.employee SET address=?, base_salary=?, clothing_allowance=?, dateofbirth=?, email = ?, firstname=?, gross_semi_monthlyrate=?, hourlyrate=?, lastname=?, pagibig=?, philhealth=?, phone_allowance=?, phone_number=?, rice_sub=?, sss=?, status=?, supervisor=?, tin=?, vacation_hours=?, sick_hours=?, positionId=?, deptId=? WHERE id = ?;";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -201,6 +201,7 @@ public class EmployeeRepository {
             pstmt.setDouble(20, employee.getSickHours());
             pstmt.setInt(21, employee.getPositionId());
             pstmt.setInt(22, employee.getDeptId());
+            pstmt.setInt(23, employee.getId());
 
             int rowsupdated = pstmt.executeUpdate();
 
