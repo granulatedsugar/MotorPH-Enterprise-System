@@ -100,4 +100,29 @@ public class DepartmentRepositiory {
             DBUtility.closeConnection(conn);
         }
     }
+
+    public Department fetchDepartmentById(int deptId) throws DepartmentException {
+        Department department = null;
+        try {
+            conn = DBUtility.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT dept_desc FROM motorph.`department` WHERE dept_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, deptId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                department = new Department(
+                        rs.getString("dept_desc")
+                );
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            throw new DepartmentException("Error connecting to database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+        return department;
+    }
 }

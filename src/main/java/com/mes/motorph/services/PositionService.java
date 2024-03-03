@@ -27,4 +27,8 @@ public class PositionService {
     public void updatePosition(Position position) throws PositionException{
         positionRepository.updateAttendance(position);
     }
+
+    public Position fetchPositionDescription(int positionId) throws PositionException {
+        return positionRepository.fetchPositionById(positionId);
+    }
 }

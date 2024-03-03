@@ -1,10 +1,10 @@
 package com.mes.motorph.repository;
 
+import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.entity.Position;
 import com.mes.motorph.exception.PositionException;
 import com.mes.motorph.utils.AlertUtility;
 import com.mes.motorph.utils.DBUtility;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -104,5 +104,30 @@ public class PositionRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Position fetchPositionById(int positionId) throws PositionException {
+        Position position = null;
+        try {
+            conn = DBUtility.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT title FROM motorph.`position` WHERE positionId = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, positionId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                position = new Position(
+                        rs.getString("title")
+                );
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            throw new PositionException("Error connecting to database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+        return position;
     }
 }

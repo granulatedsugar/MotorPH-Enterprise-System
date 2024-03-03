@@ -26,4 +26,8 @@ public class DepartmentService {
     public void deleteDepartment(int deptId) throws DepartmentException{
         departmentRepositiory.deleteDepartment(deptId);
     }
+
+    public Department fetchDepartmentDescription(int deptId) throws DepartmentException{
+        return departmentRepositiory.fetchDepartmentById(deptId);
+    }
 }

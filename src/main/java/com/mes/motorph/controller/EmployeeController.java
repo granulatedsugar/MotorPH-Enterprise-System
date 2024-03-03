@@ -1,13 +1,19 @@
 package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Employee;
+import com.mes.motorph.exception.DepartmentException;
 import com.mes.motorph.exception.EmployeeException;
+import com.mes.motorph.exception.PositionException;
 import com.mes.motorph.exception.UserException;
+import com.mes.motorph.services.DepartmentService;
 import com.mes.motorph.services.EmployeeService;
+import com.mes.motorph.services.PositionService;
 import com.mes.motorph.services.UserService;
 import com.mes.motorph.utils.AlertUtility;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,12 +25,14 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class EmployeeController {
 
     @FXML
     private TableView<Employee> employeeTableView;
-
+    @FXML
+    private FilteredList<Employee> filteredEmployees;
     @FXML
     private TableColumn<Employee, String> firstNameField;
 
@@ -39,15 +47,19 @@ public class EmployeeController {
 
     @FXML
     private TableColumn<Employee, String> supervisorField;
-
+    @FXML
+    private TextField employeeSearch;
     @FXML
     private TableColumn<Employee, String> positionField;
 
     @FXML
     private TableColumn<Employee, String> deptField;
 
+
     EmployeeService employeeService = new EmployeeService();
     UserService userService = new UserService();
+    PositionService positionService = new PositionService();
+    DepartmentService departmentService = new DepartmentService();
 
     @FXML
     protected void initialize() {
@@ -56,14 +68,46 @@ public class EmployeeController {
         emailField.setCellValueFactory(new PropertyValueFactory<>("Email"));
         contactNumField.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         supervisorField.setCellValueFactory(new PropertyValueFactory<>("supervisor"));
-        positionField.setCellValueFactory(new PropertyValueFactory<>("positionId"));
-        deptField.setCellValueFactory(new PropertyValueFactory<>("deptId"));
+        positionField.setCellValueFactory(cellData -> {
+            String positionDescription = null;
+            try {
+                int positionId = cellData.getValue().getPositionId();
+                positionDescription = String.valueOf(positionService.fetchPositionDescription(positionId));
+
+            } catch (PositionException e) {
+                e.printStackTrace(); // or log the exception
+            }
+            return new SimpleStringProperty(positionDescription);
+        });
+
+        deptField.setCellValueFactory(cellData -> {
+            String departmentDescription = null;
+            try {
+                int deptId = cellData.getValue().getDeptId();
+                departmentDescription = String.valueOf(departmentService.fetchDepartmentDescription(deptId)); // Fetch department description using departmentService
+            } catch (DepartmentException e) {
+                e.printStackTrace(); // or log the exception
+            }
+            return new SimpleStringProperty(departmentDescription);
+        });
 
         try {
             List<Employee> employees = employeeService.fetchAllEmployees();
-            ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList(employees);
-            employeeTableView.setItems(employeeObservableList);
 
+            if (employees.isEmpty()) {
+                // Show pop-up if no payroll data found
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION,"Information", null, "No employee data found.");
+            } else {
+                ObservableList<Employee> allEmployees = FXCollections.observableArrayList(employees);
+                filteredEmployees = new FilteredList<>(allEmployees);
+                employeeTableView.setItems(filteredEmployees);
+
+                employeeSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.isEmpty()) {
+                        filteredEmployees.setPredicate(null);
+                    }
+                });
+            }
         } catch (EmployeeException e) {
             e.printStackTrace();
         }
@@ -106,9 +150,9 @@ public class EmployeeController {
             if(result.isPresent() && result.get() == okButton){
                 try{
                     userService.deleteUser(selectedEmployee.getEmail());
-                    employeeService.deleteEmployee(selectedEmployee.getId());
+                    employeeService.deleteEmployee(employeeId);
                     initialize();
-                    AlertUtility.showAlert(Alert.AlertType.INFORMATION, "", null, "Row Deleted");
+                    AlertUtility.showAlert(Alert.AlertType.INFORMATION, "", null, "Employee Deleted");
                 }catch (EmployeeException | UserException e){
                     AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
                 }
@@ -171,6 +215,28 @@ public class EmployeeController {
             mainView.setCenter(employeeAddView);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (PositionException e) {
+            throw new RuntimeException(e);
+        } catch (DepartmentException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void onClickSearchEmployee() {
+        String employeeFirstName = employeeSearch.getText().trim();
+
+        try {
+            Predicate<Employee> filterPredicate = employee -> employee.getFirstName().equals(employeeFirstName);
+
+            filteredEmployees.setPredicate(filterPredicate);
+
+            // Check if any records match the employee ID
+            if (filteredEmployees.isEmpty()) {
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "No records found for the provided Employee Name.");
+            }
+        } catch (NumberFormatException e) {
+            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Please enter a valid Employee Name.");
         }
     }
 

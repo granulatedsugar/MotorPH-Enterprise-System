@@ -46,7 +46,7 @@ public class LoginController {
                 List<UserRole> userRoles = userRoleService.fetchUserRole(user.getUsername());
 
                 // Notify successful login and pass the user roles to the caller
-                mainApp.onLoginSuccess(userRoles);
+              //  mainApp.onLoginSuccess(userRoles);
                // ((LoginApp) getApplication()).onLoginSuccess(userRoles);
             } else {
                 // Notify invalid credentials

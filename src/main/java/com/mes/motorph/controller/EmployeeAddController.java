@@ -234,7 +234,7 @@ public class EmployeeAddController {
         employeeService.updateEmployee(employeeAddChecker());
     }
 
-    public void employeeUpdate(Employee employee) {
+    public void employeeUpdate(Employee employee) throws PositionException, DepartmentException {
         emailAdd.setDisable(true);
         dobAdd.setDisable(true);
         pagIbigAdd.setDisable(true);
@@ -246,7 +246,7 @@ public class EmployeeAddController {
         setEmployeeDataFields(employee);
     }
 
-    private void setEmployeeDataFields(Employee employee) {
+    private void setEmployeeDataFields(Employee employee) throws PositionException, DepartmentException {
         String empId = String.valueOf(employee.getId());
         sceneTitle.setText("Update Employee " + employee.getFirstName() + " " + employee.getLastName());
         empIdLabel.setText(empId);
@@ -270,8 +270,8 @@ public class EmployeeAddController {
         hourlyRateAdd.setText(String.valueOf(employee.getHourlyRate()));
         vacationHoursAdd.setText(String.valueOf(employee.getVacationHours()));
         sickHoursAdd.setText(String.valueOf(employee.getSickHours()));
-        positionAdd.setPromptText(String.valueOf(employee.getPositionId()));
-        departmentAdd.setPromptText(String.valueOf(employee.getDeptId()));
+        positionAdd.setPromptText(String.valueOf(positionService.fetchPositionDescription(employee.getPositionId())));
+        departmentAdd.setPromptText(String.valueOf(departmentService.fetchDepartmentDescription(employee.getDeptId())));
     }
 
     protected void resetForm() {
