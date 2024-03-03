@@ -7,11 +7,9 @@ import com.mes.motorph.utils.AlertUtility;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -21,6 +19,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class AttendanceEmployeeController {
+
+    @FXML
+    private Label breadCrumb;
+    @FXML
+    private Label sceneTitle;
     private int attendanceId;
     private int employeeId;
     private Date date;
@@ -48,6 +51,12 @@ public class AttendanceEmployeeController {
 
 
     AttendanceService attendanceService = new AttendanceService();
+
+    @FXML
+    protected void initialize() {
+        breadCrumb.setText("Attendance / Create");
+        sceneTitle.setText("Create New Attendance");
+    }
 
     public void setAttendanceDetails(int attendanceId, int employeeId, Date date, Time timeIn, Time timeOut){
         this.attendanceId = attendanceId;

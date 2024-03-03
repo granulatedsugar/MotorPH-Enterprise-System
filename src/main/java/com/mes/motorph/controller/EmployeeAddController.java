@@ -187,7 +187,7 @@ public class EmployeeAddController {
 
 
 
-    private Employee employeeAddChecker() {
+    private Employee employeeAddChecker() throws PositionException, DepartmentException {
         Employee employee = null;
 
             int empId = Integer.parseInt(empIdLabel.getText());
@@ -211,8 +211,14 @@ public class EmployeeAddController {
             double hourlyRate = Double.parseDouble(hourlyRateAdd.getText());
             double vacationHours = Double.parseDouble(vacationHoursAdd.getText());
             double sickHours = Double.parseDouble(sickHoursAdd.getText());
-            int positionId = positionAdd.getSelectionModel().getSelectedItem().getPositionId();
-            int departmentId = departmentAdd.getSelectionModel().getSelectedItem().getDeptId();
+            String positionDescription = positionAdd.getPromptText();
+            String departmentDescription = departmentAdd.getPromptText();
+            List<Position> positionList = positionService.fetchPositions();
+            List<Department> departmentList = departmentService.fetchDepartments();
+
+            // Retrieve the IDs using the descriptions from the position list
+            int positionId = getPositionIdFromDescription(positionDescription, positionList);
+            int departmentId = getDepartmentIdFromDescription(departmentDescription, departmentList);
 
             employee = new Employee(empId, address, basicSalary, clothingAllowance, dob, email, firstName, lastName, grossSemiMonthlyRate, hourlyRate, pagIbigId, philHealthId, phoneAllowance, phoneNumber, riceSubsidy, sssId, status, supervisor, tinId, vacationHours, sickHours, positionId, departmentId);
 
@@ -230,8 +236,9 @@ public class EmployeeAddController {
 
 
     @FXML
-    protected void onClickUpdate() throws EmployeeException {
+    protected void onClickUpdate() throws EmployeeException, PositionException, DepartmentException {
         employeeService.updateEmployee(employeeAddChecker());
+        AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "Updated Employee.");
     }
 
     public void employeeUpdate(Employee employee) throws PositionException, DepartmentException {
@@ -298,6 +305,26 @@ public class EmployeeAddController {
         positionAdd.setPromptText("Select a position");
         departmentAdd.setPromptText("Select a Department");
 
+    }
+
+    // Method to get position ID from description using the position list
+    private int getPositionIdFromDescription(String description, List<Position> positionList) {
+        for (Position position : positionList) {
+            if (position.getTitle().equals(description)) {
+                return position.getPositionId();
+            }
+        }
+        return 0; // Return a default value if position is not found
+    }
+
+    // Method to get department ID from description using the department service
+    private int getDepartmentIdFromDescription(String description, List<Department> departments) {
+        for (Department department : departments) {
+            if (department.getDeptDesc().equals(description)) {
+                return department.getDeptId();
+            }
+        }
+        return 0; // Return a default value if position is not found
     }
 }
 
