@@ -1,6 +1,7 @@
 package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Attendance;
+import com.mes.motorph.entity.Employee;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.services.AttendanceService;
 import com.mes.motorph.utils.AlertUtility;
@@ -56,6 +57,13 @@ public class AttendanceEmployeeController {
     protected void initialize() {
         breadCrumb.setText("Attendance / Create");
         sceneTitle.setText("Create New Attendance");
+    }
+
+    public void setData(Employee employee) {
+        breadCrumb.setText("Attendance / Time In/Out");
+        sceneTitle.setText("Time In/Out");
+        empIdField.setDisable(true);
+        empIdField.setText(String.valueOf(employee.getId()));
     }
 
     public void setAttendanceDetails(int attendanceId, int employeeId, Date date, Time timeIn, Time timeOut){

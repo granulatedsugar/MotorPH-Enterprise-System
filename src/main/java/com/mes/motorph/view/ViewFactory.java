@@ -1,12 +1,23 @@
 package com.mes.motorph.view;
 
+import com.mes.motorph.Main;
+import com.mes.motorph.controller.AttendanceEmployeeController;
+import com.mes.motorph.controller.EmployeeAddController;
+import com.mes.motorph.controller.EmployeeController;
+import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.UserRole;
-import com.mes.motorph.services.PasswordService;
+import com.mes.motorph.exception.DepartmentException;
+import com.mes.motorph.exception.EmployeeException;
+import com.mes.motorph.exception.PositionException;
+import com.mes.motorph.services.EmployeeService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -27,6 +38,8 @@ public class ViewFactory {
     private Button employeeSection;
     @FXML
     private Button employeeDetailsBtn;
+    @FXML
+    private Button employeeCreateBtn;
     @FXML
     private Button attendanceSection;
     @FXML
@@ -55,285 +68,262 @@ public class ViewFactory {
     private MenuItem profileMenuItem;
     @FXML
     private MenuItem logoutMenuItem;
-
-
+    private int employeeId;
+    private String username;
+    private int roleId;
     private List<UserRole> userRoles;
+    private EmployeeService employeeService = new EmployeeService();
+    private Main mainApp;
+
+    public void setMainApp(Main mainApp) {
+        this.mainApp = mainApp;
+    }
 
     @FXML
     protected void initialize() {
         // Initialization code, if needed
-        setDashboardData();
-        //setDashboardButtons();
-
-
-    }
-
-    public void setDashboardData() {
-        accountMenu.setText("Name");
+        setDashboardButtons();
     }
 
     // Method to initialize user roles
-    public void initData(List<UserRole> userRoles) {
+    public void initData(List<UserRole> userRoles) throws EmployeeException {
         this.userRoles = userRoles;
+        // Extract employee ID, username, and role ID from userRoles
+        if (!userRoles.isEmpty()) {
+            UserRole firstUserRole = userRoles.get(0); // Assuming the user only has one role
+            this.employeeId = firstUserRole.getId();
+            this.username = firstUserRole.getUsername();
+            this.roleId = firstUserRole.getRoleId();
+        }
+
+        setDashboardData();
         // Perform any additional initialization based on user roles
         System.out.println(userRoles);
         // For example, hide/show buttons or menu items based on user roles
-        boolean hasAccessToAdminDashboard = false;
-        boolean hasAccessToEmployees = false;
-        Set<Integer> adminRoleIds = new HashSet<>(Arrays.asList(1, 2)); // Assuming roles 1, 2, and 3 grant access to the dashboard
+        boolean hasDashboardAccess = false;
+        boolean hasManagementAccess = false;
+        boolean hasEmployeeSectionAcess = false;
+        boolean hasEmployeeDetailsAccess = false;
+        boolean hasEmployeeAddAccess = false;
+        boolean hasAttendanceManageAccess = false;
+        boolean hasPayrollSectionAccess = false;
+        boolean hasPayrollStatementAccess = false;
+        boolean hasPayrollCreateAccess = false;
+        boolean hasAdminSectionAccess = false;
+        boolean hasUserAccess = false;
+        boolean hasRoleAccess = false;
+        boolean hasPositionAccess = false;
+        boolean hasDepartmentAccess = false;
+
+        Set<Integer> executiveRoles = new HashSet<>(Arrays.asList(2, 3)); // Assuming roles 1, 2, and 3 grant access to the dashboard
         for (UserRole role : userRoles) {
-            if (adminRoleIds.contains(role.getRoleId())) {
-                hasAccessToAdminDashboard = true;
-                hasAccessToEmployees = true;
+            if (executiveRoles.contains(role.getRoleId())) {
+                hasDashboardAccess = true;
+                hasManagementAccess = true;
+                hasEmployeeSectionAcess = true;
+                hasEmployeeAddAccess = true;
+                hasEmployeeDetailsAccess = true;
+                hasAttendanceManageAccess = true;
+                hasPayrollSectionAccess = true;
+                hasPayrollStatementAccess = true;
+                hasPayrollCreateAccess = true;
                 break; // No need to continue looping if both conditions are met
-            } else if (role.getRoleId() == 3) {
-                hasAccessToEmployees = true;
+            } else if (role.getRoleId() == 5) { // Accounting
+                hasManagementAccess = true;
+                hasPayrollSectionAccess = true;
+                hasPayrollStatementAccess = true;
+                hasPayrollCreateAccess = true;
+            } else if (role.getRoleId() == 6) { // Human Resources
+                hasManagementAccess = true;
+                hasAttendanceManageAccess = true;
+                hasEmployeeSectionAcess = true;
+                hasEmployeeDetailsAccess = true;
+                hasEmployeeAddAccess = true;
+                hasAdminSectionAccess = true;
+                hasPositionAccess = true;
+                hasDepartmentAccess = true;
+            } else if (role.getRoleId() == 9) { // IT
+                hasAdminSectionAccess = true;
+                hasUserAccess = true;
+                hasRoleAccess = true;
+                hasPositionAccess = true;
+                hasDepartmentAccess = true;
+            } else if (role.getRoleId() == 1) { // ADMIN
+                hasDashboardAccess = true;
+                hasManagementAccess = true;
+                hasEmployeeSectionAcess = true;
+                hasEmployeeAddAccess = true;
+                hasEmployeeDetailsAccess = true;
+                hasAttendanceManageAccess = true;
+                hasPayrollSectionAccess = true;
+                hasPayrollStatementAccess = true;
+                hasPayrollCreateAccess = true;
+                hasAdminSectionAccess = true;
+                hasUserAccess = true;
+                hasRoleAccess = true;
+                hasPositionAccess = true;
+                hasDepartmentAccess = true;
             }
         }
-        overviewLabel.setVisible(hasAccessToAdminDashboard);
-        overviewLabel.setManaged(hasAccessToAdminDashboard);
-        dashboardBtn.setVisible(hasAccessToAdminDashboard);
-        dashboardBtn.setManaged(hasAccessToAdminDashboard);
-        managementLabel.setVisible(hasAccessToAdminDashboard);
-        managementLabel.setManaged(hasAccessToAdminDashboard);
-        employeeSection.setVisible(hasAccessToAdminDashboard);
-        employeeSection.setManaged(hasAccessToAdminDashboard);
-        employeeDetailsBtn.setVisible(hasAccessToAdminDashboard);
-        employeeDetailsBtn.setManaged(hasAccessToAdminDashboard);
-        attendanceManageBtn.setVisible(hasAccessToAdminDashboard);
-        attendanceManageBtn.setManaged(hasAccessToAdminDashboard);
-        payrollSection.setVisible(hasAccessToAdminDashboard);
-        payrollSection.setManaged(hasAccessToAdminDashboard);
-        payrollStatementBtn.setVisible(hasAccessToAdminDashboard);
-        payrollStatementBtn.setManaged(hasAccessToAdminDashboard);
-        payrollCreateBtn.setVisible(hasAccessToAdminDashboard);
-        payrollCreateBtn.setManaged(hasAccessToAdminDashboard);
-        adminSection.setVisible(hasAccessToAdminDashboard);
-        adminSection.setManaged(hasAccessToAdminDashboard);
-        userBtn.setVisible(hasAccessToAdminDashboard);
-        userBtn.setManaged(hasAccessToAdminDashboard);
-        roleBtn.setVisible(hasAccessToAdminDashboard);
-        roleBtn.setManaged(hasAccessToAdminDashboard);
-        positionBtn.setVisible(hasAccessToAdminDashboard);
-        positionBtn.setManaged(hasAccessToAdminDashboard);
-        departmentBtn.setVisible(hasAccessToAdminDashboard);
-        departmentBtn.setManaged(hasAccessToAdminDashboard);
+        overviewLabel.setVisible(hasDashboardAccess);
+        overviewLabel.setManaged(hasDashboardAccess);
+        dashboardBtn.setVisible(hasDashboardAccess);
+        dashboardBtn.setManaged(hasDashboardAccess);
+        managementLabel.setVisible(hasManagementAccess);
+        managementLabel.setManaged(hasManagementAccess);
+        employeeSection.setVisible(hasEmployeeSectionAcess);
+        employeeSection.setManaged(hasEmployeeSectionAcess);
+        employeeCreateBtn.setVisible(hasEmployeeAddAccess);
+        employeeCreateBtn.setManaged(hasEmployeeAddAccess);
+        employeeDetailsBtn.setVisible(hasEmployeeDetailsAccess);
+        employeeDetailsBtn.setManaged(hasEmployeeDetailsAccess);
+        attendanceManageBtn.setVisible(hasAttendanceManageAccess);
+        attendanceManageBtn.setManaged(hasAttendanceManageAccess);
+        payrollSection.setVisible(hasPayrollSectionAccess);
+        payrollSection.setManaged(hasPayrollSectionAccess);
+        payrollStatementBtn.setVisible(hasPayrollStatementAccess);
+        payrollStatementBtn.setManaged(hasPayrollStatementAccess);
+        payrollCreateBtn.setVisible(hasPayrollCreateAccess);
+        payrollCreateBtn.setManaged(hasPayrollCreateAccess);
+        adminSection.setVisible(hasAdminSectionAccess);
+        adminSection.setManaged(hasAdminSectionAccess);
+        userBtn.setVisible(hasUserAccess);
+        userBtn.setManaged(hasUserAccess);
+        roleBtn.setVisible(hasRoleAccess);
+        roleBtn.setManaged(hasRoleAccess);
+        positionBtn.setVisible(hasPositionAccess);
+        positionBtn.setManaged(hasPositionAccess);
+        departmentBtn.setVisible(hasDepartmentAccess);
+        departmentBtn.setManaged(hasDepartmentAccess);
+    }
+
+    public void setDashboardData() throws EmployeeException {
+        Employee employee = employeeService.fetchEmployeeDetails(employeeId);
+        accountMenu.setText(employee.getFirstName());
     }
 
     @FXML
     protected void onClickDashboard() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/dashboard-view.fxml"));
-            AnchorPane dashboard = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            dashboard.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(dashboard);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/dashboard-view.fxml");
     }
 
     @FXML
     protected void onClickEmployees() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/employee-view.fxml"));
-            AnchorPane employeesView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+        navigateToView("/com/mes/motorph/employee-view.fxml");
+    }
 
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            employeesView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(employeesView);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    protected void onClickAddEmployee() {
+        navigateToView("/com/mes/motorph/employee-add-view.fxml");
     }
 
     @FXML
     protected void onClickAttendance() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-view.fxml"));
-            AnchorPane attendanceView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            attendanceView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(attendanceView);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/attendance-view.fxml");
     }
 
     @FXML
     protected void onClickPayroll() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/payroll-list-view.fxml"));
-            AnchorPane accountingView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            accountingView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(accountingView);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/payroll-list-view.fxml");
     }
 
     @FXML
     protected void onClickCreatePayroll() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/payroll-create-view.fxml"));
-            AnchorPane accountingView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            accountingView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(accountingView);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/payroll-create-view.fxml");
     }
 
     @FXML
     protected void onClickTimeInOut() {
         try {
+
             FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-employee-view.fxml"));
-            AnchorPane timeInOutView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+            AnchorPane timeInOut = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:
             BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
 
-            // Set visibility to true (optional if not already visible):
-            timeInOutView.setVisible(true);
+
+            timeInOut.setVisible(true);
+            Employee employee = employeeService.fetchEmployeeDetails(employeeId);
+            AttendanceEmployeeController attendanceEmployeeController = fxmlLoader.getController();
+            attendanceEmployeeController.setData(employee);
 
             // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(timeInOutView);
-
+            borderPane.setCenter(timeInOut);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (EmployeeException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    // TODO: @Sid - whats the plan for this?
+        // TODO: Review if needed @Sid
     @FXML
     protected void onClickAttendanceReport() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-report.fxml"));
-            AnchorPane attendanceView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            attendanceView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(attendanceView);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/attendance-report.fxml");
     }
 
     @FXML
     protected void onClickUsers() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/user-list-view.fxml"));
-            AnchorPane usersView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            usersView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(usersView);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/user-list-view.fxml");
     }
 
     @FXML
     protected void onClickRole() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/role-list-view.fxml"));
-            AnchorPane rolesView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            rolesView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(rolesView);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/role-list-view.fxml");
     }
-  
+
     @FXML
     protected void onClickPosition() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/position-view.fxml"));
-            AnchorPane positionView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
-
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-            // Set visibility to true (optional if not already visible):
-            positionView.setVisible(true);
-
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(positionView);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigateToView("/com/mes/motorph/position-view.fxml");
     }
 
     @FXML
-    protected void onClickDepartment(){
+    protected void onClickDepartment() {
+        navigateToView("/com/mes/motorph/department-view.fxml");
+    }
+
+    @FXML
+    protected void onClickProfile() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/department-view.fxml"));
-            AnchorPane departmentView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/employee-add-view.fxml"));
+            AnchorPane profileView = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
 
             // Get reference to existing BorderPane:
             BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
 
-            // Set visibility to true (optional if not already visible):
-            departmentView.setVisible(true);
+
+            profileView.setVisible(true);
+            Employee employee = employeeService.fetchEmployeeDetails(employeeId);
+            EmployeeAddController employeeAddController = fxmlLoader.getController();
+            employeeAddController.setData(employee);
 
             // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(departmentView);
+            borderPane.setCenter(profileView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (EmployeeException e) {
+            throw new RuntimeException(e);
+        } catch (PositionException e) {
+            throw new RuntimeException(e);
+        } catch (DepartmentException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    // TODO: @Sid missing user roles
+
+    private void navigateToView(String fxmlPath) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource(fxmlPath));
+            AnchorPane view = (AnchorPane) fxmlLoader.load();
+
+            // Get reference to existing BorderPane:
+            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot();
+
+            // Add the loaded AnchorPane to the center region:
+            borderPane.setCenter(view);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -360,8 +350,6 @@ public class ViewFactory {
         }
 
     }
-
-
 
     private void setDashboardButtons() {
         overviewLabel.setVisible(false);
@@ -394,4 +382,13 @@ public class ViewFactory {
         departmentBtn.setManaged(false);
     }
 
+    @FXML
+    protected void handleLogout() {
+        // Close the main stage
+        Stage mainStage = (Stage) accountMenu.getScene().getWindow();
+        mainStage.close();
+
+        // Open the login stage
+       mainApp.openLoginStage();
+    }
 }
