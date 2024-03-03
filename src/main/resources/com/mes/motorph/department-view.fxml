@@ -56,9 +56,9 @@
       </VBox>
       <HBox layoutX="10.0" layoutY="60.0" prefHeight="41.0" prefWidth="310.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Search" />
+            <Button mnemonicParsing="false" onAction="#onClickSearchDept" prefHeight="27.0" prefWidth="108.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Search" />
             <Pane prefHeight="41.0" prefWidth="43.0" />
-            <TextField prefHeight="25.0" prefWidth="203.0" promptText="Search Department" />
+            <TextField fx:id="deptIdField" prefHeight="25.0" prefWidth="203.0" promptText="Search Department" />
          </children>
       </HBox>
    </children>

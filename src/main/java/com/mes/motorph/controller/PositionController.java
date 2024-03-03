@@ -1,8 +1,6 @@
 package com.mes.motorph.controller;
 
-import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.entity.Position;
-import com.mes.motorph.exception.DepartmentException;
 import com.mes.motorph.exception.PositionException;
 import com.mes.motorph.services.PositionService;
 import com.mes.motorph.utils.AlertUtility;
@@ -10,12 +8,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -39,6 +36,8 @@ public class PositionController {
 
     @FXML
     protected void initialize(){
+
+        setupContextMenu();
         positionIdColumn.setCellValueFactory(new PropertyValueFactory<>("positionId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
@@ -57,7 +56,6 @@ public class PositionController {
                     }
                 });
             }
-
 
         } catch (PositionException e) {
             throw new RuntimeException(e);
@@ -127,13 +125,26 @@ public class PositionController {
 
     }
 
+    private boolean isEmpty(){
+        if (posField.getText().isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     @FXML
     private void onClickUpdate(){
         Position selectedIndex = positionTableView.getSelectionModel().getSelectedItem();
-        if(selectedIndex != null){
-            processInput(false);
+        if(isEmpty()){
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "Please Fill the Field");
         }else{
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to update");
+            if(selectedIndex != null){
+                processInput(false);
+            }else{
+                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "Please Select a row to update");
+            }
+
         }
 
 
@@ -171,18 +182,41 @@ public class PositionController {
         posField.setText("");
     }
 
-    //TODO: showcontext and setup menu
 
-    private void showContextMenu(MouseEvent event, TableRow<Payroll> row, Payroll rowData){
+    private void showContextMenu(MouseEvent event, TableRow<Position> row, Position rowData){
         ContextMenu contextMenu = new ContextMenu();
 
-        MenuItem updateItem = new MenuItem("Update");
+        MenuItem updateMenu = new MenuItem("Update");
+        updateMenu.setOnAction(e -> {
+            onClickUpdate();
+        });
+
+        MenuItem deleteMenu = new MenuItem("Delete");
+        deleteMenu.setOnAction(e ->{
+            try {
+                onClickDelete();
+            } catch (PositionException ex) {
+                throw new RuntimeException(ex);
+            }
+        } );
 
 
+        contextMenu.getItems().addAll(updateMenu, deleteMenu);
+        contextMenu.show(row, event.getScreenX(), event.getScreenY());
 
+    }
 
-
-
+    private void setupContextMenu() {
+        positionTableView.setRowFactory(tableView -> {
+            TableRow<Position> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.SECONDARY && !row.isEmpty()) {
+                    Position rowData = row.getItem();
+                    showContextMenu(event, row, rowData);
+                }
+            });
+            return  row;
+        });
     }
 
 
