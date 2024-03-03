@@ -49,7 +49,7 @@ public class UserRoleRepository {
 
         try {
             conn = DBUtility.getConnection();
-            String sql = "SELECT e.id AS id, e.email AS Email, u.roleId AS Role FROM motorph.user_role u JOIN motorph.employee e ON u.userId = e.id   WHERE  e.email = ?;";
+            String sql = "SELECT e.id AS id, e.email AS Email, u.roleId AS Role FROM motorph.user_role u JOIN motorph.employee e ON u.userId = e.id  WHERE  e.email = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
             ResultSet rs = pstmt.executeQuery();

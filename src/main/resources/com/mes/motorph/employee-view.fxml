@@ -57,15 +57,6 @@
       <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="341.0" prefHeight="50.0" prefWidth="903.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
             <Pane prefHeight="74.0" prefWidth="631.0" />
-            <Button mnemonicParsing="false" onAction="#onClickAdd" prefHeight="30.0" prefWidth="100.0" stylesheets="@../../../css/scenes.css" text="Add">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-               <styleClass>
-                  <String fx:value="reg-button" />
-                  <String fx:value="new-button" />
-               </styleClass>
-            </Button>
             <Button fx:id="employeeUpdate" mnemonicParsing="false" onAction="#onClickUpdate" prefHeight="30.0" prefWidth="102.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update">
                <HBox.margin>
                   <Insets right="10.0" />

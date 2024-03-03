@@ -3,9 +3,9 @@ package com.mes.motorph.controller;
 import com.mes.motorph.Main;
 import com.mes.motorph.entity.User;
 import com.mes.motorph.entity.UserRole;
-import com.mes.motorph.services.PasswordService;
 import com.mes.motorph.services.UserRoleService;
 import com.mes.motorph.services.UserService;
+import com.mes.motorph.utils.AlertUtility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class LoginController {
@@ -26,7 +25,6 @@ public class LoginController {
     private PasswordField passwordField;
 
     private UserService userService = new UserService();
-
     private UserRoleService userRoleService = new UserRoleService();
     private Main mainApp;
     private Stage loginStage;
@@ -34,6 +32,7 @@ public class LoginController {
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
+
     public void handleLogin(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -45,17 +44,27 @@ public class LoginController {
                 User user = optionalUser.get();
                 List<UserRole> userRoles = userRoleService.fetchUserRole(user.getUsername());
 
-                // Notify successful login and pass the user roles to the caller
-              //  mainApp.onLoginSuccess(userRoles);
-               // ((LoginApp) getApplication()).onLoginSuccess(userRoles);
+                // Notify successful login and open the main stage
+                mainApp.setUserRoles(userRoles);
+                mainApp.openMainStage();
+                // Close the login stage
+                loginStage.close();
             } else {
                 // Notify invalid credentials
-                showErrorMessage("Invalid credentials. Please try again.");
+                AlertUtility.showAlert(Alert.AlertType.INFORMATION,"Information", null,"Invalid credentials. Please try again.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            showErrorMessage("An error occurred during login. Please try again.");
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null,"An error occurred during login. Please try again.");
         }
+    }
+
+    @FXML
+    public void handleLogout(ActionEvent event) {
+        // Close the login stage
+        loginStage.close();
+        // Call logout method in Main class to handle the logout action
+        mainApp.logout();
     }
 
     private void showErrorMessage(String message) {

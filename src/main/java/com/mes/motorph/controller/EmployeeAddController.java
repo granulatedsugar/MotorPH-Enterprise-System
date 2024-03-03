@@ -21,7 +21,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeeAddController {
-
+    @FXML
+    private Label breadCrumb;
     @FXML
     private Label sceneTitle;
     @FXML
@@ -112,6 +113,16 @@ public class EmployeeAddController {
         departmentComboBox();
     }
 
+    public void setData(Employee employee) throws PositionException, DepartmentException {
+        setEmployeeDataFields(employee);
+        breadCrumb.setText("Employee / Profile / " + employee.getFirstName() + " " + employee.getLastName());
+        sceneTitle.setText("Profile: " + employee.getFirstName() + " " + employee.getLastName());
+        employeeAdd.setVisible(false);
+        employeeUpdate.setVisible(false);
+        disableTextFields();
+
+    }
+
     protected void positionComboBox() {
         try {
             List<Position> positions = positionService.fetchPositions();
@@ -128,7 +139,7 @@ public class EmployeeAddController {
         }
     }
 
-    protected void departmentComboBox() throws DepartmentException {
+    protected void departmentComboBox() {
         try {
             List<Department> departments = departmentService.fetchDepartments();
 
@@ -325,6 +336,32 @@ public class EmployeeAddController {
             }
         }
         return 0; // Return a default value if position is not found
+    }
+
+    private void disableTextFields() {
+        firstNameAdd.setDisable(true);
+        lastNameAdd.setDisable(true);
+        dobAdd.setDisable(true); // Assuming dobAdd is a DatePicker
+        addressAdd.setDisable(true);
+        emailAdd.setDisable(true);
+        phoneNumAdd.setDisable(true);
+        clothingAllowanceAdd.setDisable(true);
+        phoneAllowanceAdd.setDisable(true);
+        riceSubAdd.setDisable(true);
+        pagIbigAdd.setDisable(true);
+        philHealthAdd.setDisable(true);
+        sssAdd.setDisable(true);
+        tinAdd.setDisable(true);
+        supervisorAdd.setDisable(true);
+        statusAdd.setDisable(true);
+        basicSalaryAdd.setDisable(true);
+        grossSemiMonthlyRateAdd.setDisable(true);
+        hourlyRateAdd.setDisable(true);
+        vacationHoursAdd.setDisable(true);
+        sickHoursAdd.setDisable(true);
+        positionAdd.setDisable(true);
+        departmentAdd.setDisable(true);
+
     }
 }
 
