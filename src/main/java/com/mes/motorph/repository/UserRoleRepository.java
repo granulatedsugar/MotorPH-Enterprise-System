@@ -158,7 +158,6 @@ public class UserRoleRepository {
 
                 UserRole userRole = new UserRole(userId, email, Roles);
                 userRolesView.add(userRole);
-                System.out.println(userRolesView);
             }
             rs.close();
             stmt.close();
@@ -169,6 +168,4 @@ public class UserRoleRepository {
         }
         return userRolesView;
     }
-
-
 }

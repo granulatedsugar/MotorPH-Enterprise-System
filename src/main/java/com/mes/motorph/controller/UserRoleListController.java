@@ -20,20 +20,20 @@ public class UserRoleListController {
     @FXML
     private TableColumn<UserRole, Integer> userRolesIdColumn;
     @FXML
-    private TableColumn<UserRole, String> userRoleEmailColumn;
+    private TableColumn<UserRole, Integer> userRoleEmailColumn;
     @FXML
-    private TableColumn<UserRole, String >usersRoleColumn;
+    private TableColumn<UserRole, Integer >usersRoleColumn;
 
     UserRoleService userRoleService = new UserRoleService();
 
     @FXML
     protected void initialize(){
-        userRolesIdColumn.setCellValueFactory(new PropertyValueFactory<>("Employee ID"));
-        userRoleEmailColumn.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        usersRoleColumn.setCellValueFactory(new PropertyValueFactory<>("Roles"));
+        userRolesIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        userRoleEmailColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        usersRoleColumn.setCellValueFactory(new PropertyValueFactory<>("roleId"));
 
         try {
-            List<UserRole> userRoleList = userRoleService.fetchAllUserRolesView();
+            List<UserRole> userRoleList = userRoleService.fetchAllUserRoles();
             ObservableList<UserRole> userRoleObservableList = FXCollections.observableArrayList(userRoleList);
             userRolesTableView.setItems(userRoleObservableList);
         } catch (UserRoleException e) {

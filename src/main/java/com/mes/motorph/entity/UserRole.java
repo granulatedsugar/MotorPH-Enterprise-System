@@ -102,6 +102,6 @@ public class UserRole {
 
     @Override
     public String toString() {
-        return "Employee ID: " + id + " / Username: " + username + " / Role ID: " + roleId;
+        return "Employee ID: " + empID + " / Username: " + email + " / Role ID: " + roles;
     }
 }
