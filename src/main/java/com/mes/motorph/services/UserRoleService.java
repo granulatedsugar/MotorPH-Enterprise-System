@@ -29,4 +29,8 @@ public class UserRoleService {
     public void deleteUserRole(UserRole userRole) throws UserRoleException {
         userRoleRepository.deleteUserRole(userRole);
     }
+
+    public List<UserRole> fetchAllUserRolesView() throws UserRoleException{
+        return userRoleRepository.fetchAllUserRolesView();
+    }
 }

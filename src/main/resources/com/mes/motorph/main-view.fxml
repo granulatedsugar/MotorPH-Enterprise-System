@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.view.ViewFactory">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.view.ViewFactory">
    <top>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" styleClass="post-background" stylesheets="@../../../css/main.css" BorderPane.alignment="CENTER">
          <children>
@@ -202,6 +202,18 @@
                      </VBox.margin>
                   </Button>
                   <Button fx:id="roleBtn" alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickRole" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Roles">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/student-card.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets left="25.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="userRole" alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickUserRole" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="User Roles">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
