@@ -4,10 +4,7 @@ import com.mes.motorph.entity.UserRole;
 import com.mes.motorph.exception.UserRoleException;
 import com.mes.motorph.utils.DBUtility;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,4 +141,34 @@ public class UserRoleRepository {
             DBUtility.closeConnection(conn);
         }
     }
+
+    public List<UserRole> fetchAllUserRolesView() throws UserRoleException{
+        List<UserRole> userRolesView = new ArrayList<>();
+
+        try{
+            conn = DBUtility.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM motorph.employee_roles;";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                int userId = rs.getInt("Employee ID");
+                String email = rs.getString( "Email");
+                String Roles = rs.getString("Roles");
+
+                UserRole userRole = new UserRole(userId, email, Roles);
+                userRolesView.add(userRole);
+                System.out.println(userRolesView);
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+        return userRolesView;
+    }
+
+
 }
