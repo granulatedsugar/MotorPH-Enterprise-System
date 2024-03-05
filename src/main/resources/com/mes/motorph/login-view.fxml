@@ -8,8 +8,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="mainView" maxHeight="768.0" maxWidth="746.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="746.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.LoginController">
+<BorderPane fx:id="mainView" maxHeight="768.0" maxWidth="746.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="746.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.LoginController">
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <padding>
@@ -34,6 +36,12 @@
             <MFXTextField fx:id="usernameField" floatMode="BORDER" floatingText="Username" layoutX="114.0" layoutY="325.0" prefHeight="49.0" prefWidth="251.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
             <MFXPasswordField fx:id="passwordField" floatMode="BORDER" floatingText="Password" layoutX="115.0" layoutY="384.0" prefHeight="49.0" prefWidth="250.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
             <MFXButton layoutX="115.0" layoutY="450.0" onAction="#handleLogin" prefHeight="50.0" prefWidth="250.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Login" />
+            <Text layoutX="212.0" layoutY="727.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FIVE LLC.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="139.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Rights Reserved | MotorPH © 2024" />
          </children></AnchorPane>
    </center>
    <right>

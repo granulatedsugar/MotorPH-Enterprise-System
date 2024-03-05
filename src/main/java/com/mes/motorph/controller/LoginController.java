@@ -35,8 +35,8 @@ public class LoginController {
     }
 
     public void handleLogin(ActionEvent event) {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
         try {
             Optional<User> optionalUser = userService.authenticateUser(username, password);

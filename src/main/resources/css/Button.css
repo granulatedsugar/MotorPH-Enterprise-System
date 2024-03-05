@@ -7,7 +7,6 @@
     -fx-border-width: 0;
     -fx-border-color: transparent;
     -fx-cursor: hand;
-    -fx-font-weight: bold;
 }
 
 .mfx-button-sidebar:hover {
@@ -17,8 +16,55 @@
 
 .mfx-button-primary {
     -fx-background-color: #212B36;
-    -fx-font-size: 15px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 5px;
 }
 
+.mfx-button-primary:hover {
+    -fx-background-color: rgba(33, 43, 54, 0.75);
+}
+
+.mfx-button-secondary {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212B36;
+    -fx-border-color: lightgray;
+    -fx-border-radius: 5px;
+}
+
+.mfx-button-secondary:hover {
+    -fx-border-color: #212B36;
+    -fx-background-color: rgba(33, 43, 54, 0.05);
+}
+
+.mfx-button-delete:hover {
+    -fx-border-color: #FF3232;
+    -fx-background-color: #FFEFEF;
+    -fx-text-fill: #FF3232;
+}
+
+.mfx-button-new:hover {
+    -fx-border-color: #16AE7C;
+    -fx-background-color: #EBF8F4;
+    -fx-text-fill: #16AE7C;
+}
+
+.mfx-button-options {
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 5px 5px;
+    -fx-font-weight: bold;
+}
+
+.mfx-button-welcome {
+    -fx-background-color: #078dee;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.mfx-button-welcome:hover {
+    -fx-background-color: #012972;
+}

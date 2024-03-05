@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1086.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PayrollCreateController">
+<AnchorPane prefHeight="1086.0" prefWidth="923.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PayrollCreateController">
     <children>
         <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="373.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Payroll / New / Payslip" textFill="#cdd2d6">
             <font>
@@ -27,117 +28,136 @@
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="95.0" prefHeight="987.0" prefWidth="903.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0">
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <ScrollPane prefHeight="721.0" prefWidth="1074.0" stylesheets="@../../../css/scroll-pane.css" HBox.hgrow="ALWAYS">
+            <ScrollPane prefHeight="721.0" prefWidth="1074.0" stylesheets="@../../../css/ScrollPane.css" HBox.hgrow="ALWAYS">
                <content>
-                  <VBox prefHeight="978.0" prefWidth="864.0" style="-fx-background-color: #FFFFFF;">
+                  <VBox prefHeight="978.0" prefWidth="864.0" styleClass="body">
                      <children>
-                        <HBox prefHeight="50.0" prefWidth="707.0">
+                        <AnchorPane prefHeight="758.0" prefWidth="864.0" stylesheets="@../../../css/TextField.css" VBox.vgrow="ALWAYS">
                            <children>
-                              <Label fx:id="payslipSceneTitle" styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Create New Payslip" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                        <AnchorPane prefHeight="758.0" prefWidth="864.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" VBox.vgrow="ALWAYS">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../images/logo.png" />
                                  </image>
                               </ImageView>
-                              <HBox alignment="CENTER" layoutX="1.0" layoutY="125.0" prefHeight="85.0" prefWidth="862.0" spacing="20.0" styleClass="h-box" stylesheets="@../../../css/scenes.css">
+                              <HBox alignment="CENTER" layoutX="1.0" layoutY="125.0" prefHeight="85.0" prefWidth="862.0" spacing="20.0">
                                  <children>
-                                    <TextField fx:id="payrollIdField" disable="true" promptText="Payslip No." styleClass="text-field" stylesheets="@../../../css/text.css" HBox.hgrow="ALWAYS" />
-                                    <TextField fx:id="employeeIdField" disable="true" promptText="Employee ID" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                                    <DatePicker fx:id="startDatePicker" disable="true" promptText="Start Period" stylesheets="@../../../css/date-picker.css" />
-                                    <DatePicker fx:id="endDatePicker" disable="true" promptText="End Period" stylesheets="@../../../css/date-picker.css" />
-                                    <Button fx:id="runReportBtn" disable="true" mnemonicParsing="false" onAction="#onClickRunReport" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Run">
-                                       <styleClass>
-                                          <String fx:value="reg-button" />
-                                          <String fx:value="new-button" />
-                                       </styleClass>
-                                    </Button>
+                                    <MFXTextField fx:id="payrollIdField" editable="false" floatMode="BORDER" floatingText="Payslip No." prefHeight="30.0" prefWidth="148.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                                    <MFXTextField fx:id="employeeIdField" editable="false" floatMode="BORDER" floatingText="Employee ID" prefHeight="30.0" prefWidth="150.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                                    <MFXDatePicker fx:id="startDatePicker" editable="false" floatMode="BORDER" floatingText="Start Date" prefHeight="30.0" prefWidth="193.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                                    <MFXDatePicker fx:id="endDatePicker" editable="false" floatMode="BORDER" floatingText="End Date" prefHeight="30.0" prefWidth="193.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                                    <MFXButton fx:id="runReportBtn" onAction="#onClickRunReport" prefHeight="36.0" prefWidth="102.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Generate" />
                                  </children>
                               </HBox>
-                              <Label layoutX="56.0" layoutY="19.0" text="MotorPH">
+                              <Label layoutX="52.0" layoutY="19.0" text="MotorPH">
                                  <font>
                                     <Font name="Arial Bold Italic" size="22.0" />
                                  </font>
                               </Label>
-                              <Text layoutX="14.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7 Jupiter Avenue cor. F. Sandoval Jr., Bagong Nayon, Quezon City" wrappingWidth="359.4702262878418" />
-                              <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone: (028) 911-5071 / (028) 911-5072 / (028) 911-5073 " wrappingWidth="359.4702262878418" />
-                              <Text layoutX="14.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: corporate@motorph.com" wrappingWidth="359.4702262878418" />
-                              <Label layoutX="440.0" layoutY="278.0" prefHeight="17.0" prefWidth="98.0" text="Position" />
-                              <Label layoutX="663.0" layoutY="278.0" prefHeight="17.0" prefWidth="98.0" text="Department" />
-                              <Label alignment="TOP_LEFT" layoutX="-14.0" layoutY="224.0" prefHeight="37.0" prefWidth="231.0" styleClass="txtLabel" text="Employee Information" />
-                              <Label alignment="TOP_LEFT" layoutX="-14.0" layoutY="355.0" prefHeight="37.0" prefWidth="231.0" styleClass="txtLabel" text="Earnings" />
-                              <TextField fx:id="monthlyRateField" disable="true" layoutX="8.0" layoutY="425.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="7.0" layoutY="407.0" prefHeight="17.0" prefWidth="98.0" text="Monthly Rate" />
-                              <TextField fx:id="dailyRateField" disable="true" layoutX="9.0" layoutY="493.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="8.0" layoutY="475.0" prefHeight="17.0" prefWidth="98.0" text="Daily Rate" />
-                              <TextField fx:id="daysWorkedField" disable="true" layoutX="10.0" layoutY="559.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="9.0" layoutY="541.0" prefHeight="17.0" prefWidth="98.0" text="Days Worked" />
-                              <TextField fx:id="overtimeField" disable="true" layoutX="11.0" layoutY="628.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="10.0" layoutY="610.0" prefHeight="17.0" prefWidth="98.0" text="Overtime" />
-                              <Label alignment="TOP_LEFT" layoutX="257.0" layoutY="355.0" prefHeight="37.0" prefWidth="231.0" styleClass="txtLabel" text="Deductions" />
-                              <TextField fx:id="sssField" disable="true" layoutX="279.0" layoutY="425.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="278.0" layoutY="407.0" prefHeight="17.0" prefWidth="158.0" text="Social Security System" />
-                              <TextField fx:id="phField" disable="true" layoutX="280.0" layoutY="493.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="279.0" layoutY="475.0" prefHeight="17.0" prefWidth="98.0" text="PhilHealth" />
-                              <TextField fx:id="pagIbigField" disable="true" layoutX="281.0" layoutY="559.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="280.0" layoutY="541.0" prefHeight="17.0" prefWidth="98.0" text="Pag-Ibig" />
-                              <TextField fx:id="withholdingTaxField" disable="true" layoutX="282.0" layoutY="628.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="281.0" layoutY="610.0" prefHeight="17.0" prefWidth="98.0" text="Withholding Tax" />
-                              <Label alignment="TOP_LEFT" layoutX="671.0" layoutY="355.0" prefHeight="37.0" prefWidth="173.0" styleClass="txtLabel" text="Benefits" />
-                              <TextField fx:id="riceSubField" disable="true" layoutX="693.0" layoutY="425.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="692.0" layoutY="407.0" prefHeight="17.0" prefWidth="98.0" text="Rice Subsidy" />
-                              <TextField fx:id="phoneAllowanceField" disable="true" layoutX="694.0" layoutY="493.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="693.0" layoutY="475.0" prefHeight="17.0" prefWidth="98.0" text="Phone Allowance" />
-                              <TextField fx:id="clothingAllowanceField" disable="true" layoutX="695.0" layoutY="559.0" prefHeight="36.0" prefWidth="180.0" promptText="0.00" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="694.0" layoutY="541.0" prefHeight="17.0" prefWidth="173.0" text="Clothing Allowance" />
-                              <Label layoutX="301.0" layoutY="743.0" prefHeight="17.0" prefWidth="173.0" text="TOTAL DEDUCTIONS">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="590.0" layoutY="743.0" prefHeight="17.0" prefWidth="173.0" text="TOTAL BENEFITS">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="TOP_LEFT" layoutX="-10.0" layoutY="695.0" prefHeight="37.0" prefWidth="231.0" styleClass="txtLabel" text="Summary" />
-                              <Label layoutX="10.0" layoutY="743.0" prefHeight="17.0" prefWidth="98.0" text="GROSS INCOME">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="590.0" layoutY="794.0" prefHeight="17.0" prefWidth="103.0" text="NET PAY">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="netPayLabel" alignment="CENTER_RIGHT" layoutX="702.0" layoutY="794.0" prefHeight="17.0" prefWidth="160.0" text="0.00" textAlignment="RIGHT">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="totalBenefitsLabels" alignment="CENTER_RIGHT" layoutX="702.0" layoutY="743.0" prefHeight="17.0" prefWidth="159.0" text="0.00" textAlignment="RIGHT" />
-                              <Label fx:id="totalDeductionsLabel" layoutX="432.0" layoutY="743.0" prefHeight="17.0" prefWidth="152.0" text="0.00" textAlignment="RIGHT" />
-                              <Label fx:id="grossIncomeLabel" layoutX="118.0" layoutY="743.0" prefHeight="17.0" prefWidth="173.0" text="0.00" textAlignment="RIGHT" />
-                              <CheckBox fx:id="overrideCheckBox" layoutX="793.0" layoutY="99.0" mnemonicParsing="false" onAction="#onClickOverride" text="Override" />
-                              <Button fx:id="submitBtn" layoutX="720.0" layoutY="873.0" mnemonicParsing="false" onAction="#onSubmitPayroll" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Submit">
+                              <Text layoutX="1.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7 Jupiter Avenue cor. F. Sandoval Jr., Bagong Nayon, Quezon City" wrappingWidth="359.4702262878418" />
+                              <Text layoutX="1.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone: (028) 911-5071 / (028) 911-5072 / (028) 911-5073 " wrappingWidth="359.4702262878418" />
+                              <Text layoutX="1.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: corporate@motorph.com" wrappingWidth="359.4702262878418" />
+                              <Label layoutX="1.0" layoutY="364.0" prefHeight="17.0" prefWidth="98.0" text="Monthly Rate" />
+                              <Label layoutX="1.0" layoutY="412.0" prefHeight="17.0" prefWidth="98.0" text="Daily Rate" />
+                              <Label layoutX="1.0" layoutY="461.0" prefHeight="17.0" prefWidth="98.0" text="Days Worked" />
+                              <Label layoutX="3.0" layoutY="508.0" prefHeight="17.0" prefWidth="98.0" text="Overtime" />
+                              <Label layoutX="445.0" layoutY="460.0" prefHeight="17.0" prefWidth="158.0" text="SSS" />
+                              <Label layoutX="445.0" layoutY="364.0" prefHeight="17.0" prefWidth="98.0" text="PhilHealth" />
+                              <Label layoutX="445.0" layoutY="413.0" prefHeight="17.0" prefWidth="98.0" text="Pag-Ibig" />
+                              <Label layoutX="445.0" layoutY="506.0" prefHeight="17.0" prefWidth="98.0" text="Withholding" />
+                              <Label layoutX="1.0" layoutY="621.0" prefHeight="17.0" prefWidth="98.0" text="Rice Subsidy" />
+                              <Label layoutX="2.0" layoutY="719.0" prefHeight="17.0" prefWidth="52.0" text="Phone" />
+                              <Label layoutX="1.0" layoutY="668.0" prefHeight="17.0" prefWidth="76.0" text="Clothing" />
+                              <Button fx:id="submitBtn" layoutX="411.0" layoutY="869.0" mnemonicParsing="false" onAction="#onSubmitPayroll" prefHeight="40.0" prefWidth="180.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Submit" />
+                              <Button fx:id="updateBtn" layoutX="429.0" layoutY="911.0" mnemonicParsing="false" onAction="#onUpdatePayroll" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Update">
                                  <styleClass>
                                     <String fx:value="reg-button" />
                                     <String fx:value="new-button" />
                                  </styleClass>
                               </Button>
-                              <TextField fx:id="positionField" disable="true" layoutX="440.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <TextField fx:id="deptField" disable="true" layoutX="663.0" layoutY="295.0" prefHeight="36.0" prefWidth="210.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Button fx:id="updateBtn" layoutX="720.0" layoutY="873.0" mnemonicParsing="false" onAction="#onUpdatePayroll" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Update" visible="false">
-                                 <styleClass>
-                                    <String fx:value="reg-button" />
-                                    <String fx:value="new-button" />
-                                 </styleClass>
-                              </Button>
-                              <MFXTextField fx:id="employeeNameField" floatMode="BORDER" floatingText="Employee Name" layoutX="7.0" layoutY="288.0" prefHeight="49.0" prefWidth="420.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <MFXTextField fx:id="employeeNameField" editable="false" floatMode="BORDER" floatingText="Employee Name" layoutX="1.0" layoutY="262.0" prefHeight="30.0" prefWidth="420.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <MFXCheckbox fx:id="overrideCheckBox" contentDisposition="RIGHT" layoutX="763.0" layoutY="80.0" onAction="#onClickOverride" prefHeight="28.0" prefWidth="96.0" text="Override" />
+                              <MFXTextField fx:id="positionField" editable="false" floatMode="BORDER" floatingText="Position" layoutX="438.0" layoutY="262.0" prefHeight="30.0" prefWidth="210.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <MFXTextField fx:id="deptField" editable="false" floatMode="BORDER" floatingText="Department" layoutX="663.0" layoutY="262.0" prefHeight="30.0" prefWidth="200.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="189.0" layoutY="373.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <Text layoutX="1.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Earnings">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <MFXTextField fx:id="monthlyRateField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="251.0" layoutY="354.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <MFXTextField fx:id="dailyRateField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="251.0" layoutY="402.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="189.0" layoutY="420.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="daysWorkedField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="251.0" layoutY="450.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="189.0" layoutY="469.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="overtimeField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="251.0" layoutY="497.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="189.0" layoutY="516.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="phField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="354.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="617.0" layoutY="372.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="pagIbigField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="402.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="617.0" layoutY="421.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="sssField" alignment="CENTER_RIGHT" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="450.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="617.0" layoutY="469.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <Text layoutX="446.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deductions">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="1.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Information">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <MFXTextField fx:id="withholdingTaxField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="497.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="617.0" layoutY="515.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <Text layoutX="1.0" layoutY="582.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benefits">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <MFXTextField fx:id="riceSubField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="251.0" layoutY="610.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="189.0" layoutY="629.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="clothingAllowanceField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="251.0" layoutY="658.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="189.0" layoutY="677.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="phoneAllowanceField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="251.0" layoutY="708.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="189.0" layoutY="727.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="grossIncomeField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="610.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Line endX="45.0" layoutX="617.0" layoutY="629.0" opacity="0.1" startX="-80.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <Text layoutX="446.0" layoutY="634.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gross Pay">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <MFXTextField fx:id="totalBenefitsField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="658.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Text layoutX="445.0" layoutY="681.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benefits">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Line endX="45.0" layoutX="617.0" layoutY="677.0" opacity="0.1" startX="-80.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <Text layoutX="445.0" layoutY="732.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deductions">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <Line endX="45.0" layoutX="617.0" layoutY="727.0" opacity="0.1" startX="-80.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
+                              <MFXTextField fx:id="totalDeductionsField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="709.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <Text layoutX="441.0" layoutY="816.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NET PAY">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                              <MFXTextField fx:id="netPayField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="793.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </MFXTextField>
+                              <Text layoutX="446.0" layoutY="581.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Totals">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="1.0" layoutY="916.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Rights Reserved | MotorPH © 2024" wrappingWidth="359.4702262878418" />
+                              <MFXButton layoutX="680.0" layoutY="869.0" prefHeight="40.0" prefWidth="180.0" />
                            </children></AnchorPane>
                      </children>
                   </VBox>

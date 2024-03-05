@@ -1,0 +1,9 @@
+.text-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold; /* Semi-bold font weight */
+    -fx-text-fill: #012972;
+}
+
+.text-desc {
+    -fx-text-fill: #012972;
+}

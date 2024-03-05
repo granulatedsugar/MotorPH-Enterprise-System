@@ -1,0 +1,5 @@
+.body {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.02), 5.0,0.0,0.0,5.0);
+    -fx-text-fill: #212B36;
+}

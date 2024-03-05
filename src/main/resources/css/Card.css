@@ -1,0 +1,24 @@
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: transparent;
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.02), 5.0,.0,.0,5.0);
+}
+
+.card-welcome {
+    -fx-background-color: linear-gradient(to bottom right, rgb(224,244,253), rgb(206,233,252));
+    -fx-background-radius: 15px;
+}
+
+.rounded-pane {
+    -fx-background-radius: 15px; /* Background radius */
+    -fx-border-radius: 15px; /* Border radius */
+}
+
+.card-news {
+    -fx-background-image: url("https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg");
+    -fx-background-size: cover;
+}
+
+

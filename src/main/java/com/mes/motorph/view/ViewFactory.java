@@ -3,7 +3,6 @@ package com.mes.motorph.view;
 import com.mes.motorph.Main;
 import com.mes.motorph.controller.AttendanceEmployeeController;
 import com.mes.motorph.controller.EmployeeAddController;
-import com.mes.motorph.controller.EmployeeController;
 import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.UserRole;
 import com.mes.motorph.exception.DepartmentException;
@@ -17,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,25 +35,25 @@ public class ViewFactory {
     @FXML
     private Label managementLabel;
     @FXML
-    private Button employeeSection;
+    private Text employeeSection;
     @FXML
     private Button employeeDetailsBtn;
     @FXML
     private Button employeeCreateBtn;
     @FXML
-    private Button attendanceSection;
+    private Text attendanceSection;
     @FXML
     private Button timeInOutBtn;
     @FXML
     private Button attendanceManageBtn;
     @FXML
-    private Button payrollSection;
+    private Text payrollSection;
     @FXML
     private Button payrollStatementBtn;
     @FXML
     private Button payrollCreateBtn;
     @FXML
-    private Button adminSection;
+    private Text adminSection;
     @FXML
     private Button userBtn;
     @FXML
@@ -68,6 +68,12 @@ public class ViewFactory {
     private MenuItem profileMenuItem;
     @FXML
     private MenuItem logoutMenuItem;
+    @FXML
+    private Text welcomeTitle;
+    @FXML
+    private Text welcomeSub;
+    @FXML
+    private Text welcomeText;
     private int employeeId;
     private String username;
     private int roleId;
@@ -200,6 +206,9 @@ public class ViewFactory {
     public void setDashboardData() throws EmployeeException {
         Employee employee = employeeService.fetchEmployeeDetails(employeeId);
         accountMenu.setText(employee.getFirstName());
+        welcomeTitle.setText("Welcome back 👋");
+        welcomeSub.setText(employee.getFirstName() + " " + employee.getLastName());
+        welcomeText.setText("If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything.");
     }
 
     @FXML

@@ -4,6 +4,8 @@ import com.mes.motorph.entity.*;
 import com.mes.motorph.exception.*;
 import com.mes.motorph.services.*;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -29,45 +31,45 @@ public class PayrollCreateController {
     @FXML
     private TextField employeeIdField;
     @FXML
-    private DatePicker startDatePicker;
+    private MFXDatePicker startDatePicker;
     @FXML
-    private DatePicker endDatePicker;
+    private MFXDatePicker endDatePicker;
     @FXML
-    private TextField employeeNameField;
+    private MFXTextField employeeNameField;
     @FXML
-    private TextField positionField;
+    private MFXTextField positionField;
     @FXML
-    private TextField deptField;
+    private MFXTextField deptField;
     @FXML
-    private TextField monthlyRateField;
+    private MFXTextField monthlyRateField;
     @FXML
-    private TextField dailyRateField;
+    private MFXTextField dailyRateField;
     @FXML
-    private TextField daysWorkedField;
+    private MFXTextField daysWorkedField;
     @FXML
-    private TextField overtimeField;
+    private MFXTextField overtimeField;
     @FXML
-    private TextField sssField;
+    private MFXTextField sssField;
     @FXML
-    private TextField phField;
+    private MFXTextField phField;
     @FXML
-    private TextField pagIbigField;
+    private MFXTextField pagIbigField;
     @FXML
-    private TextField withholdingTaxField;
+    private MFXTextField withholdingTaxField;
     @FXML
-    private TextField riceSubField;
+    private MFXTextField riceSubField;
     @FXML
-    private TextField phoneAllowanceField;
+    private MFXTextField phoneAllowanceField;
     @FXML
-    private TextField clothingAllowanceField;
+    private MFXTextField clothingAllowanceField;
     @FXML
-    private Label grossIncomeLabel;
+    private MFXTextField grossIncomeField;
     @FXML
-    private Label totalDeductionsLabel;
+    private MFXTextField totalDeductionsField;
     @FXML
-    private Label totalBenefitsLabels;
+    private MFXTextField totalBenefitsField;
     @FXML
-    private Label netPayLabel;
+    private MFXTextField netPayField;
     @FXML
     private Button submitBtn;
     @FXML
@@ -88,10 +90,10 @@ public class PayrollCreateController {
 
     @FXML
     protected void initialize() {
-        startDatePicker.setDisable(false);
-        endDatePicker.setDisable(false);
-        employeeIdField.setDisable(false);
-        runReportBtn.setDisable(false);
+        startDatePicker.setEditable(true);
+        endDatePicker.setEditable(true);
+        employeeIdField.setEditable(true);
+        runReportBtn.setDisable(true);
     }
 
     // UPDATE data
@@ -102,10 +104,9 @@ public class PayrollCreateController {
         payslipSceneTitle.setText("Update Payslip #" + payrollId);
         submitBtn.setVisible(false);
         updateBtn.setVisible(true);
-        startDatePicker.setDisable(true);
-        endDatePicker.setDisable(true);
-        employeeIdField.setDisable(true);
-        runReportBtn.setDisable(true);
+        startDatePicker.setEditable(false);
+        endDatePicker.setEditable(false);
+        employeeIdField.setEditable(false);
 
         try {
             Payroll payrollEmployeeData = payrollService.fetchEmployeePayrollDetails(payrollId);
@@ -164,11 +165,11 @@ public class PayrollCreateController {
         double totalDeductions = payrollEmployeeData.getDeductionSss()
                 + payrollEmployeeData.getDeductionPagIbig()
                 + payrollEmployeeData.getDeductionPhilHealth();
-        totalDeductionsLabel.setText(String.valueOf(totalDeductions));
+        totalDeductionsField.setText(String.valueOf(totalDeductions));
         double totalBenefits = salaryCalculationService.calculateTotalBenefits(payrollEmployeeData.getAllowanceRice(), payrollEmployeeData.getAllowancePhone(),payrollEmployeeData.getTotalAllowance());
-        totalBenefitsLabels.setText(String.valueOf(totalBenefits));
-        grossIncomeLabel.setText(String.valueOf(payrollEmployeeData.getGrossPay()));
-        netPayLabel.setText(String.valueOf(payrollEmployeeData.getNetPay()));
+        totalBenefitsField.setText(String.valueOf(totalBenefits));
+        grossIncomeField.setText(String.valueOf(payrollEmployeeData.getGrossPay()));
+        netPayField.setText(String.valueOf(payrollEmployeeData.getNetPay()));
     }
 
     // Override IF there is no attendance record for employee
@@ -297,11 +298,11 @@ public class PayrollCreateController {
                 pagIbigField.setText(String.valueOf(pagIbiDeduction));
                 withholdingTaxField.setText(String.valueOf(withholdingTax));
 
-                totalBenefitsLabels.setText(String.valueOf(totalBenefits));
-                grossIncomeLabel.setText(String.valueOf(totalGrossIncome));
-                totalDeductionsLabel.setText(String.valueOf(totalDeductions));
+                totalBenefitsField.setText(String.valueOf(totalBenefits));
+                grossIncomeField.setText(String.valueOf(totalGrossIncome));
+                totalDeductionsField.setText(String.valueOf(totalDeductions));
                 double totalNetPay = salaryCalculationService.calculateNetPay(totalGrossIncome, totalDeductions, totalBenefits);
-                netPayLabel.setText(String.valueOf(totalNetPay));
+                netPayField.setText(String.valueOf(totalNetPay));
 
             } else {
                 // Handle if no attendance data exists
@@ -377,8 +378,8 @@ public class PayrollCreateController {
         double clothingAllowance = Double.parseDouble(clothingAllowanceField.getText());
 
         // Summary
-        double grossIncome = Double.parseDouble(grossIncomeLabel.getText());
-        double netPay = Double.parseDouble(netPayLabel.getText());
+        double grossIncome = Double.parseDouble(grossIncomeField.getText());
+        double netPay = Double.parseDouble(netPayField.getText());
 
         return new Payroll(payrollId, employeeId, sqlFDate, sqlTDate, daysWorked, clothingAllowance, phoneAllowance, riceSub, philHealth, pagIbig, tin, sssDeduction, netPay, grossIncome, employeeName, semiMonthlyRate, title, department, overtime);
     }
@@ -402,10 +403,10 @@ public class PayrollCreateController {
         riceSubField.setText("");
         phoneAllowanceField.setText("");
         clothingAllowanceField.setText("");
-        grossIncomeLabel.setText("0.00");
-        totalBenefitsLabels.setText("0.00");
-        totalDeductionsLabel.setText("0.00");
-        netPayLabel.setText("0.00");
+        grossIncomeField.setText("");
+        totalBenefitsField.setText("");
+        totalDeductionsField.setText("");
+        netPayField.setText("");
     }
 
 }

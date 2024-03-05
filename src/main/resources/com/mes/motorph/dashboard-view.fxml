@@ -12,27 +12,20 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="675.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.DashboardController">
+<AnchorPane prefHeight="675.0" prefWidth="923.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.DashboardController">
     <children>
         <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="173.0" text="-" textFill="#cdd2d6">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" prefHeight="50.0" prefWidth="580.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
-            <children>
-            <Label styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Dashboard" />
-                <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
-            </children>
-        </HBox>
-      <VBox layoutX="14.0" layoutY="161.0" prefHeight="164.0" prefWidth="903.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <VBox layoutX="10.0" layoutY="64.0" prefHeight="164.0" prefWidth="903.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
             <GridPane fx:id="gridPane" hgap="10.0" prefHeight="150.0" prefWidth="903.0" vgap="10.0">
               <columnConstraints>
@@ -44,7 +37,7 @@
                 <RowConstraints maxHeight="250.0" minHeight="150.0" prefHeight="150.0" vgrow="ALWAYS" />
               </rowConstraints>
                <children>
-                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #D3F5FA;" styleClass="card" stylesheets="@../../../css/cards.css">
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #D3F5FA;" styleClass="card" stylesheets="@../../../css/Card.css">
                      <children>
                         <StackPane prefHeight="156.0" prefWidth="293.0">
                            <children>
@@ -73,7 +66,7 @@
                         </StackPane>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFF2D4;" styleClass="card" stylesheets="@../../../css/cards.css" GridPane.columnIndex="1">
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFF2D4;" styleClass="card" stylesheets="@../../../css/Card.css" GridPane.columnIndex="1">
                      <children>
                         <StackPane prefHeight="156.0" prefWidth="293.0">
                            <children>
@@ -102,7 +95,7 @@
                         </StackPane>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFE3DB;" styleClass="card" stylesheets="@../../../css/cards.css" GridPane.columnIndex="2">
+                  <VBox alignment="CENTER" prefHeight="91.0" prefWidth="295.0" style="-fx-background-color: #FFE3DB;" styleClass="card" stylesheets="@../../../css/Card.css" GridPane.columnIndex="2">
                      <children>
                         <StackPane prefHeight="156.0" prefWidth="293.0">
                            <children>
@@ -135,10 +128,10 @@
             </GridPane>
          </children>
       </VBox>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="339.0" prefHeight="326.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="339.0">
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="235.0" prefHeight="430.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="235.0">
          <children>
             <PieChart fx:id="statusPieChart" labelLineLength="10.0" prefHeight="299.0" prefWidth="362.0" HBox.hgrow="ALWAYS" />
-            <BarChart fx:id="expenseBreakdown" prefHeight="345.0" prefWidth="686.0" style="-fx-background-color: white;" titleSide="RIGHT" HBox.hgrow="ALWAYS">
+            <BarChart fx:id="expenseBreakdown" prefHeight="345.0" prefWidth="686.0" style="-fx-background-color: #FFFFFF;" titleSide="RIGHT" HBox.hgrow="ALWAYS">
               <xAxis>
                 <CategoryAxis side="BOTTOM" style="-fx-background-color: #FFFFFF;" fx:id="xAxis" />
               </xAxis>

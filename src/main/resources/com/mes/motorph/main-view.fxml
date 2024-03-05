@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -13,12 +14,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.view.ViewFactory">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.view.ViewFactory">
    <top>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" styleClass="post-background" stylesheets="@../../../css/main.css" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -26,13 +29,12 @@
                </image>
             </ImageView>
             <Pane prefHeight="50.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="no-bg-button" stylesheets="@../../../css/main.css" />
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/active.png" />
                </image>
             </ImageView>
-            <MenuButton fx:id="accountMenu" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="188.0" style="-fx-background-color: #FFFFFF;" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="-" HBox.hgrow="ALWAYS">
+            <MenuButton fx:id="accountMenu" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="188.0" stylesheets="@../../../css/Button.css" text="-" HBox.hgrow="ALWAYS">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#onClickProfile" style="-fx-min-width: 180px;" text="Profile" />
                 <MenuItem fx:id="logoutMenuItem" mnemonicParsing="false" onAction="#handleLogout" style="-fx-min-width: 180px;" text="Logout" />
@@ -44,6 +46,13 @@
                      </image>
                   </ImageView>
                </graphic>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+               <styleClass>
+                  <String fx:value="mfx-button-sidebar" />
+                  <String fx:value="mfx-button-options" />
+               </styleClass>
             </MenuButton>
          </children>
          <padding>
@@ -52,9 +61,9 @@
       </HBox>
    </top>
    <left>
-      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="713.0" prefWidth="230.0" stylesheets="@../../../css/scroll-pane.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="713.0" prefWidth="230.0" stylesheets="@../../../css/ScrollPane.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
-            <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="5.0" styleClass="sidebar-container" stylesheets="@../../../css/main.css">
+            <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="5.0" styleClass="sidebar-container" stylesheets="@../../../css/SideBar.css">
                <children>
                   <Pane prefHeight="20.0" prefWidth="218.0" />
                   <Label fx:id="overviewLabel" prefHeight="18.0" prefWidth="153.0" text="OVERVIEW" textFill="#627280a1">
@@ -62,7 +71,7 @@
                         <Insets />
                      </opaqueInsets>
                      <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
@@ -82,21 +91,13 @@
                         <Insets />
                      </opaqueInsets>
                      <font>
-                        <Font name="Arial Rounded MT Bold" size="10.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="employeeSection" alignment="TOP_LEFT" disable="true" graphicTextGap="10.0" mnemonicParsing="false" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Employees">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/group.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                  <Text fx:id="employeeSection" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee" wrappingWidth="153.84765625" />
                   <MFXButton fx:id="employeeDetailsBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickEmployees" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Details">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -115,15 +116,7 @@
                         </ImageView>
                      </graphic>
                   </MFXButton>
-                  <Button fx:id="attendanceSection" alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Attendance">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/calendar.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                  <Text fx:id="attendanceSection" strokeType="OUTSIDE" strokeWidth="0.0" text="Attendance" wrappingWidth="153.84765625" />
                   <MFXButton fx:id="timeInOutBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickTimeInOut" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Time In / Out">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -142,15 +135,7 @@
                         </ImageView>
                      </graphic>
                   </MFXButton>
-                  <Button fx:id="payrollSection" alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Accounting">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/bill.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                  <Text fx:id="payrollSection" strokeType="OUTSIDE" strokeWidth="0.0" text="Accounting" wrappingWidth="153.84765625" />
                   <MFXButton fx:id="payrollStatementBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickPayroll" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Payslips">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -169,15 +154,7 @@
                         </ImageView>
                      </graphic>
                   </MFXButton>
-                  <Button fx:id="adminSection" alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Admin">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/user.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                  <Text fx:id="adminSection" strokeType="OUTSIDE" strokeWidth="0.0" text="Administration" wrappingWidth="153.84765625" />
                   <MFXButton fx:id="userBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickUsers" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Users">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -252,7 +229,52 @@
       <AnchorPane BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding></AnchorPane>
+         </padding>
+         <children>
+            <HBox layoutX="40.0" layoutY="40.0" prefHeight="319.0" prefWidth="986.0" spacing="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="30.0">
+               <children>
+                  <AnchorPane prefHeight="284.0" prefWidth="586.0" styleClass="card-welcome" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Text fx:id="welcomeTitle" layoutX="25.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="Text" wrappingWidth="306.640625" />
+                        <Text fx:id="welcomeSub" layoutX="25.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="Text" wrappingWidth="306.640625" />
+                        <Text fx:id="welcomeText" layoutX="25.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="370.13671875" />
+                        <MFXButton layoutX="25.0" layoutY="211.0" styleClass="mfx-button-welcome" stylesheets="@../../../css/Button.css" text="Read More" />
+                        <ImageView fitHeight="242.0" fitWidth="304.0" layoutX="258.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="9.974365234375">
+                           <image>
+                              <Image url="@../../../images/welcome-image.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <stylesheets>
+                        <URL value="@../../../css/Text.css" />
+                        <URL value="@../../../css/Card.css" />
+                     </stylesheets>
+                  </AnchorPane>
+                  <StackPane prefHeight="319.0" prefWidth="420.0" styleClass="rounded-pane" stylesheets="@../../../css/Card.css">
+                     <children>
+                        <AnchorPane prefHeight="319.0" prefWidth="358.0">
+                           <children>
+                              <Text fx:id="welcomeTitle1" fill="WHITE" layoutX="14.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-title" text="3D modeling used to understand how chameleons' tails work" wrappingWidth="363.640625" />
+                              <Text fx:id="welcomeTitle11" fill="WHITE" layoutX="14.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEWS" wrappingWidth="363.640625">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                           <stylesheets>
+                              <URL value="@../../../css/Text.css" />
+                              <URL value="@../../../css/Card.css" />
+                           </stylesheets>
+                           <styleClass>
+                              <String fx:value="rounded-pane" />
+                              <String fx:value="card-news" />
+                           </styleClass>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children></AnchorPane>
    </center>
    <right>
       <AnchorPane prefHeight="718.0" prefWidth="4.0" BorderPane.alignment="CENTER" />
