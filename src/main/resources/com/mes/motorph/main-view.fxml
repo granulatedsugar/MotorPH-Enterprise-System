@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.view.ViewFactory">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1280.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.view.ViewFactory">
    <top>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0" styleClass="post-background" stylesheets="@../../../css/main.css" BorderPane.alignment="CENTER">
          <children>
@@ -51,9 +52,9 @@
       </HBox>
    </top>
    <left>
-      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="718.0" prefWidth="243.0" stylesheets="@../../../css/scroll-pane.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="713.0" prefWidth="230.0" stylesheets="@../../../css/scroll-pane.css" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
          <content>
-            <VBox alignment="TOP_CENTER" prefWidth="219.0" styleClass="sidebar-container" stylesheets="@../../../css/main.css">
+            <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="5.0" styleClass="sidebar-container" stylesheets="@../../../css/main.css">
                <children>
                   <Pane prefHeight="20.0" prefWidth="218.0" />
                   <Label fx:id="overviewLabel" prefHeight="18.0" prefWidth="153.0" text="OVERVIEW" textFill="#627280a1">
@@ -67,7 +68,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="dashboardBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickDashboard" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Dashboard">
+                  <MFXButton fx:id="dashboardBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickDashboard" prefHeight="40.0" prefWidth="200.0" rippleColor="#bdbdbd89" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Dashboard">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -75,10 +76,7 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
+                  </MFXButton>
                   <Label fx:id="managementLabel" prefHeight="18.0" prefWidth="153.0" text="MANAGEMENT" textFill="#627280a1">
                      <opaqueInsets>
                         <Insets />
@@ -90,7 +88,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="employeeSection" alignment="TOP_LEFT" disable="true" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickEmployees" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Employees">
+                  <Button fx:id="employeeSection" alignment="TOP_LEFT" disable="true" graphicTextGap="10.0" mnemonicParsing="false" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Employees">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -99,7 +97,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="employeeDetailsBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickEmployees" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Details">
+                  <MFXButton fx:id="employeeDetailsBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickEmployees" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Details">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -107,14 +105,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="employeeCreateBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickAddEmployee" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Add">
+                  </MFXButton>
+                  <MFXButton fx:id="employeeCreateBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickAddEmployee" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Add">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -122,13 +114,7 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
+                  </MFXButton>
                   <Button fx:id="attendanceSection" alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Attendance">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -138,7 +124,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="timeInOutBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickTimeInOut" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Time In/Out">
+                  <MFXButton fx:id="timeInOutBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickTimeInOut" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Time In / Out">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -146,11 +132,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="attendanceManageBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickAttendance" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Manage">
+                  </MFXButton>
+                  <MFXButton fx:id="attendanceManageBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickAttendance" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Log">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -158,11 +141,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="payrollSection" alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Payroll">
+                  </MFXButton>
+                  <Button fx:id="payrollSection" alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Accounting">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -171,7 +151,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="payrollStatementBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Statements">
+                  <MFXButton fx:id="payrollStatementBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickPayroll" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Payslips">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -179,11 +159,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="payrollCreateBtn" alignment="TOP_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickCreatePayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Create">
+                  </MFXButton>
+                  <MFXButton fx:id="payrollCreateBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickCreatePayroll" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="New Payslip">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -191,10 +168,7 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
+                  </MFXButton>
                   <Button fx:id="adminSection" alignment="TOP_LEFT" disable="true" graphicTextGap="15.0" mnemonicParsing="false" onAction="#onClickPayroll" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Admin">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -204,7 +178,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="userBtn" alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickUsers" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Users">
+                  <MFXButton fx:id="userBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickUsers" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Users">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -212,11 +186,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="roleBtn" alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickRole" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Roles">
+                  </MFXButton>
+                  <MFXButton fx:id="roleBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickRole" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Roles">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -224,11 +195,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="userRole" alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickUserRole" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="User Roles">
+                  </MFXButton>
+                  <MFXButton fx:id="userRole" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickUserRole" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="User Roles">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -236,11 +204,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="positionBtn" alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickPosition" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Position">
+                  </MFXButton>
+                  <MFXButton fx:id="positionBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickPosition" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Position">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -248,11 +213,8 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="departmentBtn" alignment="TOP_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onClickDepartment" prefWidth="200.0" styleClass="sidebar-button" stylesheets="@../../../css/main.css" text="Department">
+                  </MFXButton>
+                  <MFXButton fx:id="departmentBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickDepartment" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Department">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -260,10 +222,7 @@
                            </image>
                         </ImageView>
                      </graphic>
-                     <VBox.margin>
-                        <Insets left="25.0" />
-                     </VBox.margin>
-                  </Button>
+                  </MFXButton>
                   <Pane prefHeight="59.0" prefWidth="217.0" VBox.vgrow="ALWAYS" />
                   <Label alignment="CENTER" prefHeight="18.0" prefWidth="153.0" text="FIVE LLC." textFill="#627280a1">
                      <opaqueInsets>

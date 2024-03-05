@@ -15,6 +15,7 @@ module com.mes.motorph {
     requires eu.hansolo.toolboxfx;
     requires eu.hansolo.fx.countries;
     requires eu.hansolo.fx.heatmap;
+    requires MaterialFX;
 
     opens com.mes.motorph to javafx.fxml;
     opens com.mes.motorph.entity to javafx.base;
@@ -23,4 +24,5 @@ module com.mes.motorph {
     opens com.mes.motorph.controller to javafx.fxml;
     exports com.mes.motorph.view;
     opens com.mes.motorph.view to javafx.fxml;
+
 }

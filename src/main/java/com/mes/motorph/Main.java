@@ -30,6 +30,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 768, 746);
             loginStage = new Stage();
+            loginStage.setResizable(false);
             loginStage.setScene(scene);
             loginStage.setTitle("MotorPH Enterprise System V20240214");
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
@@ -7,7 +9,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -23,21 +24,15 @@
         </Label>
         <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" prefHeight="50.0" prefWidth="580.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
             <children>
-                <Button mnemonicParsing="false" onAction="#onClickSearchEmployeeId" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Search">
-               <font>
-                  <Font size="16.0" />
-               </font></Button>
-                <TextField fx:id="txtEmployeeId" alignment="CENTER" prefHeight="26.0" prefWidth="172.0" promptText="Search Employee ID" styleClass="text-field" stylesheets="@../../../css/text.css">
-               <font>
-                  <Font size="3.0" />
-               </font></TextField>
+            <MFXTextField fx:id="txtEmployeeId" floatMode="BORDER" floatingText="Employee ID" prefHeight="30.0" prefWidth="191.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+            <MFXButton onAction="#onClickSearchEmployeeId" prefHeight="38.0" prefWidth="79.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Search" />
                 <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
-                <DatePicker fx:id="datePicker" promptText="Select Date" stylesheets="@../../../css/date-picker.css" />
+            <DatePicker fx:id="datePicker" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
             </children>
         </HBox>
-        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="112.0" prefHeight="512.0" prefWidth="903.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0">
+        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="112.0" prefHeight="491.0" prefWidth="903.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0">
             <children>
-                <TableView fx:id="payrollTableView" prefHeight="445.0" prefWidth="903.0" VBox.vgrow="ALWAYS">
+                <TableView fx:id="payrollTableView" prefHeight="478.0" prefWidth="903.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="idColumn" editable="false" prefWidth="75.0" styleClass="centered-cell" text="Payslip ID" />
                         <TableColumn fx:id="employeeIdColumn" editable="false" prefWidth="440.0" styleClass="centered-cell" text="Employee ID" />
@@ -62,12 +57,16 @@
         </VBox>
       <HBox alignment="CENTER" layoutX="14.0" layoutY="612.0" prefHeight="50.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#onClickDeletePayroll" stylesheets="@../../../css/scenes.css" text="Delete">
+            <MFXButton onAction="#onClickDeletePayroll" prefHeight="40.0" prefWidth="95.0" text="Delete">
+               <stylesheets>
+                  <URL value="@../../../css/Button.css" />
+                  <URL value="@../../../css/scenes.css" />
+               </stylesheets>
                <styleClass>
+                  <String fx:value="mfx-button-primary" />
                   <String fx:value="delete-button" />
-                  <String fx:value="reg-button" />
                </styleClass>
-            </Button>
+            </MFXButton>
             <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#onClickNewPayroll" stylesheets="@../../../css/scenes.css" text="New">
                <styleClass>

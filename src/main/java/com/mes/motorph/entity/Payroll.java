@@ -1,5 +1,7 @@
 package com.mes.motorph.entity;
 
+import javafx.collections.ObservableList;
+
 import java.util.Date;
 
 public class Payroll {

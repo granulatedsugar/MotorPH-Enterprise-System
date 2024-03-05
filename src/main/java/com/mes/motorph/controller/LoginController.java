@@ -6,11 +6,12 @@ import com.mes.motorph.entity.UserRole;
 import com.mes.motorph.services.UserRoleService;
 import com.mes.motorph.services.UserService;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXPasswordField;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -19,10 +20,10 @@ import java.util.Optional;
 public class LoginController {
 
     @FXML
-    private TextField usernameField;
+    private MFXTextField usernameField;
 
     @FXML
-    private PasswordField passwordField;
+    private MFXPasswordField passwordField;
 
     private UserService userService = new UserService();
     private UserRoleService userRoleService = new UserRoleService();

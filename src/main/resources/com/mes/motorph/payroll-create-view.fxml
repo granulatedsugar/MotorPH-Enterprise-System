@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -35,7 +36,7 @@
                               <Label fx:id="payslipSceneTitle" styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Create New Payslip" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
-                        <AnchorPane prefHeight="758.0" prefWidth="864.0" VBox.vgrow="ALWAYS">
+                        <AnchorPane prefHeight="758.0" prefWidth="864.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" VBox.vgrow="ALWAYS">
                            <children>
                               <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -64,8 +65,6 @@
                               <Text layoutX="14.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7 Jupiter Avenue cor. F. Sandoval Jr., Bagong Nayon, Quezon City" wrappingWidth="359.4702262878418" />
                               <Text layoutX="14.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone: (028) 911-5071 / (028) 911-5072 / (028) 911-5073 " wrappingWidth="359.4702262878418" />
                               <Text layoutX="14.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: corporate@motorph.com" wrappingWidth="359.4702262878418" />
-                              <TextField fx:id="employeeNameField" disable="true" layoutX="8.0" layoutY="296.0" prefHeight="36.0" prefWidth="409.0" styleClass="text-field" stylesheets="@../../../css/text.css" />
-                              <Label layoutX="7.0" layoutY="278.0" prefHeight="17.0" prefWidth="98.0" text="Employee Name" />
                               <Label layoutX="440.0" layoutY="278.0" prefHeight="17.0" prefWidth="98.0" text="Position" />
                               <Label layoutX="663.0" layoutY="278.0" prefHeight="17.0" prefWidth="98.0" text="Department" />
                               <Label alignment="TOP_LEFT" layoutX="-14.0" layoutY="224.0" prefHeight="37.0" prefWidth="231.0" styleClass="txtLabel" text="Employee Information" />
@@ -138,6 +137,7 @@
                                     <String fx:value="new-button" />
                                  </styleClass>
                               </Button>
+                              <MFXTextField fx:id="employeeNameField" floatMode="BORDER" floatingText="Employee Name" layoutX="7.0" layoutY="288.0" prefHeight="49.0" prefWidth="420.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
                            </children></AnchorPane>
                      </children>
                   </VBox>

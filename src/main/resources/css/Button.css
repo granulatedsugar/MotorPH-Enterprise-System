@@ -1,0 +1,24 @@
+.mfx-button-sidebar {
+    -fx-text-fill: #637381;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.mfx-button-sidebar:hover {
+    -fx-background-color: #ebf6ff;
+    -fx-text-fill: #419ed1;
+}
+
+.mfx-button-primary {
+    -fx-background-color: #212B36;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
