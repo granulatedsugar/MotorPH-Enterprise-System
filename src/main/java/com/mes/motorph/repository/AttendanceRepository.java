@@ -6,6 +6,7 @@ import com.mes.motorph.exception.PayrollException;
 import com.mes.motorph.utils.DBUtility;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
+import java.awt.image.DataBufferDouble;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,13 +85,13 @@ public class AttendanceRepository {
         try{
             conn = DBUtility.getConnection();
             String sql = "INSERT INTO motorph.attendance(employeeId, date, timeIn, timeOut) VALUES (?,?,?,?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, attendance.getEmployeeId());
-            stmt.setDate(2, attendance.getDate());
-            stmt.setTime(3, attendance.getTimeIn());
-            stmt.setTime(4, attendance.getTimeOut());
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, attendance.getEmployeeId());
+            pstmt.setDate(2, attendance.getDate());
+            pstmt.setTime(3, attendance.getTimeIn());
+            pstmt.setTime(4, attendance.getTimeOut());
 
-            int rows = stmt.executeUpdate();
+            int rows = pstmt.executeUpdate();
             if(rows == 0){
                 throw new AttendanceException("Failed to add Attendance!");
             }else{
@@ -110,14 +111,14 @@ public class AttendanceRepository {
         try{
             conn = DBUtility.getConnection();
             String sql = "UPDATE motorph.attendance SET employeeId=?, date=?, timeIn=?, timeOut=? WHERE id=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, attendance.getEmployeeId());
-            stmt.setDate(2, attendance.getDate());
-            stmt.setTime(3,attendance.getTimeIn());
-            stmt.setTime(4, attendance.getTimeOut());
-            stmt.setInt(5, attendance.getId());
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, attendance.getEmployeeId());
+            pstmt.setDate(2, attendance.getDate());
+            pstmt.setTime(3,attendance.getTimeIn());
+            pstmt.setTime(4, attendance.getTimeOut());
+            pstmt.setInt(5, attendance.getId());
 
-            int rows = stmt.executeUpdate();
+            int rows = pstmt.executeUpdate();
             if(rows == 0){
                 throw new AttendanceException("Failed to update Attendance!");
             }else{
@@ -130,14 +131,14 @@ public class AttendanceRepository {
         }
     }
 
-    public void deleteAttendance(int positionId) throws AttendanceException{
+    public void deleteAttendance(int attendanceId) throws AttendanceException{
         try{
             conn = DBUtility.getConnection();
             String sql = "DELETE FROM motorph.attendance WHERE id=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, positionId);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, attendanceId);
 
-            int rows = stmt.executeUpdate();
+            int rows = pstmt.executeUpdate();
             if(rows == 0){
                 throw new AttendanceException("Failed to delete Attendance!");
             }else{
@@ -150,7 +151,35 @@ public class AttendanceRepository {
         }
     }
 
+    public Attendance fetchAttendanceByDate(int employeeId, Date date) throws SQLException {
+        Attendance attendance = null;
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "SELECT id, employeeId, date, timeIn, timeOut FROM motorph.attendance WHERE employeeId = ? AND date = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, employeeId);
+            pstmt.setDate(2, new java.sql.Date(date.getTime()));
+            ResultSet rs = pstmt.executeQuery();
 
+            if(rs.next()){
+                attendance = new Attendance(
+                        rs.getInt("id"),
+                        rs.getInt("employeeId"),
+                        rs.getDate("date"),
+                        rs.getTime("timeIn"),
+                        rs.getTime("timeOut")
+                );
+            }
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while fetching attendance record: " + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+        return attendance;
+    }
 
 
 }
+

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.AttendanceEmployeeController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.AttendanceEmployeeController">
    <children>
       <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" text="-" textFill="#cdd2d6">
          <font>
@@ -25,9 +25,9 @@
             <Label text="Attendance Id" />
             <TextField fx:id="attendanceIdField" disable="true" />
             <Label text="Employee Id" />
-            <TextField fx:id="empIdField" />
+            <TextField fx:id="empIdField" disable="true" />
             <Label text="Date" />
-            <DatePicker fx:id="dateField" stylesheets="@../../../css/date-picker.css" />
+            <DatePicker fx:id="dateField" disable="true" stylesheets="@../../../css/date-picker.css" />
          </children>
       </VBox>
       <VBox layoutX="300.0" layoutY="94.0" prefHeight="200.0" prefWidth="162.0">
@@ -47,7 +47,7 @@
                </children></Pane>
          </children>
       </HBox>
-      <Button fx:id="timeInBtn" layoutX="473.0" layoutY="111.0" mnemonicParsing="false" onAction="#onClickTimeInBtn" onMouseClicked="#onTimeInMouseClicked" prefHeight="25.0" prefWidth="65.0" text="Time In" />
-      <Button fx:id="timeOutBtn" layoutX="473.0" layoutY="154.0" mnemonicParsing="false" onAction="#onClickTimeOutBtn" onMouseClicked="#onTimeOutMouseClicked" text="Time Out" />
+      <Button fx:id="timeInBtn" layoutX="473.0" layoutY="111.0" mnemonicParsing="false" onAction="#onClickTimeInBtn" prefHeight="25.0" prefWidth="65.0" text="Time In" />
+      <Button fx:id="timeOutBtn" layoutX="473.0" layoutY="154.0" mnemonicParsing="false" onAction="#onClickTimeOutBtn" text="Time Out" />
    </children>
 </AnchorPane>

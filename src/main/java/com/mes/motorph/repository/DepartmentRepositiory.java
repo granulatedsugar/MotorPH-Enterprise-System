@@ -77,6 +77,8 @@ public class DepartmentRepositiory {
             }
         }catch(SQLException e){
             throw new DepartmentException("Error Connecting to the database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
         }
     }
 

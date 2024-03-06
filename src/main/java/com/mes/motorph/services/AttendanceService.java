@@ -4,6 +4,7 @@ import com.mes.motorph.entity.Attendance;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.repository.AttendanceRepository;
 
+import java.sql.SQLException;
 import java.sql.Date;
 import java.util.List;
 
@@ -26,8 +27,10 @@ public class AttendanceService {
         attendanceRepository.updateAttendance(attendance);
     }
 
-    public void deleteAttendance(int id) throws AttendanceException{
-        attendanceRepository.deleteAttendance(id);
+    public void deleteAttendance(int attendanceId) throws AttendanceException{
+        attendanceRepository.deleteAttendance(attendanceId);
     }
-
+    public Attendance fetchAttendanceRecordByDate(int empId, Date date) throws SQLException {
+        return attendanceRepository.fetchAttendanceByDate(empId, date);
+    }
 }

@@ -83,6 +83,8 @@ public class PositionRepository {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DBUtility.closeConnection(conn);
         }
 
     }
@@ -103,6 +105,8 @@ public class PositionRepository {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            DBUtility.closeConnection(conn);
         }
     }
 
