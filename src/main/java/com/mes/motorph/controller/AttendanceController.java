@@ -197,6 +197,7 @@ public class AttendanceController {
             AttendanceEmployeeController attendanceEmployeeController = loader.getController();
 
             BorderPane mainView = (BorderPane) attendanceTableView.getScene().getRoot().lookup("#mainView");
+            attendanceEmployeeController.onClickAddToCreate();
 
             mainView.setCenter(attendanceEmployeeView);
         }catch (IOException e){

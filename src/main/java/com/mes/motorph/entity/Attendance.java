@@ -122,4 +122,16 @@ public class Attendance {
         this.timeIn = timeIn;
         this.timeOut = timeOut;
     }
+
+    public Attendance(int id, int employeeId, Date date, Time timeIn) {
+        this.id = id;
+        this.employeeId = employeeId;
+        this.date = date;
+        this.timeIn = timeIn;
+    }
+
+    @Override
+    public String toString(){
+        return id+ " " +employeeId+" "+ date +" " + timeIn;
+    }
 }
