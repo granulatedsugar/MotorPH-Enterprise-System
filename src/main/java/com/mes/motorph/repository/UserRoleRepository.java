@@ -152,11 +152,15 @@ public class UserRoleRepository {
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
-                int userId = rs.getInt("Employee ID");
+                int empId = rs.getInt("Employee ID");
+                String firstName =  rs.getString("First Name");
+                String lastName =  rs.getString("Last Name");
                 String email = rs.getString( "Email");
-                String Roles = rs.getString("Roles");
+                String position = rs.getString( "Job Title");
+                String department = rs.getString( "Department");
+                String roles = rs.getString("Roles");
 
-                UserRole userRole = new UserRole(userId, email, Roles);
+                UserRole userRole = new UserRole(empId, firstName, lastName, email, position, department, roles);
                 userRolesView.add(userRole);
             }
             rs.close();

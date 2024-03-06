@@ -5,12 +5,12 @@ public class UserRole {
     private int userId;
     private int roleId;
     private String username;
-
     private String email;
     private String roles;
-
-
-
+    private String firstName;
+    private String lastName;
+    private String position;
+    private String department;
     private int empID;
 
     public UserRole(int id, int userId, int roleId) {
@@ -19,20 +19,54 @@ public class UserRole {
         this.roleId = roleId;
     }
 
-    public UserRole(int userId, int roleId) {
-        this.userId = userId;
-        this.roleId = roleId;
-    }
+//    public UserRole(int userId, int roleId) {
+//        this.userId = userId;
+//        this.roleId = roleId;
+//    }
 
-    public UserRole(int empId, String email, String roles){
+    public UserRole(int empId, String firstName, String lastName, String email, String position, String department, String roles){
         this.empID = empId;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
+        this.position = position;
+        this.department = department;
         this.roles = roles;
-
     }
 
 
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
     public UserRole(int userId) {
         this.roleId = userId;

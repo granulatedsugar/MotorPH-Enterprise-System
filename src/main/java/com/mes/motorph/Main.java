@@ -59,6 +59,7 @@ public class Main extends Application {
             // Load the application icon
             Image icon = new Image(Main.class.getResourceAsStream("/images/app-icon.png"));
             primaryStage.getIcons().add(icon);
+            primaryStage.setResizable(false);
 
             // Pass user ID and roles to the controller of main view
             ViewFactory mainController = fxmlLoader.getController();

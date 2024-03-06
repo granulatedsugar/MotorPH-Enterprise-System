@@ -23,7 +23,7 @@ public class UserRepository {
         try {
             conn = DBUtility.getConnection();
             stmt = conn.createStatement();
-            String sql = "SELECT username, password FROM motorph.user;";
+            String sql = "SELECT * FROM motorph.user;";
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()) {

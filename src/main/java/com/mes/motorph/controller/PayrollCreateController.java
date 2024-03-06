@@ -4,8 +4,11 @@ import com.mes.motorph.entity.*;
 import com.mes.motorph.exception.*;
 import com.mes.motorph.services.*;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -15,17 +18,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class PayrollCreateController {
-
-    @FXML
-    private Label payslipSceneTitle;
     @FXML
     private Label breadCrumb;
     @FXML
     private CheckBox overrideCheckBox;
     @FXML
     private Button runReportBtn;
-    @FXML
-    private Button calculateSalaryBtn;
     @FXML
     private TextField payrollIdField;
     @FXML
@@ -71,29 +69,29 @@ public class PayrollCreateController {
     @FXML
     private MFXTextField netPayField;
     @FXML
-    private Button submitBtn;
-    @FXML
-    private Button updateBtn;
+    private MFXButton payrollButton;
     private String payrollId;
+    private PayrollService payrollService = new PayrollService();
+    private DeductionService deductionService = new DeductionService();
+    private AttendanceService attendanceService = new AttendanceService();
+    private EmployeeService employeeService = new EmployeeService();
+    private PositionService positionService = new PositionService();
+    private DepartmentService departmentService = new DepartmentService();
+    private SalaryCalculationService salaryCalculationService = new SalaryCalculationService();
 
-    PayrollService payrollService = new PayrollService();
-    DeductionService deductionService = new DeductionService();
-    AttendanceService attendanceService = new AttendanceService();
-    EmployeeService employeeService = new EmployeeService();
-    PositionService positionService = new PositionService();
-    DepartmentService departmentService = new DepartmentService();
-    SalaryCalculationService salaryCalculationService = new SalaryCalculationService();
-
-
+    // TODO:
     // Implement next phase : continuous improvement
     // NumberFormat philippinesFormat = CurrencyUtility.getPhilippinesCurrencyFormatter();
-
     @FXML
     protected void initialize() {
         startDatePicker.setEditable(true);
         endDatePicker.setEditable(true);
         employeeIdField.setEditable(true);
         runReportBtn.setDisable(true);
+        payrollButton.setText("Submit");
+        payrollButton.setOnAction(actionEvent -> {
+            onSubmitPayroll();
+        });
     }
 
     // UPDATE data
@@ -101,12 +99,13 @@ public class PayrollCreateController {
         this.payrollId = payrollId;
         payrollIdField.setText(payrollId);
         breadCrumb.setText("Payroll / Update / Payslip #" + payrollId);
-        payslipSceneTitle.setText("Update Payslip #" + payrollId);
-        submitBtn.setVisible(false);
-        updateBtn.setVisible(true);
-        startDatePicker.setEditable(false);
-        endDatePicker.setEditable(false);
+        startDatePicker.setDisable(true);
+        endDatePicker.setDisable(true);
         employeeIdField.setEditable(false);
+        payrollButton.setText("Update");
+        payrollButton.setOnAction(actionEvent -> {
+            onUpdatePayroll();
+        });
 
         try {
             Payroll payrollEmployeeData = payrollService.fetchEmployeePayrollDetails(payrollId);
@@ -179,7 +178,6 @@ public class PayrollCreateController {
         runReportBtn.setDisable(!isSelected);
     }
 
-
     // Generate new payslip
     @FXML
     protected void onClickRunReport() {
@@ -195,10 +193,8 @@ public class PayrollCreateController {
                 // Calculate salary details
                 calculateSalaryDetails(employee);
             }
-
         } catch (EmployeeException e) {
-            e.printStackTrace();
-            // Handle exception
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
         }
     }
 
@@ -208,8 +204,6 @@ public class PayrollCreateController {
             List<Position> positions = positionService.fetchPositions();
             List<Department> departments = departmentService.fetchDepartments();
 
-
-
             String employeePositionTitle = null;
             for (Position position : positions) {
                 if (position.getPositionId() == employee.getPositionId()) {
@@ -217,7 +211,6 @@ public class PayrollCreateController {
                     break;
                 }
             }
-
             String employeeDepartment = null;
             for (Department department : departments) {
                 if (department.getDeptId() == employee.getDeptId()) {
@@ -225,14 +218,12 @@ public class PayrollCreateController {
                     break;
                 }
             }
-
             // Employee Information
             employeeNameField.setText(employee.getFirstName() + " " + employee.getLastName());
             positionField.setText(employeePositionTitle);
             deptField.setText(employeeDepartment);
         } catch (PositionException | DepartmentException e) {
-            e.printStackTrace();
-            // Handle exception
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
         }
     }
 
@@ -247,7 +238,6 @@ public class PayrollCreateController {
         payrollIdField.setText(payslipIdValue + "-" + employee.getId());
 
         try {
-
             // Check Attendance
             List<Attendance> attendances = attendanceService.fetchAttendaceByEmployeId(employee.getId(), fDate, tDate);
             double totalOvertime = 0;
@@ -314,13 +304,15 @@ public class PayrollCreateController {
     }
 
     @FXML
-    protected void onSubmitPayroll() {
+    protected EventHandler<ActionEvent> onSubmitPayroll() {
         processPayrollSubmission(true);
+        return null;
     }
 
     @FXML
-    protected void onUpdatePayroll() {
+    protected EventHandler<ActionEvent> onUpdatePayroll() {
         processPayrollSubmission(false);
+        return null;
     }
 
     private void processPayrollSubmission(boolean isNew) {
@@ -408,5 +400,4 @@ public class PayrollCreateController {
         totalDeductionsField.setText("");
         netPayField.setText("");
     }
-
 }

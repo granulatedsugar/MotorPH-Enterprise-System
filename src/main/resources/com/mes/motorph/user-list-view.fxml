@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="663.0" prefWidth="923.0" styleClass="post-background" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.UserListController">
     <children>
-      <PasswordField fx:id="passwordField" layoutX="16.0" layoutY="251.0" prefHeight="30.0" prefWidth="268.0" stylesheets="@../../../css/text.css" />
+      <PasswordField fx:id="passwordField" layoutX="14.0" layoutY="310.0" prefHeight="30.0" prefWidth="268.0" stylesheets="@../../../css/text.css" />
         <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="412.0" text="-" textFill="#cdd2d6">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />
@@ -39,27 +39,18 @@
             </children>
         </HBox>
       <HBox alignment="CENTER" layoutX="14.0" layoutY="612.0" prefHeight="50.0" prefWidth="903.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-        <VBox alignment="TOP_CENTER" layoutX="668.0" layoutY="117.0" prefHeight="537.0" prefWidth="244.0" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="117.0">
+        <VBox alignment="TOP_CENTER" layoutX="668.0" layoutY="117.0" prefHeight="537.0" prefWidth="614.0" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="117.0">
          <children>
-                <TableView fx:id="usersTableView" prefHeight="498.0" prefWidth="465.0" stylesheets="@../../../css/table.css" VBox.vgrow="ALWAYS">
+                <TableView fx:id="usersTableView" prefHeight="537.0" prefWidth="568.0" stylesheets="@../../../css/table.css" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="usernameColumn" editable="false" prefWidth="440.0" styleClass="centered-cell" text="Username" />
+                        <TableColumn fx:id="usernameColumn" editable="false" prefWidth="194.66668701171875" styleClass="centered-cell" text="Username" />
                     </columns>
-                    <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                    </columnResizePolicy>
                 </TableView>
          </children>
         </VBox>
-      <Label layoutX="14.0" layoutY="172.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Username" />
-      <TextField fx:id="usernameField" layoutX="14.0" layoutY="190.0" prefHeight="29.0" prefWidth="268.0" stylesheets="@../../../css/text.css" />
-      <Label layoutX="14.0" layoutY="234.0" prefHeight="17.0" prefWidth="136.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Password" />
-      <Button layoutX="14.0" layoutY="310.0" mnemonicParsing="false" onAction="#onClickNewUser" prefHeight="28.0" prefWidth="268.0" stylesheets="@../../../css/scenes.css" text="New">
-         <styleClass>
-            <String fx:value="reg-button" />
-            <String fx:value="new-button" />
-         </styleClass>
-      </Button>
+      <Label layoutX="16.0" layoutY="274.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Username" />
+      <TextField fx:id="usernameField" layoutX="14.0" layoutY="268.0" prefHeight="29.0" prefWidth="268.0" stylesheets="@../../../css/text.css" />
+      <Label layoutX="16.0" layoutY="316.0" prefHeight="17.0" prefWidth="136.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Password" />
       <Button layoutX="16.0" layoutY="347.0" mnemonicParsing="false" onAction="#onClickUpdateUser" prefHeight="28.0" prefWidth="268.0" styleClass="reg-button" stylesheets="@../../../css/scenes.css" text="Update" />
       <Button layoutX="16.0" layoutY="424.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="268.0" stylesheets="@../../../css/scenes.css" text="Delete">
          <styleClass>
@@ -68,7 +59,7 @@
          </styleClass>
       </Button>
       <Text layoutX="137.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- OR -" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="387.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="62.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/avatar.png" />
          </image>

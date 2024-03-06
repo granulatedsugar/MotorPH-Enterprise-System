@@ -50,6 +50,7 @@ public class PayrollRepository {
         return payrolls;
     }
 
+    // TODO:
     // Check if Payroll has Data
     public boolean hasPayrollData() throws PayrollException, SQLException {
         try {
@@ -61,6 +62,7 @@ public class PayrollRepository {
             rs.next();
             int count = rs.getInt(1);
 
+            // TODO:
 //            boolean check = count > 0 ? true : false;
 //            System.out.println("CHECCCCCCKKKKK MEEEEEEE!!!!!" + check);
 

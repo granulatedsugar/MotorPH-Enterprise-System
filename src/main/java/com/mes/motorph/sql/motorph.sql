@@ -172,7 +172,11 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `employee_roles` AS SELECT 
  1 AS `Employee ID`,
+ 1 AS `First Name`,
+ 1 AS `Last Name`,
  1 AS `Email`,
+ 1 AS `Job Title`,
+ 1 AS `Department`,
  1 AS `Roles`*/;
 SET character_set_client = @saved_cs_client;
 
@@ -330,13 +334,12 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` char(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
-  CONSTRAINT `user_ibfuserk_1` FOREIGN KEY (`username`) REFERENCES `employee` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `username_UNIQUE` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -345,7 +348,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'mgarcia@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(2,'alim@motorph.com',NULL),(3,'baquino@motorph.com',NULL),(4,'ireyes@motorph.com',NULL),(5,'ehernandez@motorph.com',NULL),(6,'avillanueva@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(7,'bsan jose@motorph.com',NULL),(8,'aromualdez@motorph.com',NULL),(9,'ratienza@motorph.com',NULL),(10,'ralvaro@motorph.com',NULL),(11,'asalcedo@motorph.com',NULL),(12,'jlopez@motorph.com',NULL),(13,'mfarala@motorph.com',NULL),(14,'lmartinez@motorph.com',NULL),(15,'fromualdez@motorph.com',NULL),(16,'cmata@motorph.com',NULL),(17,'sdeleon@motorph.com',NULL),(18,'asanjose@motorph.com',NULL),(19,'crosario@motorph.com',NULL),(20,'mbautista@motorph.com',NULL),(21,'dlazaro@motorph.com',NULL),(22,'kdelossantos@motorph.com',NULL),(23,'vsantos@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(24,'tdelrosario@motorph.com',NULL),(25,'jtolentino@motorph.com',NULL),(26,'pgutierrez@motorph.com',NULL),(27,'gmanalaysay@motorph.com',NULL),(28,'lvillegas@motorph.com',NULL),(29,'cramos@motorph.com',NULL),(30,'emaceda@motorph.com',NULL),(31,'daguilar@motorph.com',NULL),(32,'jcastro@motorph.com',NULL),(33,'cmartinez@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(34,'bsantos@motorph.com',NULL),(40,'nroque@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(41,'stolentino@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(42,'taylor@motorph.com','AnxSdyNanjXLOxSVt/j6Hg==');
+INSERT INTO `user` VALUES (1,'mgarcia@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(2,'alim@motorph.com',''),(3,'baquino@motorph.com',''),(4,'ireyes@motorph.com',''),(5,'ehernandez@motorph.com',''),(6,'avillanueva@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(7,'bsan jose@motorph.com',''),(8,'aromualdez@motorph.com',''),(9,'ratienza@motorph.com',''),(10,'ralvaro@motorph.com',''),(11,'asalcedo@motorph.com',''),(12,'jlopez@motorph.com',''),(13,'mfarala@motorph.com',''),(14,'lmartinez@motorph.com',''),(15,'fromualdez@motorph.com',''),(16,'cmata@motorph.com',''),(17,'sdeleon@motorph.com',''),(18,'asanjose@motorph.com',''),(19,'crosario@motorph.com',''),(20,'mbautista@motorph.com',''),(21,'dlazaro@motorph.com',''),(22,'kdelossantos@motorph.com',''),(23,'vsantos@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(24,'tdelrosario@motorph.com',''),(25,'jtolentino@motorph.com',''),(26,'pgutierrez@motorph.com',''),(27,'gmanalaysay@motorph.com',''),(28,'lvillegas@motorph.com',''),(29,'cramos@motorph.com',''),(30,'emaceda@motorph.com',''),(31,'daguilar@motorph.com',''),(32,'jcastro@motorph.com',''),(33,'cmartinez@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(34,'bsantos@motorph.com',''),(35,'nroque@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(36,'stolentino@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(37,'taylor@motorph.com','AnxSdyNanjXLOxSVt/j6Hg==');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +430,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `employee_roles` AS select `user`.`id` AS `Employee ID`,`user`.`username` AS `Email`,`role`.`name` AS `Roles` from ((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) */;
+/*!50001 VIEW `employee_roles` AS select `user`.`id` AS `Employee ID`,`employee`.`firstname` AS `First Name`,`employee`.`lastname` AS `Last Name`,`user`.`username` AS `Email`,`position`.`title` AS `Job Title`,`department`.`dept_desc` AS `Department`,`role`.`name` AS `Roles` from (((((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) join `employee` on((`employee`.`id` = `user`.`id`))) join `position` on((`position`.`positionId` = `employee`.`positionId`))) join `department` on((`department`.`dept_id` = `employee`.`deptId`))) order by `user`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -459,4 +462,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-04 23:01:40
+-- Dump completed on 2024-03-05 20:57:17

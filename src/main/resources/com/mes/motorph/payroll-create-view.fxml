@@ -4,15 +4,12 @@
 <?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import java.lang.String?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -20,19 +17,18 @@
 
 <AnchorPane prefHeight="1086.0" prefWidth="923.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PayrollCreateController">
     <children>
-        <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="373.0" styleClass="labels" stylesheets="@../../../css/scenes.css" text="Payroll / New / Payslip" textFill="#cdd2d6">
+        <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="373.0" text="Payroll / New / Payslip" textFill="#cdd2d6">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />
             </font>
         </Label>
-      <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="95.0" prefHeight="987.0" prefWidth="903.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0">
-         <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <ScrollPane prefHeight="721.0" prefWidth="1074.0" stylesheets="@../../../css/ScrollPane.css" HBox.hgrow="ALWAYS">
-               <content>
-                  <VBox prefHeight="978.0" prefWidth="864.0" styleClass="body">
+       <HBox alignment="CENTER" layoutX="10.0" layoutY="63.0" prefHeight="1019.0" prefWidth="903.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="63.0" HBox.hgrow="ALWAYS">
+       <children>
+          <ScrollPane hbarPolicy="NEVER" stylesheets="@../../../css/ScrollPane.css" HBox.hgrow="ALWAYS">
+          <content>
+                  <VBox prefHeight="919.0" prefWidth="900.0" styleClass="body">
                      <children>
-                        <AnchorPane prefHeight="758.0" prefWidth="864.0" stylesheets="@../../../css/TextField.css" VBox.vgrow="ALWAYS">
+                        <AnchorPane prefHeight="919.0" prefWidth="942.0" stylesheets="@../../../css/TextField.css" VBox.vgrow="ALWAYS">
                            <children>
                               <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -67,13 +63,6 @@
                               <Label layoutX="1.0" layoutY="621.0" prefHeight="17.0" prefWidth="98.0" text="Rice Subsidy" />
                               <Label layoutX="2.0" layoutY="719.0" prefHeight="17.0" prefWidth="52.0" text="Phone" />
                               <Label layoutX="1.0" layoutY="668.0" prefHeight="17.0" prefWidth="76.0" text="Clothing" />
-                              <Button fx:id="submitBtn" layoutX="411.0" layoutY="869.0" mnemonicParsing="false" onAction="#onSubmitPayroll" prefHeight="40.0" prefWidth="180.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Submit" />
-                              <Button fx:id="updateBtn" layoutX="429.0" layoutY="911.0" mnemonicParsing="false" onAction="#onUpdatePayroll" prefHeight="31.0" prefWidth="145.0" stylesheets="@../../../css/scenes.css" text="Update">
-                                 <styleClass>
-                                    <String fx:value="reg-button" />
-                                    <String fx:value="new-button" />
-                                 </styleClass>
-                              </Button>
                               <MFXTextField fx:id="employeeNameField" editable="false" floatMode="BORDER" floatingText="Employee Name" layoutX="1.0" layoutY="262.0" prefHeight="30.0" prefWidth="420.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
                               <MFXCheckbox fx:id="overrideCheckBox" contentDisposition="RIGHT" layoutX="763.0" layoutY="80.0" onAction="#onClickOverride" prefHeight="28.0" prefWidth="96.0" text="Override" />
                               <MFXTextField fx:id="positionField" editable="false" floatMode="BORDER" floatingText="Position" layoutX="438.0" layoutY="262.0" prefHeight="30.0" prefWidth="210.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
@@ -95,7 +84,7 @@
                               <Line endX="45.0" layoutX="617.0" layoutY="372.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
                               <MFXTextField fx:id="pagIbigField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="402.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
                               <Line endX="45.0" layoutX="617.0" layoutY="421.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
-                              <MFXTextField fx:id="sssField" alignment="CENTER_RIGHT" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="450.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                              <MFXTextField fx:id="sssField" alignment="CENTER_RIGHT" editable="false" floatMode="BORDER" floatingText="PHP" layoutX="680.0" layoutY="450.0" prefHeight="30.0" prefWidth="181.0" promptText="0.00" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
                               <Line endX="45.0" layoutX="617.0" layoutY="469.0" opacity="0.1" startX="-100.0" strokeLineCap="ROUND" style="-fx-stroke-dash-array: 3;" />
                               <Text layoutX="446.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deductions">
                                  <font>
@@ -157,13 +146,13 @@
                                  </font>
                               </Text>
                               <Text layoutX="1.0" layoutY="916.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Rights Reserved | MotorPH © 2024" wrappingWidth="359.4702262878418" />
-                              <MFXButton layoutX="680.0" layoutY="869.0" prefHeight="40.0" prefWidth="180.0" />
-                           </children></AnchorPane>
+                              <MFXButton fx:id="payrollButton" layoutX="680.0" layoutY="869.0" prefHeight="40.0" prefWidth="180.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </VBox>
                </content>
             </ScrollPane>
-            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
          </children></HBox>
     </children>
 </AnchorPane>
