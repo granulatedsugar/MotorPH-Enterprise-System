@@ -18,8 +18,8 @@ public class RoleService {
         roleRepository.createRole(roleName);
     }
 
-    public void updateRole(Role role) throws RoleException {
-        roleRepository.updateRole(role);
+    public void updateRole(int roleId, String name) throws RoleException {
+        roleRepository.updateRole(roleId, name);
     }
 
     public void deleteRole(int roleId) throws RoleException {

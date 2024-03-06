@@ -164,16 +164,7 @@
                         </ImageView>
                      </graphic>
                   </MFXButton>
-                  <MFXButton fx:id="roleBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickRole" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Roles">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/student-card.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </MFXButton>
-                  <MFXButton fx:id="userRole" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickUserRole" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="User Roles">
+                  <MFXButton fx:id="roleBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickUserRole" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="User Roles">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>

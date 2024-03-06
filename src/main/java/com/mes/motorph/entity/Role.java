@@ -9,7 +9,6 @@ public class Role {
         this.name = name;
     }
 
-
     public int getRoleId() {
         return roleId;
     }
@@ -24,5 +23,10 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Role ID: " + roleId + " Name: " + name;
     }
 }

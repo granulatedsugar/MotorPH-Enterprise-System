@@ -13,3 +13,7 @@
 .table-view .column-header#netPayColumn .label {
     -fx-alignment: CENTER_LEFT;
 }
+
+.pagination > .control-box > .text {
+    -fx-fill: #212B36; /* Change this to your desired color */
+}

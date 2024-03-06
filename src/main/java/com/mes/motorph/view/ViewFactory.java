@@ -278,11 +278,6 @@ public class ViewFactory {
     }
 
     @FXML
-    protected void onClickRole() {
-        navigateToView("/com/mes/motorph/role-list-view.fxml");
-    }
-
-    @FXML
     protected void onClickPosition() {
         navigateToView("/com/mes/motorph/position-view.fxml");
     }
@@ -327,7 +322,6 @@ public class ViewFactory {
     }
 
     // TODO: @Sid missing user roles
-
     private void navigateToView(String fxmlPath) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource(fxmlPath));

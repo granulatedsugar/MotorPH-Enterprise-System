@@ -2,6 +2,8 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,10 +19,25 @@
         </Label>
         <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
             <children>
-                <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="729.0" HBox.hgrow="ALWAYS" />
-            <MFXButton onAction="#onClickUpdate" prefHeight="29.0" prefWidth="100.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Update" />
+            <MFXButton onAction="#onClickCreateRole" prefHeight="29.0" prefWidth="120.0" stylesheets="@../../../css/Button.css" text="Manage Role">
+               <styleClass>
+                  <String fx:value="mfx-button-secondary" />
+                  <String fx:value="mfx-button-new" />
+               </styleClass>
+            </MFXButton>
+                <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="507.0" HBox.hgrow="ALWAYS" />
+            <MFXButton onAction="#onClickAssignRole" prefHeight="29.0" prefWidth="120.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Assign Role" />
             </children>
         </HBox>
-      <MFXPaginatedTableView fx:id="userRolesTableView" layoutX="10.0" layoutY="114.0" pagesToShow="5" prefHeight="145.0" prefWidth="903.0" rowsPerPage="15" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="114.0" />
+      <MFXPaginatedTableView fx:id="userRolesTableView" layoutX="10.0" layoutY="114.0" pagesToShow="5" prefHeight="145.0" prefWidth="903.0" rowsPerPage="15" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="114.0">
+         <styleClass>
+            <String fx:value="text" />
+            <String fx:value="control-box" />
+            <String fx:value="pagination" />
+         </styleClass>
+         <stylesheets>
+            <URL value="@../../../css/TableView.css" />
+            <URL value="@../../../css/ContextMenu.css" />
+         </stylesheets></MFXPaginatedTableView>
     </children>
 </AnchorPane>

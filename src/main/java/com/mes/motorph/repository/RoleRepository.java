@@ -62,14 +62,14 @@ public class RoleRepository {
         }
     }
 
-    public void updateRole(Role role) throws RoleException {
+    public void updateRole(int roleId, String name) throws RoleException {
         try {
             conn = DBUtility.getConnection();
             String sql = "UPDATE motorph.role SET name = ? WHERE roleId = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setString(1, role.getName());
-            pstmt.setInt(2, role.getRoleId());
+            pstmt.setString(1, name);
+            pstmt.setInt(2, roleId);
 
             int rowsInserted = pstmt.executeUpdate();
 
