@@ -92,6 +92,7 @@ public class AttendanceEmployeeController {
         dateField.setDisable(false);
 
         Attendance attendance = new Attendance(attendanceId,employeeId,date,timeIn,timeOut);
+        //we set the fields
         setAttendanceDetailsFields(attendance);
 
     }
@@ -105,20 +106,24 @@ public class AttendanceEmployeeController {
 
     @FXML
     private void onClickAddCreateAttendance() throws AttendanceException, SQLException {
-        if(hasAttendance()){
-            System.out.println("ALREADY EXIST!");
+
+        if(hasAttendance()){  //Check if has attendance
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "Attendance Already Exist. Check Record");
         }else{
-            if(empIdField.getText().isEmpty()|| dateField.getValue() == null || timeInField.getText().isEmpty() || timeOutField.getText().isEmpty()){
+            if(empIdField.getText().isEmpty()|| dateField.getValue() == null || timeInField.getText().isEmpty() || timeOutField.getText().isEmpty()){// Check if all fields are null then display a message
                 AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "Missing Fields");
             }else{
+                //if not null get all values from fields
                 this.employeeId = Integer.parseInt(empIdField.getText());
                 this.date = Date.valueOf(dateField.getValue());
                 this.timeIn = Time.valueOf(timeInField.getText());
                 this.timeOut = Time.valueOf(timeOutField.getText());
                 Attendance attendance = new Attendance(employeeId,date,timeIn,timeOut);
                 try {
+                    //add attendance
                     attendanceService.createAttendance(attendance);
                     resetFields();
+                    //display a message
                     AlertUtility.showAlert(Alert.AlertType.INFORMATION, " ", null, "Attendance Created!");
                 } catch (AttendanceException e) {
                     throw new RuntimeException(e);
@@ -129,11 +134,13 @@ public class AttendanceEmployeeController {
 
     }
 
-    //create a method that resets everything
+    //create a method that resets all fields
     private void resetFields(){
         empIdField.setText("");
-        dateField.setValue(null);
+        dateField.setValue(LocalDate.parse(date.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+        //set timeInField to 08:00:00
         timeInField.setText("08:00:00");
+        //set timeOutField to 5:00:00
         timeOutField.setText("17:00:00");
         timeInBtn.setDisable(false);
         timeOutBtn.setDisable(false);
@@ -145,12 +152,16 @@ public class AttendanceEmployeeController {
         this.attendanceId = Integer.parseInt(attendanceIdField.getText());
         this.employeeId = Integer.parseInt(empIdField.getText());
         this.date = Date.valueOf(dateField.getValue());
+        //get time in and time out, and format it
         Time timeIn = Time.valueOf(LocalTime.parse(timeInField.getText()).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        //convert from Time to SQL.Time
         java.sql.Time convertedTimeIn = new java.sql.Time(timeIn.getTime());
         Time timeOut = Time.valueOf(LocalTime.parse(timeOutField.getText()).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         java.sql.Time convertedTimeOut = new java.sql.Time(timeOut.getTime());
+        //instantiate a new Attendance
         Attendance attendance = new Attendance(attendanceId, employeeId, date, convertedTimeIn,convertedTimeOut);
         try {
+            //update attendance
             attendanceService.updateAttendance(attendance);
             AlertUtility.showAlert(Alert.AlertType.INFORMATION, " ", null, "Attendance Updated!");
         } catch (AttendanceException e) {
@@ -168,10 +179,10 @@ public class AttendanceEmployeeController {
         Date date = Date.valueOf(dateField.getValue());
         Attendance logIn = new Attendance(employeeId, date, convertedTimeIn, null);
         if(hasAttendance()){
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "WARNING!", null, "DUPLICATE! CLICK TIMEOUT!");
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "WARNING!", null, "You are currently logged in.");
         }else{
             attendanceService.createAttendance(logIn);
-            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Time In", null, "TIME IN LOGGED!");
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Time In", null, "Time in logged!");
             timeInBtn.setDisable(true);
         }
 
@@ -203,13 +214,13 @@ public class AttendanceEmployeeController {
         Date date = attendanceRecord().getDate();
         Time timeIn = attendanceRecord().getTimeIn();
         if(hasAttendance() && attendanceRecord().getTimeOut() != null){
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "WARNING!", null, "ALREADY TIME OUT");
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "WARNING!", null, "You have already been logged out.");
         }else{
             Attendance attendance = new Attendance(id, employeeId, date, timeIn, convertedTimeOut);
             attendanceService.updateAttendance(attendance);
             AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Time Out", null, "GREAT WORK! TIME OUT");
             timeOutBtn.setDisable(true);
-            
+
         }
     }
 
