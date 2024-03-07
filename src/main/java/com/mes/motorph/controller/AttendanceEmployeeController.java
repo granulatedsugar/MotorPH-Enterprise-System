@@ -218,7 +218,7 @@ public class AttendanceEmployeeController {
         }else{
             Attendance attendance = new Attendance(id, employeeId, date, timeIn, convertedTimeOut);
             attendanceService.updateAttendance(attendance);
-            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Time Out", null, "GREAT WORK! TIME OUT");
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Time Out", null, "GREAT WORK! UMALIS KA NA!");
             timeOutBtn.setDisable(true);
 
         }
