@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="newView" prefHeight="700.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.EmployeeAddController">
+<AnchorPane fx:id="newView" prefHeight="700.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.EmployeeAddController">
    <children>
       <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="57.0" prefWidth="428.0" text="Employees / Add / Employee" textFill="#cdd2d6">
          <font>
@@ -21,60 +21,49 @@
       </Label>
       <HBox layoutX="24.0" layoutY="64.0" prefHeight="37.0" prefWidth="879.0">
          <children>
-            <Label fx:id="sceneTitle" prefHeight="22.0" prefWidth="303.0" styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Add New Employee" />
+            <Label fx:id="sceneTitle" prefHeight="22.0" prefWidth="303.0" styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Add New Employee">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="empIdLabel" styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="-" />
+            <Label fx:id="empIdLabel" styleClass="scene-title" stylesheets="@../../../css/scenes.css" />
          </children>
       </HBox>
       <VBox layoutX="19.0" layoutY="106.0" prefHeight="609.0" prefWidth="903.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="106.0">
          <children>
             <AnchorPane prefHeight="635.0" prefWidth="903.0">
                <children>
-                  <Label styleClass="txtLabel" stylesheets="@../../../css/main.css" text="Employee Information" />
-                  <TextField fx:id="firstNameAdd" layoutX="17.0" layoutY="58.0" prefHeight="30.0" prefWidth="267.0" />
-                  <TextField fx:id="lastNameAdd" layoutX="321.0" layoutY="57.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="17.0" layoutY="41.0" text="First Name" />
-                  <Label layoutX="321.0" layoutY="40.0" text="Last Name" />
-                  <Label layoutX="623.0" layoutY="36.0" text="Date of Birth" />
-                  <DatePicker fx:id="dobAdd" layoutX="623.0" layoutY="56.0" prefHeight="30.0" prefWidth="189.0" />
-                  <TextField fx:id="addressAdd" layoutX="17.0" layoutY="115.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="17.0" layoutY="98.0" text="Address" />
-                  <TextField fx:id="emailAdd" layoutX="321.0" layoutY="115.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="321.0" layoutY="98.0" text="Email" />
-                  <TextField fx:id="vacationHoursAdd" layoutX="17.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
-                  <Label layoutX="17.0" layoutY="412.0" text="Vacation Hours" />
-                  <TextField fx:id="phoneNumAdd" layoutX="623.0" layoutY="115.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="623.0" layoutY="98.0" text="Phone Number" />
-                  <TextField fx:id="clothingAllowanceAdd" layoutX="18.0" layoutY="176.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="18.0" layoutY="159.0" text="Clothing Allowance" />
-                  <TextField fx:id="phoneAllowanceAdd" layoutX="322.0" layoutY="176.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="322.0" layoutY="159.0" text="Phone Allowance" />
-                  <TextField fx:id="riceSubAdd" layoutX="624.0" layoutY="176.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="624.0" layoutY="159.0" text="Rice Subsidy" />
-                  <TextField fx:id="pagIbigAdd" layoutX="19.0" layoutY="241.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="19.0" layoutY="224.0" text="Pag-Ibig ID" />
-                  <TextField fx:id="philHealthAdd" layoutX="323.0" layoutY="241.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="323.0" layoutY="224.0" text="PhilHealth ID" />
-                  <TextField fx:id="sssAdd" layoutX="625.0" layoutY="241.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="625.0" layoutY="224.0" text="Social Security System ID" />
-                  <TextField fx:id="tinAdd" layoutX="19.0" layoutY="304.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="19.0" layoutY="287.0" text="TIN ID" />
-                  <TextField fx:id="supervisorAdd" layoutX="323.0" layoutY="304.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="323.0" layoutY="287.0" text="Immediate Supervisor" />
-                  <TextField fx:id="statusAdd" layoutX="625.0" layoutY="304.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="625.0" layoutY="287.0" text="Employment Status" />
-                  <TextField fx:id="sickHoursAdd" layoutX="231.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
-                  <Label layoutX="231.0" layoutY="412.0" text="Sick Hours" />
-                  <Label layoutX="443.0" layoutY="412.0" text="Position ID" />
-                  <Label layoutX="657.0" layoutY="412.0" text="Department ID" />
-                  <TextField fx:id="basicSalaryAdd" layoutX="18.0" layoutY="366.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="18.0" layoutY="349.0" text="Basic Salary" />
-                  <TextField fx:id="grossSemiMonthlyRateAdd" layoutX="322.0" layoutY="366.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="322.0" layoutY="349.0" text="Gross Semi Monthly Rate" />
-                  <TextField fx:id="hourlyRateAdd" layoutX="624.0" layoutY="366.0" prefHeight="30.0" prefWidth="267.0" />
-                  <Label layoutX="624.0" layoutY="349.0" text="Hourly Rate" />
-                  <ComboBox fx:id="positionAdd" layoutX="443.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
-                  <ComboBox fx:id="departmentAdd" layoutX="656.0" layoutY="429.0" prefHeight="30.0" prefWidth="189.0" />
+                  <Label styleClass="txtLabel" stylesheets="@../../../css/main.css" text="Employee Information">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <MFXTextField fx:id="firstNameAdd" floatMode="BORDER" floatingText="First Name* " layoutX="18.0" layoutY="48.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="lastNameAdd" floatMode="BORDER" floatingText="Last Name*" layoutX="318.0" layoutY="48.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXDatePicker fx:id="dobAdd" floatMode="BORDER" floatingText="Date of Birth*" layoutX="623.0" layoutY="48.0" prefHeight="30.0" prefWidth="267.0" stylesheets="@../../../css/DatePicker.css">
+                     <styleClass>
+                        <String fx:value="mfx-date-picker" />
+                        <String fx:value="mfx-text-field" />
+                     </styleClass>
+                  </MFXDatePicker>
+                  <MFXTextField fx:id="addressAdd" floatMode="BORDER" floatingText="Address*" layoutX="19.0" layoutY="111.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="emailAdd" floatMode="BORDER" floatingText="Email*" layoutX="318.0" layoutY="111.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="phoneNumAdd" floatMode="BORDER" floatingText="Phone Number*" layoutX="623.0" layoutY="111.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="clothingAllowanceAdd" floatMode="BORDER" floatingText="Clothing Allowance*" layoutX="18.0" layoutY="172.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="phoneAllowanceAdd" floatMode="BORDER" floatingText="Phone Allowance*" layoutX="318.0" layoutY="172.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="riceSubAdd" floatMode="BORDER" floatingText="Rice Subsidy*" layoutX="623.0" layoutY="172.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="pagIbigAdd" floatMode="BORDER" floatingText="Pag-Ibig ID*" layoutX="18.0" layoutY="233.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="philHealthAdd" floatMode="BORDER" floatingText="PhilHealth ID*" layoutX="318.0" layoutY="233.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="sssAdd" floatMode="BORDER" floatingText="Social Security System ID*" layoutX="623.0" layoutY="233.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="tinAdd" floatMode="BORDER" floatingText="TIN ID*" layoutX="18.0" layoutY="296.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="supervisorAdd" floatMode="BORDER" floatingText="Immediate Supervisor*" layoutX="318.0" layoutY="296.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="statusAdd" floatMode="BORDER" floatingText="Employment Status*" layoutX="624.0" layoutY="296.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="basicSalaryAdd" floatMode="BORDER" floatingText="Basic Salary*" layoutX="18.0" layoutY="358.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="grossSemiMonthlyRateAdd" floatMode="BORDER" floatingText="Gross Semi Monthly Rate*" layoutX="318.0" layoutY="358.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="hourlyRateAdd" floatMode="BORDER" floatingText="Hourly Rate*" layoutX="624.0" layoutY="358.0" prefHeight="30.0" prefWidth="267.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="vacationHoursAdd" floatMode="BORDER" floatingText="Vacation Hours" layoutX="19.0" layoutY="421.0" prefHeight="38.0" prefWidth="189.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXTextField fx:id="sickHoursAdd" floatMode="BORDER" floatingText="Sick Hours" layoutX="244.0" layoutY="421.0" prefHeight="38.0" prefWidth="189.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXComboBox fx:id="positionAdd" floatMode="BORDER" floatingText="Position ID*" layoutX="472.0" layoutY="420.0" prefHeight="40.0" prefWidth="189.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+                  <MFXComboBox fx:id="departmentAdd" floatMode="BORDER" floatingText="Department ID*" layoutX="702.0" layoutY="420.0" prefHeight="40.0" prefWidth="189.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
                </children>
             </AnchorPane>
          </children>
@@ -84,18 +73,8 @@
             <Pane prefHeight="74.0" prefWidth="806.0" />
             <Pane prefHeight="74.0" prefWidth="806.0">
                <children>
-                  <Button fx:id="employeeUpdate" layoutX="330.0" layoutY="22.0" mnemonicParsing="false" onAction="#onClickUpdate" prefHeight="30.0" prefWidth="100.0" stylesheets="@../../../css/scenes.css" text="Update">
-                     <styleClass>
-                        <String fx:value="reg-button" />
-                        <String fx:value="new-button" />
-                     </styleClass>
-                  </Button>
-                  <Button fx:id="employeeAdd" layoutX="330.0" layoutY="22.0" mnemonicParsing="false" onAction="#onClickCreate" prefHeight="30.0" prefWidth="100.0" stylesheets="@../../../css/scenes.css" text="Add">
-                     <styleClass>
-                        <String fx:value="reg-button" />
-                        <String fx:value="new-button" />
-                     </styleClass>
-                  </Button>
+                  <MFXButton fx:id="employeeUpdate" layoutX="338.0" layoutY="22.0" onAction="#onClickUpdate" prefHeight="30.0" prefWidth="100.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Update" />
+                  <MFXButton fx:id="employeeAdd" layoutX="338.0" layoutY="22.0" onAction="#onClickCreate" prefHeight="30.0" prefWidth="100.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Add" />
                </children>
             </Pane>
          </children>

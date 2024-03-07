@@ -13,6 +13,10 @@ import com.mes.motorph.services.EmployeeService;
 import com.mes.motorph.services.PositionService;
 import com.mes.motorph.services.UserService;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -28,53 +32,53 @@ public class EmployeeAddController {
     @FXML
     private Label empIdLabel;
     @FXML
-    private TextField firstNameAdd;
+    private MFXTextField firstNameAdd;
     @FXML
-    private TextField lastNameAdd;
+    private MFXTextField lastNameAdd;
     @FXML
-    private TextField addressAdd;
+    private MFXTextField addressAdd;
     @FXML
-    private TextField emailAdd;
+    private MFXTextField emailAdd;
     @FXML
-    private TextField phoneNumAdd;
+    private MFXTextField phoneNumAdd;
     @FXML
-    private TextField clothingAllowanceAdd;
+    private MFXTextField clothingAllowanceAdd;
     @FXML
-    private TextField phoneAllowanceAdd;
+    private MFXTextField phoneAllowanceAdd;
     @FXML
-    private TextField riceSubAdd;
+    private MFXTextField riceSubAdd;
     @FXML
-    private TextField pagIbigAdd;
+    private MFXTextField pagIbigAdd;
     @FXML
-    private TextField philHealthAdd;
+    private MFXTextField philHealthAdd;
     @FXML
-    private TextField sssAdd;
+    private MFXTextField sssAdd;
     @FXML
-    private TextField tinAdd;
+    private MFXTextField tinAdd;
     @FXML
-    private TextField supervisorAdd;
+    private MFXTextField supervisorAdd;
     @FXML
-    private TextField statusAdd;
+    private MFXTextField statusAdd;
     @FXML
-    private TextField basicSalaryAdd;
+    private MFXTextField basicSalaryAdd;
     @FXML
-    private TextField grossSemiMonthlyRateAdd;
+    private MFXTextField grossSemiMonthlyRateAdd;
     @FXML
-    private TextField hourlyRateAdd;
+    private MFXTextField hourlyRateAdd;
     @FXML
-    private TextField vacationHoursAdd;
+    private MFXTextField vacationHoursAdd;
     @FXML
-    private TextField sickHoursAdd;
+    private MFXTextField sickHoursAdd;
     @FXML
-    private DatePicker dobAdd;
+    private MFXDatePicker dobAdd;
     @FXML
-    private ComboBox<Position> positionAdd;
+    private MFXComboBox<Position> positionAdd;
     @FXML
-    private ComboBox<Department> departmentAdd;
+    private MFXComboBox<Department> departmentAdd;
     @FXML
-    private Button employeeAdd;
+    private MFXButton employeeAdd;
     @FXML
-    private Button employeeUpdate;
+    private MFXButton employeeUpdate;
 
     private int id;
     private String firstName;
@@ -111,6 +115,7 @@ public class EmployeeAddController {
     protected void initialize() throws PositionException, DepartmentException {
         positionComboBox();
         departmentComboBox();
+
     }
 
     public void setData(Employee employee) throws PositionException, DepartmentException {
@@ -118,7 +123,7 @@ public class EmployeeAddController {
         breadCrumb.setText("Employee / Profile / " + employee.getFirstName() + " " + employee.getLastName());
         sceneTitle.setText("Profile: " + employee.getFirstName() + " " + employee.getLastName());
         employeeAdd.setVisible(false);
-        employeeUpdate.setVisible(false);
+        employeeUpdate.setVisible(true);
         disableTextFields();
 
     }
@@ -160,27 +165,27 @@ public class EmployeeAddController {
     //Creates new employee
     @FXML
     protected void onClickCreate() throws EmployeeException, UserException {
-        if (!checkFields()) {
+        if(!checkFields()) {
             String firstName = firstNameAdd.getText();
             String lastName = lastNameAdd.getText();
             Date dob = Date.valueOf(dobAdd.getValue());
             String address = addressAdd.getText();
             String email = emailAdd.getText();
             String phoneNumber = phoneNumAdd.getText();
-            double clothingAllowance = Double.parseDouble(clothingAllowanceAdd.getText());
-            double phoneAllowance = Double.parseDouble(phoneAllowanceAdd.getText());
-            double riceSubsidy = Double.parseDouble(riceSubAdd.getText());
+            double clothingAllowance = parseNonNegativeDouble(clothingAllowanceAdd.getText());
+            double phoneAllowance = parseNonNegativeDouble(phoneAllowanceAdd.getText());
+            double riceSubsidy = parseNonNegativeDouble(riceSubAdd.getText());
             String pagIbigId = pagIbigAdd.getText();
             String philHealthId = philHealthAdd.getText();
             String sssId = sssAdd.getText();
             String tinId = tinAdd.getText();
             String supervisor = supervisorAdd.getText();
             String status = statusAdd.getText();
-            double basicSalary = Double.parseDouble(basicSalaryAdd.getText());
-            double grossSemiMonthlyRate = Double.parseDouble(grossSemiMonthlyRateAdd.getText());
-            double hourlyRate = Double.parseDouble(hourlyRateAdd.getText());
-            double vacationHours = Double.parseDouble(vacationHoursAdd.getText());
-            double sickHours = Double.parseDouble(sickHoursAdd.getText());
+            double basicSalary = parseNonNegativeDouble(basicSalaryAdd.getText());
+            double grossSemiMonthlyRate = parseNonNegativeDouble(grossSemiMonthlyRateAdd.getText());
+            double hourlyRate = parseNonNegativeDouble(hourlyRateAdd.getText());
+            double vacationHours = parseNonNegativeDouble(vacationHoursAdd.getText());
+            double sickHours = parseNonNegativeDouble(sickHoursAdd.getText());
             int positionId = positionAdd.getSelectionModel().getSelectedItem().getPositionId();
             int departmentId = departmentAdd.getSelectionModel().getSelectedItem().getDeptId();
 
@@ -196,6 +201,21 @@ public class EmployeeAddController {
         }
     }
 
+    //THIS METHOD IS A TEST REMOVE IF NOT WORKING
+    private double parseNonNegativeDouble(String value) throws EmployeeException{
+        try {
+            double parsedValue = Double.parseDouble(value);
+            if (parsedValue < 0) {
+                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Cannot have a negative value");
+                throw new EmployeeException("Negative value");
+            }
+            return parsedValue;
+        } catch (NumberFormatException e) {
+            // Handle the case where the value is not a valid non-negative double
+            // You can show an error message or take appropriate action
+            return 0.0; // Or throw an exception, depending on your application's requirements
+        }
+    }
 
 
     private Employee employeeAddChecker() throws PositionException, DepartmentException {
