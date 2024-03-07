@@ -68,3 +68,32 @@
 .mfx-button-welcome:hover {
     -fx-background-color: #012972;
 }
+
+.mfx-button-table-update {
+    -fx-background-color: #212B36;
+    -fx-font-size: 8px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 5px;
+}
+
+.mfx-button-table-update:hover {
+    -fx-border-color: #16AE7C;
+    -fx-background-color: #EBF8F4;
+    -fx-text-fill: #16AE7C;
+}
+
+.mfx-button-table-delete {
+    -fx-background-color: transparent;
+    -fx-font-size: 8px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212B36;
+    -fx-border-color: lightgray;
+    -fx-border-radius: 5px;
+}
+
+.mfx-button-table-delete:hover {
+    -fx-border-color: #FF3232;
+    -fx-background-color: #FFEFEF;
+    -fx-text-fill: #FF3232;
+}
