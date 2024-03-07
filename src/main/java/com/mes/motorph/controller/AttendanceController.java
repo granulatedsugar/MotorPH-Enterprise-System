@@ -76,19 +76,19 @@ public class AttendanceController {
 
         try{
             List<Attendance> attendances = attendanceService.fetchAttedance();
-            if(attendances.isEmpty()){
+            if(attendances.isEmpty()){ //Check if list is empty, and display a message
                 AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "No Attendance Record");
             }else{
                 ObservableList<Attendance> attendanceObservableList = FXCollections.observableArrayList(attendances);
                 filteredList = new FilteredList<>(attendanceObservableList);
                 attendanceTableView.setItems(filteredList);
-
+                //Add an action listener to the empIdField (textfield) that if null reset the filteredList (table)
                 empIdField.textProperty().addListener((observableValue, oldValue, newValue) -> {
                     if(newValue.isEmpty()){
                         filteredList.setPredicate(null);
                     }
                 } );
-                //Datepicker
+                ////Add an action listener to the datePicker (date picker) that if null reset the filteredList (table)
                 datePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
                     if(newValue == null){
                         filteredList.setPredicate(null);
@@ -111,10 +111,11 @@ public class AttendanceController {
 
         try{
             int employeeId = Integer.parseInt(employeeIdText);
+            //Create a predicate to filter the list(table) according to employeeId
             Predicate<Attendance> filteredPredicate = attendance -> attendance.getEmployeeId() == employeeId;
-
+            //Set the List according to searched employeeId
             filteredList.setPredicate(filteredPredicate);
-
+            //Check if the list is empty, and display a message
             if(filteredList.isEmpty()){
                 AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "No records found for the provided Employee ID.");
             }
@@ -127,31 +128,38 @@ public class AttendanceController {
     @FXML
     protected void onClickDelete() throws AttendanceException{
         Attendance selectedAttendance = attendanceTableView.getSelectionModel().getSelectedItem();
-        if(selectedAttendance != null){
+        //check if a row is selected
+        if(selectedAttendance != null){//if not null
             int attendanceId = selectedAttendance.getId();
+            //display a confirmation message
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText(null);
             alert.setContentText("Do you want to delete this row?");
 
+            //set buttons, Ok and Cancel
             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
             alert.getButtonTypes().setAll(okButton,cancelButton);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == okButton){
+            if(result.isPresent() && result.get() == okButton){ //if user selected "ok"
                 try{
+                    //delete the selected row
                     attendanceService.deleteAttendance(attendanceId);
+                    //refresh the list/table
                     initialize();
+                    //display a message
                     AlertUtility.showAlert(Alert.AlertType.INFORMATION, "", null, "Row Deleted");
                 }catch (AttendanceException e){
                     AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
                 }
             }else{
-
+                //do nothing
             }
         }else{
+            //if user didn't select a row, display a message
             AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
         }
 
@@ -161,12 +169,13 @@ public class AttendanceController {
     private void onClickUpdate() throws AttendanceException {
         Attendance selectedAttendance = attendanceTableView.getSelectionModel().getSelectedItem();
 
-        if(selectedAttendance != null){
+        if(selectedAttendance != null){//check if selected row is not null
             int attendanceId = selectedAttendance.getId();
             int employeedId = selectedAttendance.getEmployeeId();
             Date date = selectedAttendance.getDate();
             Time timeIn = selectedAttendance.getTimeIn();
             Time timeOut = selectedAttendance.getTimeOut();
+            //we get each values from the table
             navigateToAttendanceEmployee(attendanceId, employeedId, date, timeIn, timeOut);
         }else{
             AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to update");
@@ -179,10 +188,11 @@ public class AttendanceController {
         try{
             Parent attendanceEmployeeView = loader.load();
             AttendanceEmployeeController attendanceEmployeeController = loader.getController();
+            //call the setAttendanceDetails to set the fields when updating
             attendanceEmployeeController.setAttendanceDetails(attendanceId,employeeId,date,timeIn,timeOut);
-
+            //Get the border pane of this scene
             BorderPane mainView = (BorderPane) attendanceTableView.getScene().getRoot().lookup("#mainView");
-
+            //replace it with the attendance-employee-view pane
             mainView.setCenter(attendanceEmployeeView);
         }catch (IOException e){
             e.printStackTrace();
@@ -196,9 +206,10 @@ public class AttendanceController {
             Parent attendanceEmployeeView = loader.load();
             AttendanceEmployeeController attendanceEmployeeController = loader.getController();
 
+            //Get the border pane of this scene
             BorderPane mainView = (BorderPane) attendanceTableView.getScene().getRoot().lookup("#mainView");
             attendanceEmployeeController.onClickAddToCreate();
-
+            //replace it with the attendance-employee-view pane
             mainView.setCenter(attendanceEmployeeView);
         }catch (IOException e){
             e.printStackTrace();
