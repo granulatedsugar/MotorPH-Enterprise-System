@@ -1,6 +1,7 @@
 package com.mes.motorph.services;
 
 import com.mes.motorph.entity.UserRole;
+import com.mes.motorph.exception.UserException;
 import com.mes.motorph.exception.UserRoleException;
 import com.mes.motorph.repository.UserRoleRepository;
 
@@ -26,11 +27,15 @@ public class UserRoleService {
         userRoleRepository.updateUserRole(userRole);
     }
 
-    public void deleteUserRole(UserRole userRole) throws UserRoleException {
-        userRoleRepository.deleteUserRole(userRole);
+    public void deleteUserRole(int logId) throws UserRoleException {
+        userRoleRepository.deleteUserRole(logId);
     }
 
     public List<UserRole> fetchAllUserRolesView() throws UserRoleException{
         return userRoleRepository.fetchAllUserRolesView();
+    }
+
+    public List<UserRole> fetchUsersView() throws UserRoleException {
+        return userRoleRepository.fetchUsersView();
     }
 }

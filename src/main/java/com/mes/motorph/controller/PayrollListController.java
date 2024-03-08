@@ -268,7 +268,7 @@ public class PayrollListController {
     }
 
     @FXML
-    protected void onClickDeletePayroll() throws PayrollException {
+    protected void onClickDeletePayroll() {
         Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelectedItem();
 
         if (selectedPayroll != null) {

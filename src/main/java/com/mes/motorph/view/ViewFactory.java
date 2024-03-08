@@ -11,8 +11,6 @@ import com.mes.motorph.exception.PositionException;
 import com.mes.motorph.services.EmployeeService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -274,7 +272,7 @@ public class ViewFactory {
 
     @FXML
     protected void onClickUsers() {
-        navigateToView("/com/mes/motorph/user-list-view.fxml");
+        navigateToView("/com/mes/motorph/user-assign-list-view.fxml");
     }
 
     @FXML

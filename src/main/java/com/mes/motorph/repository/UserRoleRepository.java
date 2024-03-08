@@ -1,6 +1,8 @@
 package com.mes.motorph.repository;
 
+
 import com.mes.motorph.entity.UserRole;
+import com.mes.motorph.exception.UserException;
 import com.mes.motorph.exception.UserRoleException;
 import com.mes.motorph.utils.DBUtility;
 
@@ -76,8 +78,12 @@ public class UserRoleRepository {
             String sql = "INSERT INTO motorph.user_role (userId, roleId) VALUES (?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1, userRole.getUserId());
+            pstmt.setInt(1, userRole.getEmpID());
             pstmt.setInt(2, userRole.getRoleId());
+
+            // TODO: Delete
+            System.out.println(userRole.getEmpID());
+            System.out.println(userRole.getRoleId());
 
             int rowsInserted = pstmt.executeUpdate();
 
@@ -97,12 +103,11 @@ public class UserRoleRepository {
 
         try {
             conn = DBUtility.getConnection();
-            String sql = "UPDATE motorph.user_role SET userId = ?, roleId = ? WHERE user_role_id = ?;";
+            String sql = "UPDATE motorph.user_role SET roleId = ? WHERE user_role_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1, userRole.getUserId());
-            pstmt.setInt(2, userRole.getRoleId());
-            pstmt.setInt(3, userRole.getId());
+            pstmt.setInt(1, userRole.getRoleId());
+            pstmt.setInt(2, userRole.getId());
 
             int rowsInserted = pstmt.executeUpdate();
 
@@ -118,15 +123,14 @@ public class UserRoleRepository {
         }
     }
 
-    public void deleteUserRole(UserRole userRole) throws UserRoleException {
+    public void deleteUserRole(int logId) throws UserRoleException {
 
         try {
             conn = DBUtility.getConnection();
-            String sql = "DELETE FROM motorph.user_role WHERE user_role_id = ?;";
+            String sql = "DELETE FROM motorph.user_role WHERE user_roles_id = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.setInt(1, userRole.getId());
-
+            pstmt.setInt(1, logId);
 
             int rowsInserted = pstmt.executeUpdate();
 
@@ -152,6 +156,7 @@ public class UserRoleRepository {
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
+                int logId = rs.getInt("LogID");
                 int empId = rs.getInt("Employee ID");
                 String firstName =  rs.getString("First Name");
                 String lastName =  rs.getString("Last Name");
@@ -160,7 +165,7 @@ public class UserRoleRepository {
                 String department = rs.getString( "Department");
                 String roles = rs.getString("Roles");
 
-                UserRole userRole = new UserRole(empId, firstName, lastName, email, position, department, roles);
+                UserRole userRole = new UserRole(logId,empId, firstName, lastName, email, position, department, roles);
                 userRolesView.add(userRole);
             }
             rs.close();
@@ -171,5 +176,33 @@ public class UserRoleRepository {
             DBUtility.closeConnection(conn);
         }
         return userRolesView;
+    }
+
+    public List<UserRole> fetchUsersView() throws UserRoleException {
+        List<UserRole> userRoles = new ArrayList<>();
+
+        try {
+            conn = DBUtility.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT * FROM motorph.user_details;";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()) {
+                int empId = rs.getInt("Employee ID");
+                String empName = rs.getString("Employee Name");
+                String username = rs.getString("Username");
+                String roles = rs.getString("Roles");
+
+                UserRole userRole = new UserRole(empId, empName, username, roles);
+                userRoles.add(userRole);
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            throw new UserRoleException("Error connecting to database: " + e.getMessage(), e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+        return userRoles;
     }
 }

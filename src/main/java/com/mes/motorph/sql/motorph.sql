@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `motorph` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `motorph`;
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: motorph
 -- ------------------------------------------------------
@@ -171,6 +171,7 @@ DROP TABLE IF EXISTS `employee_roles`;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `employee_roles` AS SELECT 
+ 1 AS `LogID`,
  1 AS `Employee ID`,
  1 AS `First Name`,
  1 AS `Last Name`,
@@ -191,10 +192,10 @@ CREATE TABLE `leaverequest` (
   `leavereqid` int NOT NULL AUTO_INCREMENT,
   `employeeid` int DEFAULT NULL,
   `reg_date` datetime DEFAULT NULL,
-  `leavetype` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `leavetype` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `startdate` datetime DEFAULT NULL,
   `enddate` datetime DEFAULT NULL,
-  `status` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `approve_date` datetime DEFAULT NULL,
   PRIMARY KEY (`leavereqid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -206,7 +207,7 @@ CREATE TABLE `leaverequest` (
 
 LOCK TABLES `leaverequest` WRITE;
 /*!40000 ALTER TABLE `leaverequest` DISABLE KEYS */;
-INSERT INTO `leaverequest` VALUES (1,1,'2024-03-07 00:00:00','Sick Leave','2024-03-12 00:00:00','2024-03-16 00:00:00','Approve','2024-03-08 00:00:00');
+INSERT INTO `leaverequest` VALUES (1,5,'2024-03-07 00:00:00','Sick Leave','2024-03-12 00:00:00','2024-03-16 00:00:00','Approve','2024-03-08 00:00:00');
 /*!40000 ALTER TABLE `leaverequest` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +222,7 @@ CREATE TABLE `overtime` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
   `employeeid` int DEFAULT NULL,
-  `status` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -339,7 +340,7 @@ CREATE TABLE `role` (
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`roleId`),
   UNIQUE KEY `roleId_UNIQUE` (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +349,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'Administrator'),(2,'Executive'),(3,'Manager'),(4,'Supervisors'),(5,'Accounting'),(6,'Human Resources'),(7,'Operations'),(8,'Sales'),(9,'IT'),(10,'Users'),(13,'Tester');
+INSERT INTO `role` VALUES (1,'Administrator'),(2,'Executive'),(3,'Manager'),(4,'Supervisors'),(5,'Accounting'),(6,'Human Resources'),(7,'Operations'),(8,'Sales'),(9,'IT'),(10,'Users'),(14,'Yard'),(15,'Assistant'),(16,'Secretary'),(17,'Driver'),(18,'Guard'),(19,'Maid'),(20,'Janitor'),(21,'Custodial'),(22,'Helper'),(23,'Delivery'),(28,'Tukneneng');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -409,6 +410,21 @@ INSERT INTO `user` VALUES (1,'mgarcia@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `user_details`
+--
+
+DROP TABLE IF EXISTS `user_details`;
+/*!50001 DROP VIEW IF EXISTS `user_details`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `user_details` AS SELECT 
+ 1 AS `Employee ID`,
+ 1 AS `Employee Name`,
+ 1 AS `Username`,
+ 1 AS `Roles`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `user_role`
 --
 
@@ -424,7 +440,7 @@ CREATE TABLE `user_role` (
   KEY `roleId_idx` (`roleId`),
   CONSTRAINT `roleId` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`),
   CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `employee` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -433,7 +449,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1,1),(2,1,2),(3,1,3),(4,23,7),(5,35,1),(6,6,6),(7,6,3),(8,36,9),(9,37,1),(10,38,5);
+INSERT INTO `user_role` VALUES (1,1,1),(2,1,2),(3,1,3),(5,35,1),(8,36,9),(9,37,1),(10,38,5),(14,36,28),(22,3,1),(23,2,2),(24,5,14),(26,38,1),(27,4,1);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -483,10 +499,10 @@ UNLOCK TABLES;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `employee_roles` AS select `user`.`id` AS `Employee ID`,`employee`.`firstname` AS `First Name`,`employee`.`lastname` AS `Last Name`,`user`.`username` AS `Email`,`position`.`title` AS `Job Title`,`department`.`dept_desc` AS `Department`,`role`.`name` AS `Roles` from (((((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) join `employee` on((`employee`.`id` = `user`.`id`))) join `position` on((`position`.`positionId` = `employee`.`positionId`))) join `department` on((`department`.`dept_id` = `employee`.`deptId`))) order by `user`.`id` */;
+/*!50001 VIEW `employee_roles` AS select `user_role`.`user_roles_id` AS `LogID`,`user`.`id` AS `Employee ID`,`employee`.`firstname` AS `First Name`,`employee`.`lastname` AS `Last Name`,`user`.`username` AS `Email`,`position`.`title` AS `Job Title`,`department`.`dept_desc` AS `Department`,`role`.`name` AS `Roles` from (((((`user` join `user_role` on((`user`.`id` = `user_role`.`userId`))) join `role` on((`user_role`.`roleId` = `role`.`roleId`))) join `employee` on((`employee`.`id` = `user`.`id`))) join `position` on((`position`.`positionId` = `employee`.`positionId`))) join `department` on((`department`.`dept_id` = `employee`.`deptId`))) order by `user`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -508,6 +524,24 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `user_details`
+--
+
+/*!50001 DROP VIEW IF EXISTS `user_details`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `user_details` AS select `u`.`id` AS `Employee ID`,concat(`e`.`firstname`,' ',`e`.`lastname`) AS `Employee Name`,`e`.`email` AS `Username`,group_concat((case when (`ur`.`roleId` is null) then '' else `r`.`name` end) separator ' / ') AS `Roles` from (((`user` `u` left join `employee` `e` on((`u`.`id` = `e`.`id`))) left join `user_role` `ur` on((`ur`.`userId` = `e`.`id`))) left join `role` `r` on((`ur`.`roleId` = `r`.`roleId`))) group by `u`.`id` order by `u`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -518,4 +552,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-07 15:15:25
+-- Dump completed on 2024-03-07 22:32:08

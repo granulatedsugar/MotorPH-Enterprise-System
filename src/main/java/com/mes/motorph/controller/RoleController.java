@@ -1,6 +1,8 @@
 package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Role;
+import com.mes.motorph.entity.UserRole;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import com.mes.motorph.exception.RoleException;
 import com.mes.motorph.services.RoleService;
 import com.mes.motorph.utils.AlertUtility;
@@ -9,10 +11,10 @@ import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -31,6 +33,7 @@ public class RoleController {
     private MFXButton submitBtn;
     private String roleName;
     private int roleId;
+    private int id;
 
     private RoleService roleService = new RoleService();
 
@@ -38,18 +41,60 @@ public class RoleController {
     protected void initialize() {
         setupTable();
         breadCrumb.setText("Administration / Manage / Role");
-        setupContextMenu();
     }
 
     private void setupTable() {
+        // Clear existing columns
+        rolesTableView.getTableColumns().clear();
+
         MFXTableColumn<Role> idColumn = new MFXTableColumn<>("Role ID", true, Comparator.comparing(Role::getRoleId));
         MFXTableColumn<Role> nameColumn = new MFXTableColumn<>("Description", true, Comparator.comparing(Role::getName));
+        MFXTableColumn<UserRole> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(UserRole::getEmpID));
+        MFXTableColumn<Role> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Role::getRoleId));
 
         idColumn.setRowCellFactory(role -> new MFXTableRowCell<>(Role::getRoleId));
         nameColumn.setRowCellFactory(role -> new MFXTableRowCell<>(Role::getName));
         nameColumn.setMinWidth(250);
 
-        rolesTableView.getTableColumns().addAll(idColumn, nameColumn);
+        updateButton.setRowCellFactory(userRole -> new MFXTableRowCell<>(rowUserRole -> "") {
+            {
+                updateButton.setAlignment(Pos.CENTER);
+                updateButton.setMinWidth(62);
+                updateButton.setMaxWidth(62);
+                updateButton.setColumnResizable(false);
+
+                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> confirmAndUpdateRole());
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
+                    }
+                });
+            }
+        });
+
+        deleteButton.setRowCellFactory(userRole -> new MFXTableRowCell<>(rowUserRole -> "") {
+                {
+                    deleteButton.setAlignment(Pos.CENTER);
+                    deleteButton.setMinWidth(62);
+                    deleteButton.setMaxWidth(62);
+                    deleteButton.setColumnResizable(false);
+
+                    MFXButton button = createButton("⛔", "mfx-button-table-delete", event -> confirmAndDeleteRole());
+                    setGraphic(button);
+
+                    mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                        System.out.println(newValue);
+                        if (newValue) {
+                            setMouseTransparent(false);
+                        }
+                    });
+                }
+            });
+
+        rolesTableView.getTableColumns().addAll(idColumn, nameColumn, deleteButton);
 
         rolesTableView.getFilters().addAll(
                 new IntegerFilter<>("Role ID", Role::getRoleId),
@@ -58,81 +103,51 @@ public class RoleController {
 
         try {
             List<Role> roleList = roleService.fetchAllRoles();
+            rolesTableView.getItems().clear(); // Clear existing items
             rolesTableView.setItems(FXCollections.observableArrayList(roleList));
         } catch (RoleException e) {
             AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
         }
     }
 
-    private void showContextMenu(MouseEvent event, MFXTableRow<Role> row, Role rowData) {
-        ContextMenu contextMenu = new ContextMenu();
-
-        MenuItem updateItem = createUpdateMenuItem(rowData);
-        MenuItem deleteItem = createDeleteMenuItem(rowData);
-
-        contextMenu.getItems().addAll(updateItem, deleteItem);
-        contextMenu.show(row, event.getScreenX(), event.getScreenY());
+    private MFXButton createButton(String text, String styleClass, EventHandler<? super MouseEvent> eventHandler) {
+        MFXButton button = new MFXButton(text);
+        button.getStyleClass().add(styleClass);
+        button.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler);
+        return button;
     }
 
-    private MenuItem createUpdateMenuItem(Role rowData) {
-        MenuItem updateItem = new MenuItem("Update");
-        updateItem.setOnAction(e -> {
-            roleId = rowData.getRoleId();
-            roleNameField.setFloatingText("Update Role");
-            roleNameField.setText(rowData.getName());
-            submitBtn.setText("Update");
-        });
-        return updateItem;
-    }
 
-    private MenuItem createDeleteMenuItem(Role rowData) {
-        MenuItem deleteItem = new MenuItem("Delete");
-        deleteItem.setOnAction(e -> {
-            roleId = rowData.getRoleId();
-            confirmAndDeleteRole(rowData);
-        });
-        return deleteItem;
-    }
+    private void confirmAndDeleteRole() {
+        Role selectedRole = rolesTableView.getSelectionModel().getSelectedValues().get(roleId);
 
-    private void confirmAndDeleteRole(Role rowData) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete Role #" + roleName + " ?");
+        if (selectedRole != null) {
+            int roleId = selectedRole.getRoleId();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete Role #" + roleId + " ?");
 
-        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(okButton, cancelButton);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == okButton) {
-            // User clicked OK, proceed with deletion
-            try {
-                roleService.deleteRole(roleId);
-                initialize();
-            } catch (RoleException ex) {
-                // Handle exception
-                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == okButton) {
+                // User clicked OK, proceed with deletion
+                try {
+                    roleService.deleteRole(roleId);
+                    initialize();
+                } catch (RoleException ex) {
+                    // Handle exception
+                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
+                }
+            } else {
+                // User clicked Cancel or closed the dialog, do nothing
             }
-        } else {
-            // User clicked Cancel or closed the dialog, do nothing
         }
     }
-
-    private void setupContextMenu() {
-        rolesTableView.setTableRowFactory(tv -> {
-            MFXTableRow<Role> row = new MFXTableRow<>(rolesTableView, new Role(roleId, roleName));
-            row.setOnMouseClicked(event -> {
-                if (event.getButton() == MouseButton.SECONDARY && row != null) {
-                    Role rowData = row.getData();
-                    showContextMenu(event, row, rowData);
-                }
-            });
-            return row;
-        });
-    }
-
 
     @FXML
     private void onClickSubmit() {

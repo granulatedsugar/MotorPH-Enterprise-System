@@ -12,6 +12,7 @@ public class UserRole {
     private String position;
     private String department;
     private int empID;
+    private String empName;
 
     public UserRole(int id, int userId, int roleId) {
         this.id = id;
@@ -19,12 +20,13 @@ public class UserRole {
         this.roleId = roleId;
     }
 
-//    public UserRole(int userId, int roleId) {
-//        this.userId = userId;
-//        this.roleId = roleId;
-//    }
+    public UserRole(int empID, int roleId) {
+        this.empID = empID;
+        this.roleId = roleId;
+    }
 
-    public UserRole(int empId, String firstName, String lastName, String email, String position, String department, String roles){
+    public UserRole(int id, int empId, String firstName, String lastName, String email, String position, String department, String roles){
+        this.id = id;
         this.empID = empId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,7 +36,12 @@ public class UserRole {
         this.roles = roles;
     }
 
-
+    public UserRole(int empID,  String empName, String username, String roles) {
+        this.empID = empID;
+        this.empName = empName;
+        this.username = username;
+        this.roles = roles;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -132,6 +139,14 @@ public class UserRole {
 
     public void setEmpID(int empID) {
         this.empID = empID;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
     }
 
     @Override
