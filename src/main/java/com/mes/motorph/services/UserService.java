@@ -14,6 +14,14 @@ public class UserService {
         return userRepository.fetchAllUsers();
     }
 
+    public User fetchUserDetail(String username) throws UserException {
+        return userRepository.fetchUserDetail(username);
+    }
+
+    public User fetchUserDetailPasswordCreate(String username) throws UserException {
+        return userRepository.fetchUserDetailPasswordReset(username);
+    }
+
     public Optional<User> authenticateUser(String username, String password) throws UserException {
         // Fetch user details based on the provided username
         User user = userRepository.fetchUserDetail(username);

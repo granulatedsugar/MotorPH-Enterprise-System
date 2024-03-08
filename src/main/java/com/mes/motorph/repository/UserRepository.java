@@ -43,9 +43,32 @@ public class UserRepository {
         return users;
     }
 
+    public User fetchUserDetailPasswordReset(String username) throws UserException {
+        User user = null;
+        try {
+            conn = DBUtility.getConnection();
+            String sql = "SELECT username, password FROM motorph.user WHERE username = ? AND password = '';";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                user = new User(
+                        rs.getString("username"),
+                        rs.getString("password"));
+            }
+            rs.close();
+            pstmt.close();
+        } catch (Exception e) {
+            throw new UserException("Error connecting to database: " + e.getMessage(),e);
+        } finally {
+            DBUtility.closeConnection(conn);
+        }
+        return user;
+    }
+
     public User fetchUserDetail(String username) throws UserException {
         User user = null;
-
         try {
             conn = DBUtility.getConnection();
             String sql = "SELECT username, password FROM motorph.user WHERE username = ?;";

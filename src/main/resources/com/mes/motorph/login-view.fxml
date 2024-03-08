@@ -18,7 +18,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
          <children>
-            <ImageView fitHeight="93.0" fitWidth="127.0" layoutX="185.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="93.0" fitWidth="127.0" layoutX="193.0" layoutY="189.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/logo.png" />
                </image>
@@ -42,6 +42,17 @@
                </font>
             </Text>
             <Text layoutX="139.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Rights Reserved | MotorPH © 2024" />
+            <MFXButton layoutX="115.0" layoutY="580.0" onAction="#openStepperStage" prefHeight="50.0" prefWidth="250.0" styleClass="mfx-button-secondary" stylesheets="@../../../css/Button.css" text="Create Password" />
+            <Text layoutX="116.0" layoutY="568.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Employee?">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="223.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" - OR - ">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Text>
          </children></AnchorPane>
    </center>
    <right>

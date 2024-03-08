@@ -181,7 +181,7 @@ public class UserRoleListController {
     private void navigateToCreateAssigneRole(String fxmlPath, String title) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource(fxmlPath));
-            Scene scene = new Scene(fxmlLoader.load(), 680, 650);
+            Scene scene = new Scene(fxmlLoader.load(), 768, 650);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle(title);

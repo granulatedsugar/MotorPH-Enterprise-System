@@ -77,23 +77,6 @@ public class UserListController {
     }
 
     @FXML
-    protected void onClickSearchUsername() {
-        String usernameText = usernameSearchField.getText().trim();
-
-        try {
-            Predicate<User> filterPredicate = user -> Objects.equals(user.getUsername(), usernameText);
-
-            filteredUsers.setPredicate(filterPredicate);
-
-            if (filteredUsers.isEmpty()) {
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "No records found for provided Username.");
-            }
-        } catch (Exception e) {
-            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Please enter a valid Username.");
-        }
-    }
-
-    @FXML
     protected void setUserDetails(String username) {
         usernameField.setText(username);
     }
@@ -153,48 +136,50 @@ public class UserListController {
         });
     }
 
-    @FXML
-    protected void onClickNewUser() throws Exception {
-        processUserSubmission(true);
-    }
 
-    @FXML
-    protected void onClickUpdateUser() throws Exception {
-        processUserSubmission(false);
-    }
+//    TODO : DELETE
+//    @FXML
+//    protected void onClickNewUser() throws Exception {
+//        processUserSubmission(true);
+//    }
+//
+//    @FXML
+//    protected void onClickUpdateUser() throws Exception {
+//        processUserSubmission(false);
+//    }
 
-    protected void processUserSubmission(boolean isNew) throws Exception {
-        try {
-            User user = fetchFromInput();
-            if (isNew) {
-                userService.createNewUser(user);
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "User created.");
+//    protected void processUserSubmission(boolean isNew) throws Exception {
+//        try {
+//            User user = fetchFromInput();
+//            if (isNew) {
+//                userService.createNewUser(user);
+//                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "User created.");
+//
+//                initialize();
+//
+//            } else {
+//                userService.updateUser(user);
+//                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "User updated.");
+//
+//            }
+//            resetForm();
+//        } catch (UserException e) {
+//            String action = isNew ? "creating" : "updating";
+//            String username = fetchFromInput().getUsername();
+//            String errorMessage = "Error " + action + " User " + username +" | Reason: " + e.getMessage();
+//            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, errorMessage);
+//        }
+//    }
 
-                initialize();
-
-            } else {
-                userService.updateUser(user);
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "User updated.");
-
-            }
-            resetForm();
-        } catch (UserException e) {
-            String action = isNew ? "creating" : "updating";
-            String username = fetchFromInput().getUsername();
-            String errorMessage = "Error " + action + " User " + username +" | Reason: " + e.getMessage();
-            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, errorMessage);
-        }
-    }
-
-    private User fetchFromInput() throws Exception {
-        String username = usernameField.getText();
-        String password = PasswordService.encrypt(passwordField.getText());
-
-        return new User(username, password);
-    }
-
-    protected void resetForm() {
-        usernameField.setText("");
-        passwordField.setText("");
-    }
+//    private User fetchFromInput() throws Exception {
+//        String username = usernameField.getText();
+//        String password = PasswordService.encrypt(passwordField.getText());
+//
+//        return new User(username, password);
+//    }
+//
+//    protected void resetForm() {
+//        usernameField.setText("");
+//        passwordField.setText("");
+//    }
 }

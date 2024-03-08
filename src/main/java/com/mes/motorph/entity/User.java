@@ -3,6 +3,7 @@ package com.mes.motorph.entity;
 public class User {
     private String username;
     private String hashPassword;
+    private int id;
 
     public User(String username, String hashPassword) {
         this.username = username;
@@ -27,5 +28,13 @@ public class User {
 
     public void setHashPassword(String hashPassword) {
         this.hashPassword = hashPassword;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

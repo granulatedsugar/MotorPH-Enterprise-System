@@ -10,10 +10,15 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +58,7 @@ public class LoginController {
             } else {
                 // Notify invalid credentials
                 AlertUtility.showAlert(Alert.AlertType.INFORMATION,"Information", null,"Invalid credentials. Please try again.");
+                throw new RuntimeException();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,21 +66,40 @@ public class LoginController {
         }
     }
 
+
     @FXML
-    public void handleLogout(ActionEvent event) {
-        // Close the login stage
-        loginStage.close();
-        // Call logout method in Main class to handle the logout action
-        mainApp.logout();
+    private void openStepperStage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/stepper.fxml"));
+            Parent root = loader.load();
+
+            Stage stepperStage = new Stage();
+            stepperStage.setTitle("Set Password");
+            stepperStage.initModality(Modality.APPLICATION_MODAL);
+            stepperStage.setScene(new Scene(root));
+
+            stepperStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void showErrorMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Login Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+    // TODO: Delete
+//    @FXML
+//    public void handleLogout(ActionEvent event) {
+//        // Close the login stage
+//        loginStage.close();
+//        // Call logout method in Main class to handle the logout action
+//        mainApp.logout();
+//    }
+//
+//    private void showErrorMessage(String message) {
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Login Error");
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+//    }
 
     public void setLoginStage(Stage loginStage) {
         this.loginStage = loginStage;

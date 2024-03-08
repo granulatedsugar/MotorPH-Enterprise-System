@@ -1,12 +1,16 @@
 package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Role;
+import com.mes.motorph.entity.User;
 import com.mes.motorph.entity.UserRole;
 import com.mes.motorph.exception.RoleException;
+import com.mes.motorph.exception.UserException;
 import com.mes.motorph.exception.UserRoleException;
 import com.mes.motorph.services.RoleService;
 import com.mes.motorph.services.UserRoleService;
+import com.mes.motorph.services.UserService;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
@@ -14,12 +18,19 @@ import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class UserRoleAssignController {
     @FXML
@@ -30,6 +41,7 @@ public class UserRoleAssignController {
     private MFXComboBox<Role> roleComboBox;
     private int empId;
     private UserRoleService userRoleService = new UserRoleService();
+    private UserService userService = new UserService();
     private RoleService roleService = new RoleService();
 
     @FXML
@@ -74,6 +86,13 @@ public class UserRoleAssignController {
         }
     }
 
+    private MFXButton createButton(String text, String styleClass, EventHandler<? super MouseEvent> eventHandler) {
+        MFXButton button = new MFXButton(text);
+        button.getStyleClass().add(styleClass);
+        button.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler);
+        return button;
+    }
+
     // Method to fetch roles from the repository and populate the ComboBox
     private void populateRolesComboBox() {
         // Fetch roles from the repository
@@ -94,7 +113,6 @@ public class UserRoleAssignController {
              roleComboBox.getSelectionModel().selectFirst(); // Select the first role by default
          }
     }
-
     private void selectedEmployee() {
         UserRole selectedUser = userTableView.getSelectionModel().getSelectedValues().get(empId);
         if (selectedUser != null) {
@@ -128,4 +146,44 @@ public class UserRoleAssignController {
         selectedEmployee();
         initialize();
     }
+
+    @FXML
+    protected void onClickResetPass() {
+        UserRole selectedUser = userTableView.getSelectionModel().getSelectedValues().get(empId);
+        if (selectedUser != null) {
+            int empID = selectedUser.getEmpID();
+            String username = selectedUser.getUsername();
+            String password = "";
+            System.out.println("Selected employee ID: " + empID + " Username: " + username + " password:  " + password);
+
+            User user = new User(username, password);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to reset password for " + username + " ?");
+
+            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == okButton) {
+                // User clicked OK, proceed with deletion
+                try {
+                    userService.updateUser(user);
+                    AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "Successfully reset password for user: " + username);
+                } catch (UserException e) {
+                    AlertUtility.showAlert(Alert.AlertType.ERROR, "Information", null, "Unable to reset password for user: " + username);
+                    throw new RuntimeException(e);
+                }
+            }
+        } else {
+           AlertUtility.showAlert(Alert.AlertType.WARNING, "Information", null, "No selected row.");
+        }
+    }
 }
+
+
+

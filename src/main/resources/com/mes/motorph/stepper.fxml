@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="639.0" prefWidth="446.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.StepperController">
+   <children>
+      <MFXPasswordField fx:id="passwordField" allowCopy="true" allowCut="true" allowPaste="true" floatMode="BORDER" floatingText="Password" layoutX="89.0" layoutY="418.0" prefHeight="50.0" prefWidth="266.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+      <Text layoutX="128.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Password">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="189.0" fitWidth="222.0" layoutX="128.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/avatar.png" />
+         </image>
+      </ImageView>
+      <MFXTextField fx:id="usernameField" floatMode="BORDER" floatingText="Username" layoutX="90.0" layoutY="355.0" prefHeight="50.0" prefWidth="265.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" />
+      <MFXButton fx:id="submitButton" layoutX="89.0" layoutY="508.0" onAction="#onClickCheckUsername" prefHeight="57.0" prefWidth="266.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" />
+      <MFXButton fx:id="successBtn" layoutX="89.0" layoutY="508.0" prefHeight="57.0" prefWidth="266.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Success">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/checkmark.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </MFXButton>
+   </children>
+
+
+</AnchorPane>

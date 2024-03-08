@@ -349,7 +349,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'Administrator'),(2,'Executive'),(3,'Manager'),(4,'Supervisors'),(5,'Accounting'),(6,'Human Resources'),(7,'Operations'),(8,'Sales'),(9,'IT'),(10,'Users'),(14,'Yard'),(15,'Assistant'),(16,'Secretary'),(17,'Driver'),(18,'Guard'),(19,'Maid'),(20,'Janitor'),(21,'Custodial'),(22,'Helper'),(23,'Delivery'),(28,'Tukneneng');
+INSERT INTO `role` VALUES (1,'Administrator'),(2,'Executive'),(3,'Manager'),(4,'Supervisors'),(5,'Accounting'),(6,'Human Resources'),(7,'Operations'),(8,'Sales'),(9,'IT'),(10,'Users'),(14,'Yard'),(15,'Assistant'),(16,'Secretary'),(17,'Driver'),(18,'Guard'),(19,'Maid'),(20,'Janitor'),(21,'Custodial'),(22,'Helper'),(23,'Delivery');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +405,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'mgarcia@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(2,'alim@motorph.com',''),(3,'baquino@motorph.com',''),(4,'ireyes@motorph.com',''),(5,'ehernandez@motorph.com',''),(6,'avillanueva@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(7,'bsan jose@motorph.com',''),(8,'aromualdez@motorph.com',''),(9,'ratienza@motorph.com',''),(10,'ralvaro@motorph.com',''),(11,'asalcedo@motorph.com',''),(12,'jlopez@motorph.com',''),(13,'mfarala@motorph.com',''),(14,'lmartinez@motorph.com',''),(15,'fromualdez@motorph.com',''),(16,'cmata@motorph.com',''),(17,'sdeleon@motorph.com',''),(18,'asanjose@motorph.com',''),(19,'crosario@motorph.com',''),(20,'mbautista@motorph.com',''),(21,'dlazaro@motorph.com',''),(22,'kdelossantos@motorph.com',''),(23,'vsantos@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(24,'tdelrosario@motorph.com',''),(25,'jtolentino@motorph.com',''),(26,'pgutierrez@motorph.com',''),(27,'gmanalaysay@motorph.com',''),(28,'lvillegas@motorph.com',''),(29,'cramos@motorph.com',''),(30,'emaceda@motorph.com',''),(31,'daguilar@motorph.com',''),(32,'jcastro@motorph.com',''),(33,'cmartinez@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(34,'bsantos@motorph.com',''),(35,'nroque@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(36,'stolentino@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(37,'taylor@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(38,'astacruziii@motorph.com','AnxSdyNanjXLOxSVt/j6Hg==');
+INSERT INTO `user` VALUES (1,'mgarcia@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(2,'alim@motorph.com',''),(3,'baquino@motorph.com',''),(4,'ireyes@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(5,'ehernandez@motorph.com',''),(6,'avillanueva@motorph.com',''),(7,'bsanjose@motorph.com',''),(8,'aromualdez@motorph.com',''),(9,'ratienza@motorph.com',''),(10,'ralvaro@motorph.com',''),(11,'asalcedo@motorph.com',''),(12,'jlopez@motorph.com',''),(13,'mfarala@motorph.com',''),(14,'lmartinez@motorph.com',''),(15,'fromualdez@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(16,'cmata@motorph.com',''),(17,'sdeleon@motorph.com',''),(18,'asanjose@motorph.com',''),(19,'crosario@motorph.com',''),(20,'mbautista@motorph.com',''),(21,'dlazaro@motorph.com',''),(22,'kdelossantos@motorph.com',''),(23,'vsantos@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(24,'tdelrosario@motorph.com',''),(25,'jtolentino@motorph.com',''),(26,'pgutierrez@motorph.com',''),(27,'gmanalaysay@motorph.com',''),(28,'lvillegas@motorph.com',''),(29,'cramos@motorph.com',''),(30,'emaceda@motorph.com',''),(31,'daguilar@motorph.com',''),(32,'jcastro@motorph.com',''),(33,'cmartinez@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(34,'bsantos@motorph.com',''),(35,'nroque@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(36,'stolentino@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(37,'taylor@motorph.com','AnxSdyNanjXLOxSVt/j6Hg=='),(38,'astacruziii@motorph.com','AnxSdyNanjXLOxSVt/j6Hg==');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,7 +440,7 @@ CREATE TABLE `user_role` (
   KEY `roleId_idx` (`roleId`),
   CONSTRAINT `roleId` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`),
   CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `employee` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -449,7 +449,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1,1),(2,1,2),(3,1,3),(5,35,1),(8,36,9),(9,37,1),(10,38,5),(14,36,28),(22,3,1),(23,2,2),(24,5,14),(26,38,1),(27,4,1);
+INSERT INTO `user_role` VALUES (1,1,1),(2,1,2),(3,1,3),(5,35,1),(8,36,9),(9,37,1),(10,38,5),(22,3,1),(23,2,2),(24,5,14),(26,38,1),(27,4,1),(28,8,3);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -552,4 +552,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-07 22:32:08
+-- Dump completed on 2024-03-08 15:08:54
