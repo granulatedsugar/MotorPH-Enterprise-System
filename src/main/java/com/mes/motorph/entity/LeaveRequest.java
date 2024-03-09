@@ -38,6 +38,15 @@ public class LeaveRequest {
         this.status = status;
         this.approveDate = approveDate;
     }
+
+    public LeaveRequest( Date regDate, String leaveType, Date startDate, Date endDate, Date approveDate,String status) {
+        this.regDate = regDate;
+        this.leaveType = leaveType;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.approveDate = approveDate;
+        this.status = status;
+    }
     public LeaveRequest(String status, Date approveDate, int leaveReqId) {
         this.leaveReqId = leaveReqId;
         this.status = status;

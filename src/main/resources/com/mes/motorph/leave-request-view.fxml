@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="663.0" prefWidth="923.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.LeaveRequestController">
@@ -18,21 +19,18 @@
             </font>
         </Label>
         <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0" />
-      <MFXPaginatedTableView layoutX="10.0" layoutY="489.0" pagesToShow="5" prefHeight="145.0" prefWidth="903.0" rowsPerPage="15" stylesheets="@../../../css/Button.css" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-      <MFXTextField floatingText="Employee Name" layoutX="326.0" layoutY="127.0" prefHeight="49.0" prefWidth="254.0" />
-      <Label fx:id="breadCrumb1" alignment="CENTER_RIGHT" layoutX="722.0" layoutY="24.0" prefHeight="50.0" prefWidth="144.0" text="Employee Number" textFill="#cdd2d6" AnchorPane.rightAnchor="57.0" AnchorPane.topAnchor="24.0">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="breadCrumb11" alignment="CENTER_RIGHT" layoutX="873.0" layoutY="24.0" prefHeight="50.0" prefWidth="36.0" text="-" textFill="#cdd2d6" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="24.0">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="14.0" />
-         </font>
-      </Label>
-      <MFXDatePicker layoutX="326.0" layoutY="203.0" prefHeight="38.0" prefWidth="254.0" promptText="Start" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
-      <MFXDatePicker layoutX="619.0" layoutY="203.0" prefHeight="38.0" prefWidth="254.0" promptText="End" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
-      <MFXComboBox floatingText="Select Leave" layoutX="619.0" layoutY="123.0" prefHeight="56.0" prefWidth="254.0" />
-      <MFXButton layoutX="615.0" layoutY="290.0" prefHeight="42.0" prefWidth="263.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Button" />
+      <MFXPaginatedTableView fx:id="leaveReqTableView" layoutX="10.0" layoutY="489.0" pagesToShow="5" prefHeight="145.0" prefWidth="903.0" rowsPerPage="15" stylesheets="@../../../css/Button.css" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <MFXTextField fx:id="empNumberField" floatingText="Employee Number" layoutX="14.0" layoutY="104.0" prefHeight="49.0" prefWidth="254.0" />
+      <MFXButton layoutX="703.0" layoutY="317.0" onAction="#onClickSubmitBtn" prefHeight="42.0" prefWidth="206.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Submit" />
+      <HBox layoutX="14.0" layoutY="204.0" prefHeight="100.0" prefWidth="805.0" spacing="15.0">
+         <children>
+            <MFXDatePicker fx:id="startDatePicker" prefHeight="38.0" prefWidth="254.0" promptText="Start" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
+            <MFXDatePicker fx:id="endDatePicker" prefHeight="38.0" prefWidth="254.0" promptText="End" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
+            <MFXComboBox fx:id="leaveTypeComboBox" floatingText="Select Leave" prefHeight="42.0" prefWidth="254.0" />
+         </children>
+      </HBox>
+      <Pane layoutX="14.0" layoutY="400.0" prefHeight="76.0" prefWidth="903.0" />
+      <Label layoutX="14.0" layoutY="80.0" prefHeight="24.0" prefWidth="133.0" text="Employee Information" />
+      <Label layoutX="14.0" layoutY="174.0" prefHeight="24.0" prefWidth="133.0" text="Leave Information" />
     </children>
 </AnchorPane>
