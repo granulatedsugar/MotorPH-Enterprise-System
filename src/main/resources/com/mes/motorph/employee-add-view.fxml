@@ -31,7 +31,7 @@
       </HBox>
       <VBox layoutX="19.0" layoutY="106.0" prefHeight="609.0" prefWidth="903.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="106.0">
          <children>
-            <AnchorPane prefHeight="635.0" prefWidth="903.0">
+            <AnchorPane prefHeight="635.0" prefWidth="903.0" VBox.vgrow="ALWAYS">
                <children>
                   <Label styleClass="txtLabel" stylesheets="@../../../css/main.css" text="Employee Information">
                      <font>

@@ -115,6 +115,8 @@ public class EmployeeAddController {
     protected void initialize() throws PositionException, DepartmentException {
         positionComboBox();
         departmentComboBox();
+        employeeUpdate.setVisible(false);
+
 
     }
 
@@ -197,26 +199,25 @@ public class EmployeeAddController {
             resetForm();
             AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Success", null, "Employee added successfully");
         } else {
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please check if there are any empty fields");
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please check if there are any empty or negative fields");
         }
     }
 
-    //THIS METHOD IS A TEST REMOVE IF NOT WORKING
+    //checks double values to see if it is a negative value
     private double parseNonNegativeDouble(String value) throws EmployeeException{
         try {
             double parsedValue = Double.parseDouble(value);
             if (parsedValue < 0) {
-                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Cannot have a negative value");
-                throw new EmployeeException("Negative value");
+                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please check if there are any empty or negative fields");
+                throw new EmployeeException("Negative or empty value present in data field");
             }
             return parsedValue;
         } catch (NumberFormatException e) {
             // Handle the case where the value is not a valid non-negative double
-            // You can show an error message or take appropriate action
-            return 0.0; // Or throw an exception, depending on your application's requirements
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please check if there are any empty or negative fields");
+            throw new EmployeeException("Negative or empty value present in data field");
         }
     }
-
 
     private Employee employeeAddChecker() throws PositionException, DepartmentException {
         Employee employee = null;
@@ -256,6 +257,7 @@ public class EmployeeAddController {
         return employee;
     }
 
+    // Checks input fields for text/values
     private boolean checkFields() {
         if (firstNameAdd.getText().isEmpty() || lastNameAdd.getText().isEmpty() || dobAdd.getValue() == null || addressAdd.getText().isEmpty() || emailAdd.getText().isEmpty() || phoneNumAdd.getText().isEmpty() || clothingAllowanceAdd.getText().isEmpty() || phoneAllowanceAdd.getText().isEmpty() || riceSubAdd.getText().isEmpty() || pagIbigAdd.getText().isEmpty() || philHealthAdd.getText().isEmpty() || sssAdd.getText().isEmpty() || tinAdd.getText().isEmpty() || supervisorAdd.getText().isEmpty() || statusAdd.getText().isEmpty() || basicSalaryAdd.getText().isEmpty() || grossSemiMonthlyRateAdd.getText().isEmpty() || hourlyRateAdd.getText().isEmpty() || vacationHoursAdd.getText().isEmpty() || sickHoursAdd.getText().isEmpty() || positionAdd.getValue() == null || departmentAdd.getValue() == null) {
             return true;
@@ -265,14 +267,49 @@ public class EmployeeAddController {
 
     }
 
-
+    // Update employee button
     @FXML
     protected void onClickUpdate() throws EmployeeException, PositionException, DepartmentException {
-        employeeService.updateEmployee(employeeAddChecker());
-        AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "Updated Employee.");
+        if (!updateCheckFields()) {
+            employeeService.updateEmployee(employeeAddChecker());
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "Updated Employee.");
+        } else {
+            // Show warning message for empty or negative fields
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please check if there are any empty or negative fields");
+            throw new EmployeeException("Negative or empty value present in data field");
+        }
     }
 
+    //THIS IS A TEST REMOVE IF NOT WORKING TY
+    // Method to check if any field contains negative value
+    private boolean updateCheckFields() throws EmployeeException {
+        try {
+            // Check each double field for negative values
+            double clothingAllowance = parseNonNegativeDouble(clothingAllowanceAdd.getText());
+            double phoneAllowance = parseNonNegativeDouble(phoneAllowanceAdd.getText());
+            double riceSubsidy = parseNonNegativeDouble(riceSubAdd.getText());
+            double basicSalary = parseNonNegativeDouble(basicSalaryAdd.getText());
+            double grossSemiMonthlyRate = parseNonNegativeDouble(grossSemiMonthlyRateAdd.getText());
+            double hourlyRate = parseNonNegativeDouble(hourlyRateAdd.getText());
+            double vacationHours = parseNonNegativeDouble(vacationHoursAdd.getText());
+            double sickHours = parseNonNegativeDouble(sickHoursAdd.getText());
+
+            // If any field contains a negative value, return true
+            if (clothingAllowance < 0 || phoneAllowance < 0 || riceSubsidy < 0 || basicSalary < 0 ||
+                    grossSemiMonthlyRate < 0 || hourlyRate < 0 || vacationHours < 0 || sickHours < 0) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            // Handle the case where a field contains an invalid double value
+            return true;
+        }
+        // All fields are non-negative
+        return false;
+    }
+
+    // Puts certain fields to disabled/not visible state & populates employee data fields
     public void employeeUpdate(Employee employee) throws PositionException, DepartmentException {
+        breadCrumb.setText("Employee / Update / " + employee.getFirstName() + " " + employee.getLastName());
         emailAdd.setDisable(true);
         dobAdd.setDisable(true);
         pagIbigAdd.setDisable(true);
@@ -280,10 +317,12 @@ public class EmployeeAddController {
         sssAdd.setDisable(true);
         tinAdd.setDisable(true);
         employeeAdd.setVisible(false);
+        employeeUpdate.setVisible(true);
 
         setEmployeeDataFields(employee);
     }
 
+    // Sets up data fields when updating an employee
     private void setEmployeeDataFields(Employee employee) throws PositionException, DepartmentException {
         String empId = String.valueOf(employee.getId());
         sceneTitle.setText("Update Employee " + employee.getFirstName() + " " + employee.getLastName());
@@ -312,6 +351,7 @@ public class EmployeeAddController {
         departmentAdd.setPromptText(String.valueOf(departmentService.fetchDepartmentDescription(employee.getDeptId())));
     }
 
+    // Method to reset form
     protected void resetForm() {
         firstNameAdd.setText("");
         lastNameAdd.setText("");

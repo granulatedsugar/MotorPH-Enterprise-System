@@ -10,19 +10,29 @@ import com.mes.motorph.services.EmployeeService;
 import com.mes.motorph.services.PositionService;
 import com.mes.motorph.services.UserService;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.filter.IntegerFilter;
+import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -30,31 +40,27 @@ import java.util.function.Predicate;
 public class EmployeeController {
 
     @FXML
-    private TableView<Employee> employeeTableView;
-    @FXML
     private FilteredList<Employee> filteredEmployees;
     @FXML
     private TableColumn<Employee, String> firstNameField;
-
     @FXML
     private TableColumn<Employee, String> lastNameField;
-
     @FXML
     private TableColumn<Employee, String> emailField;
-
     @FXML
     private TableColumn<Employee, String> contactNumField;
-
     @FXML
     private TableColumn<Employee, String> supervisorField;
     @FXML
     private TextField employeeSearch;
     @FXML
     private TableColumn<Employee, String> positionField;
-
     @FXML
     private TableColumn<Employee, String> deptField;
+    @FXML
+    private MFXPaginatedTableView<Employee> employeeTableView;
 
+    private int id;
 
     EmployeeService employeeService = new EmployeeService();
     UserService userService = new UserService();
@@ -63,53 +69,81 @@ public class EmployeeController {
 
     @FXML
     protected void initialize() {
-        firstNameField.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        lastNameField.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        emailField.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        contactNumField.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        supervisorField.setCellValueFactory(new PropertyValueFactory<>("supervisor"));
-        positionField.setCellValueFactory(cellData -> {
-            String positionDescription = null;
-            try {
-                int positionId = cellData.getValue().getPositionId();
-                positionDescription = String.valueOf(positionService.fetchPositionDescription(positionId));
+        setupTable();
+        employeeTableView.autosizeColumnsOnInitialization();
+        employeeTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> employeeTableView.autosizeColumns());
+    }
 
-            } catch (PositionException e) {
-                e.printStackTrace(); // or log the exception
-            }
-            return new SimpleStringProperty(positionDescription);
-        });
+    private void setupTable() {
+        employeeTableView.getTableColumns().clear();
 
-        deptField.setCellValueFactory(cellData -> {
-            String departmentDescription = null;
-            try {
-                int deptId = cellData.getValue().getDeptId();
-                departmentDescription = String.valueOf(departmentService.fetchDepartmentDescription(deptId)); // Fetch department description using departmentService
-            } catch (DepartmentException e) {
-                e.printStackTrace(); // or log the exception
-            }
-            return new SimpleStringProperty(departmentDescription);
-        });
+        MFXTableColumn<Employee> firstNameColumn = new MFXTableColumn<>("First Name", true, Comparator.comparing(Employee::getFirstName));
+        MFXTableColumn<Employee> lastNameColumn = new MFXTableColumn<>("Last Name", true, Comparator.comparing(Employee::getLastName));
+        MFXTableColumn<Employee> emailColumn = new MFXTableColumn<>("Email", true, Comparator.comparing(Employee::getEmail));
+        MFXTableColumn<Employee> contactNumColumn = new MFXTableColumn<>("Contact Number", true, Comparator.comparing(Employee::getPhoneNumber));
+        MFXTableColumn<Employee> supervisorColumn = new MFXTableColumn<>("Immediate Supervisor", true, Comparator.comparing(Employee::getSupervisor));
 
-        try {
-            List<Employee> employees = employeeService.fetchAllEmployees();
+        MFXTableColumn<Employee> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Employee::getId));
+        MFXTableColumn<Employee> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Employee::getId));
 
-            if (employees.isEmpty()) {
-                // Show pop-up if no payroll data found
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION,"Information", null, "No employee data found.");
-            } else {
-                ObservableList<Employee> allEmployees = FXCollections.observableArrayList(employees);
-                filteredEmployees = new FilteredList<>(allEmployees);
-                employeeTableView.setItems(filteredEmployees);
+        firstNameColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getFirstName));
+        lastNameColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getLastName));
+        emailColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getEmail));
+        contactNumColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getPhoneNumber));
+        supervisorColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getSupervisor));
 
-                employeeSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue.isEmpty()) {
-                        filteredEmployees.setPredicate(null);
+        updateButton.setRowCellFactory(employee -> new MFXTableRowCell<>(rowEmployee -> "") {
+            {
+                updateButton.setAlignment(Pos.CENTER);
+                updateButton.setMinWidth(62);
+                updateButton.setMaxWidth(62);
+                updateButton.setColumnResizable(false);
+
+                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> onClickUpdate());
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
                     }
                 });
             }
+        });
+        deleteButton.setRowCellFactory(employee -> new MFXTableRowCell<>(rowEmployee -> "") {
+            {
+                deleteButton.setAlignment(Pos.CENTER);
+                deleteButton.setMinWidth(62);
+                deleteButton.setMaxWidth(62);
+                deleteButton.setColumnResizable(false);
+
+                MFXButton button = createButton("⛔", "mfx-button-table-delete", event -> onClickDelete());
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
+                    }
+                });
+            }
+        });
+
+        employeeTableView.getTableColumns().addAll(firstNameColumn, lastNameColumn, emailColumn, contactNumColumn, supervisorColumn, deleteButton, updateButton);
+
+        employeeTableView.getFilters().addAll(
+                new StringFilter<>("First Name", Employee::getFirstName),
+                new StringFilter<>("Last Name", Employee::getLastName),
+                new StringFilter<>("Email", Employee::getEmail)
+        );
+
+        try {
+            List<Employee> employeeList = employeeService.fetchAllEmployees();
+            employeeTableView.getItems().clear();
+            employeeTableView.setItems(FXCollections.observableArrayList(employeeList));
         } catch (EmployeeException e) {
-            e.printStackTrace();
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -133,9 +167,10 @@ public class EmployeeController {
 
     @FXML
     protected void onClickDelete(){
-        Employee selectedEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        Employee selectedEmployee = employeeTableView.getSelectionModel().getSelectedValues().get(id);
         if(selectedEmployee != null){
             int employeeId = selectedEmployee.getId();
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText(null);
@@ -168,7 +203,7 @@ public class EmployeeController {
 
     @FXML
     protected void onClickUpdate(){
-        Employee selectedEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        Employee selectedEmployee = employeeTableView.getSelectionModel().getSelectedValues().get(id);
 
         int id = selectedEmployee.getId();
         String firstName = selectedEmployee.getFirstName();
@@ -239,5 +274,11 @@ public class EmployeeController {
             AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Please enter a valid Employee Name.");
         }
     }
-
+    // Method to create and configure a button
+    private MFXButton createButton(String text, String styleClass, EventHandler<? super MouseEvent> eventHandler) {
+        MFXButton button = new MFXButton(text);
+        button.getStyleClass().add(styleClass);
+        button.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler);
+        return button;
+    }
 }
