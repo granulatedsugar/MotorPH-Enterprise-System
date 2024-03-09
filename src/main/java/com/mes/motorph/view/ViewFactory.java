@@ -277,7 +277,7 @@ public class ViewFactory {
 
     @FXML
     protected void onClickPosition() {
-        navigateToView("/com/mes/motorph/position-view.fxml");
+        navigateToView("/com/mes/motorph/position-list-view.fxml");
     }
 
     @FXML

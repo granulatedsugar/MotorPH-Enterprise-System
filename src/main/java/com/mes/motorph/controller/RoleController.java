@@ -40,7 +40,7 @@ public class RoleController {
     @FXML
     protected void initialize() {
         setupTable();
-        breadCrumb.setText("Administration / Manage / Role");
+        breadCrumb.setText("Administration / Role / Create");
     }
 
     private void setupTable() {
@@ -49,21 +49,23 @@ public class RoleController {
 
         MFXTableColumn<Role> idColumn = new MFXTableColumn<>("Role ID", true, Comparator.comparing(Role::getRoleId));
         MFXTableColumn<Role> nameColumn = new MFXTableColumn<>("Description", true, Comparator.comparing(Role::getName));
-        MFXTableColumn<UserRole> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(UserRole::getEmpID));
+        MFXTableColumn<Role> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Role::getRoleId));
         MFXTableColumn<Role> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Role::getRoleId));
 
         idColumn.setRowCellFactory(role -> new MFXTableRowCell<>(Role::getRoleId));
         nameColumn.setRowCellFactory(role -> new MFXTableRowCell<>(Role::getName));
         nameColumn.setMinWidth(250);
 
-        updateButton.setRowCellFactory(userRole -> new MFXTableRowCell<>(rowUserRole -> "") {
+        updateButton.setRowCellFactory(role -> new MFXTableRowCell<>(roles -> "") {
             {
                 updateButton.setAlignment(Pos.CENTER);
                 updateButton.setMinWidth(62);
                 updateButton.setMaxWidth(62);
                 updateButton.setColumnResizable(false);
 
-                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> confirmAndUpdateRole());
+                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> { Role selectedRole = rolesTableView.getSelectionModel().getSelectedValues().get(roleId);
+                // Pass the selected row to setData() method
+                setData(selectedRole); });
                 setGraphic(button);
 
                 mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
@@ -94,7 +96,7 @@ public class RoleController {
                 }
             });
 
-        rolesTableView.getTableColumns().addAll(idColumn, nameColumn, deleteButton);
+        rolesTableView.getTableColumns().addAll(idColumn, nameColumn, deleteButton, updateButton);
 
         rolesTableView.getFilters().addAll(
                 new IntegerFilter<>("Role ID", Role::getRoleId),
@@ -117,11 +119,17 @@ public class RoleController {
         return button;
     }
 
+    protected void setData(Role role) {
+        roleNameField.setText(role.getName());
+        roleId = role.getRoleId();
+    }
+
 
     private void confirmAndDeleteRole() {
-        Role selectedRole = rolesTableView.getSelectionModel().getSelectedValues().get(roleId);
+        List<Role> selectedRoles = rolesTableView.getSelectionModel().getSelectedValues();
+        if (!selectedRoles.isEmpty()) { // Check if any items are selected
+            Role selectedRole = selectedRoles.get(0); // Assuming you want the first selected role
 
-        if (selectedRole != null) {
             int roleId = selectedRole.getRoleId();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
@@ -141,11 +149,14 @@ public class RoleController {
                     initialize();
                 } catch (RoleException ex) {
                     // Handle exception
-                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
+                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Error deleting role.");
                 }
             } else {
                 // User clicked Cancel or closed the dialog, do nothing
             }
+        } else {
+            // Show this message when no row is selected
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
         }
     }
 
@@ -198,6 +209,7 @@ public class RoleController {
     protected void updateRoleSelected() throws RoleException {
         roleName = roleNameField.getText();
         roleService.updateRole(roleId, roleName);
+        initialize();
     }
 
     private void handleRoleException(RoleException ex) {
