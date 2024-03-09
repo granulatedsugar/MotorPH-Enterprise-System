@@ -217,4 +217,49 @@ public class EmployeeRepository {
         }
 
         }
+        public void updateSickHours(Employee employee) throws EmployeeException {
+            try{
+                conn = DBUtility.getConnection();
+                String sql = "UPDATE motorph.employee SET sick_hours=? WHERE id =?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setDouble(1, employee.getHours());
+                pstmt.setInt(2, employee.getId());
+
+                int rows = pstmt.executeUpdate();
+
+                if(rows == 0){
+                    throw new EmployeeException("Error updating employee info in database");
+                }else{
+                    System.out.println("Successfully updated employee info in database");
+                }
+            }catch (Exception e){
+                throw new EmployeeException("Error updating employee in database: " + e.getMessage(), e);
+            }finally {
+                DBUtility.closeConnection(conn);
+            }
+
+        }
+
+    public void updateVacaHours(Employee employee) throws EmployeeException {
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "UPDATE  motorph.employee SET vacation_hours=? WHERE id =?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setDouble(1, employee.getHours());
+            pstmt.setInt(2, employee.getId());
+
+            int rows = pstmt.executeUpdate();
+
+            if(rows == 0){
+                throw new EmployeeException("Error updating employee info in database");
+            }else{
+                System.out.println("Successfully updated employee info in database");
+            }
+        }catch (Exception e){
+            throw new EmployeeException("Error updating employee in database: " + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+
+    }
     }

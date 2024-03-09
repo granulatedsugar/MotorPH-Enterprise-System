@@ -16,4 +16,16 @@ public class LeaveRequestService {
     public void createLeaveRequest(LeaveRequest leaveRequest) throws LeaveRequestException {
         leaveRequestRepository.createLeaveRequest(leaveRequest);
     }
+
+    public void updateLeaveRequest(LeaveRequest leaveRequest) throws LeaveRequestException{
+        leaveRequestRepository.updateLeaveRequest(leaveRequest);
+    }
+
+    public void deleteLeaveRequest(int leaveReqId) throws LeaveRequestException{
+        leaveRequestRepository.deleteLeaveRequest(leaveReqId);
+    }
+
+    public List<LeaveRequest> fetchLeaveRequestBySupervisor(int deptId) throws LeaveRequestException{
+       return leaveRequestRepository.fetchLeaveRequestBySupervisor(deptId);
+    }
 }

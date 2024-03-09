@@ -13,6 +13,12 @@ public class LeaveRequest {
     private Date approveDate;
 
 
+    private String name;
+    private String supervisor;
+    private int deptId;
+    private String deptDesc;
+
+
     public LeaveRequest(int leaveReqId, int employeeId, Date regDate, String leaveType, Date startDate, Date endDate, String status, Date approveDate) {
         this.leaveReqId = leaveReqId;
         this.employeeId = employeeId;
@@ -32,6 +38,41 @@ public class LeaveRequest {
         this.status = status;
         this.approveDate = approveDate;
     }
+    public LeaveRequest(String status, Date approveDate, int leaveReqId) {
+        this.leaveReqId = leaveReqId;
+        this.status = status;
+        this.approveDate = approveDate;
+    }
+
+    public LeaveRequest(int leaveReqId,int employeeId, String name, String supervisor, Date regDate, Date startDate, Date endDate, String leavetype, Date apprDate, String status, String deptDesc ) {
+        this.leaveReqId = leaveReqId;
+        this.employeeId = employeeId;
+        this.name = name;
+        this.supervisor = supervisor;
+        this.regDate = regDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.leaveType = leavetype;
+        this.approveDate = apprDate;
+        this.status = status;
+        this.deptDesc = deptDesc;
+
+    }
+
+    public LeaveRequest(String name, String supervisor, Date regDate, Date startDate, Date endDate, String leavetype, Date apprDate, String status, String deptDesc, int deptId) {
+        this.name = name;
+        this.supervisor = supervisor;
+        this.regDate = regDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.leaveType = leavetype;
+        this.approveDate = apprDate;
+        this.status = status;
+        this.deptDesc = deptDesc;
+        this.deptId = deptId;
+
+    }
+
 
     public int getLeaveReqId() {
         return leaveReqId;
@@ -96,6 +137,39 @@ public class LeaveRequest {
     public void setApproveDate(Date approveDate) {
         this.approveDate = approveDate;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public int getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(int deptId) {
+        this.deptId = deptId;
+    }
+
+    public String getDeptDesc() {
+        return deptDesc;
+    }
+
+    public void setDeptDesc(String deptDesc) {
+        this.deptDesc = deptDesc;
+    }
+
 
     @Override
     public String toString(){

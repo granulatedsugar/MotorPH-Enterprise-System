@@ -28,4 +28,11 @@ public class EmployeeService {
     public void updateEmployee(Employee employee) throws EmployeeException {
         employeeRepository.updateEmployee(employee);
     }
+
+    public void updateSickHours(Employee employee) throws EmployeeException{
+        employeeRepository.updateSickHours(employee);
+    }
+    public void updateVacaHours(Employee employee) throws EmployeeException{
+        employeeRepository.updateVacaHours(employee);
+    }
 }

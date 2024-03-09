@@ -14,8 +14,6 @@ import java.util.Scanner;
 
 public class OvertimeController {
 
-
-
 }
 
 
