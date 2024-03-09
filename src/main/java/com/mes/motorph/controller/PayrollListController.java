@@ -5,163 +5,139 @@ import com.mes.motorph.exception.PayrollException;
 import com.mes.motorph.services.PayrollService;
 import com.mes.motorph.utils.AlertUtility;
 
-import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.filter.IntegerFilter;
+import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public class PayrollListController {
     @FXML
-    private TableView<Payroll> payrollTableView;
+    private MFXPaginatedTableView<Payroll> payrollTableView;
     @FXML
-    private FilteredList<Payroll> filteredPayrolls;
-    @FXML
-    private TableColumn<Payroll, String> idColumn;
-    @FXML
-    private TableColumn<Payroll, Integer> employeeIdColumn;
-    @FXML
-    private TableColumn<Payroll, String> employeeNameColumn;
-    @FXML
-    private TableColumn<Payroll, Date> fromColumn;
-    @FXML
-    private TableColumn<Payroll, Date> toColumn;
-    @FXML
-    private TableColumn<Payroll, Double> daysWorkedColumn;
-    @FXML
-    private TableColumn<Payroll, Double> totalDeductionColumn;
-    @FXML
-    private TableColumn<Payroll, Double> totalAllowanceColumn;
-    @FXML
-    private TableColumn<Payroll, Double> grossPayColumn;
-    @FXML
-    private TableColumn<Payroll, Double> netPayColumn;
-    @FXML
-    private DatePicker datePicker;
-    @FXML
-    private TextField txtEmployeeId;
+    private Label breadCrumb;
+    private int id;
 
 
 
     private PayrollService payrollService = new PayrollService();
 
     @FXML
-    protected void initialize() throws PayrollException {
-        // Initialize ContextMenu
-        setupContextMenu();
+    protected void initialize() {
+        setupTable();
+        breadCrumb.setText("Payroll / Statements");
+        payrollTableView.autosizeColumnsOnInitialization();
+        payrollTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> payrollTableView.autosizeColumns());
+    }
 
-        // Initialize columns
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("payrollId"));
-        employeeIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
-        employeeNameColumn.setCellValueFactory(new PropertyValueFactory<>("employeeName"));
-        // For Date columns, use custom cell value factories to format Date objects
-        fromColumn.setCellValueFactory(new PropertyValueFactory<>("payPeriodFrom"));
-        fromColumn.setCellFactory(column -> new TableCell<Payroll, Date>() {
-            @Override
-            protected void updateItem(Date item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    setText(item.toString()); // Customize the date formatting as needed
-                }
+    private void setupTable() {
+        payrollTableView.getTableColumns().clear();
+
+        MFXTableColumn<Payroll> payslipIdColumn = new MFXTableColumn<>("Payslip No.", true, Comparator.comparing(Payroll::getPayrollId));
+        MFXTableColumn<Payroll> empIdColumn = new MFXTableColumn<>("Employee ID", true, Comparator.comparing(Payroll::getEmployeeId));
+        MFXTableColumn<Payroll> empNameColumn = new MFXTableColumn<>("Employee Name", true, Comparator.comparing(Payroll::getEmployeeName));
+        MFXTableColumn<Payroll> fromColumn = new MFXTableColumn<>("Start Date", true, Comparator.comparing(Payroll::getPayPeriodFrom));
+        MFXTableColumn<Payroll> toColumn = new MFXTableColumn<>("End Date", true, Comparator.comparing(Payroll::getPayPeriodTo));
+        MFXTableColumn<Payroll> daysWorkedColumn = new MFXTableColumn<>("Days Worked", true, Comparator.comparing(Payroll::getDaysWorked));
+        MFXTableColumn<Payroll> deductionColumn = new MFXTableColumn<>("Total Deduction", true, Comparator.comparing(Payroll::getTotalDeduction));
+        MFXTableColumn<Payroll> allowanceColumn = new MFXTableColumn<>("Total Deduction", true, Comparator.comparing(Payroll::getTotalAllowance));
+        MFXTableColumn<Payroll> grossColumn = new MFXTableColumn<>("Total Deduction", true, Comparator.comparing(Payroll::getGrossPay));
+        MFXTableColumn<Payroll> netColumn = new MFXTableColumn<>("Total Deduction", true, Comparator.comparing(Payroll::getNetPay));
+        MFXTableColumn<Payroll> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Payroll::getEmployeeId));
+        MFXTableColumn<Payroll> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Payroll::getEmployeeId));
+
+        payslipIdColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getPayrollId));
+        empIdColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getEmployeeId));
+        empNameColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getEmployeeName));
+        fromColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getPayPeriodFrom));
+        toColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getPayPeriodTo));
+        daysWorkedColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getDaysWorked));
+        deductionColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getTotalDeduction));
+        allowanceColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getTotalAllowance));
+        grossColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getGrossPay));
+        netColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getNetPay));
+
+        deleteButton.setRowCellFactory(payroll -> new MFXTableRowCell<>(payrolls -> "") {
+            {
+                deleteButton.setAlignment(Pos.CENTER);
+                deleteButton.setMinWidth(62);
+                deleteButton.setMaxWidth(62);
+                deleteButton.setColumnResizable(false);
+
+                MFXButton button = createButton("⛔", "mfx-button-table-delete", event -> onClickDeletePayroll());
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
+                    }
+                });
             }
         });
-        toColumn.setCellValueFactory(new PropertyValueFactory<>("payPeriodTo"));
-        toColumn.setCellFactory(column -> new TableCell<Payroll, Date>() {
-            @Override
-            protected void updateItem(Date item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    setText(item.toString()); // Customize the date formatting as needed
-                }
+
+        updateButton.setRowCellFactory(payroll -> new MFXTableRowCell<>(payrolls -> "") {
+            {
+                updateButton.setAlignment(Pos.CENTER);
+                updateButton.setMinWidth(62);
+                updateButton.setMaxWidth(62);
+                updateButton.setColumnResizable(false);
+
+                id = payroll.getEmployeeId();
+
+                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> onClickUpdateBtn());
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
+                    }
+                });
             }
         });
-        daysWorkedColumn.setCellValueFactory(new PropertyValueFactory<>("daysWorked"));
-        totalDeductionColumn.setCellValueFactory(new PropertyValueFactory<>("totalDeduction"));
-        totalAllowanceColumn.setCellValueFactory(new PropertyValueFactory<>("totalAllowance"));
-        grossPayColumn.setCellValueFactory(new PropertyValueFactory<>("grossPay"));
-        netPayColumn.setCellValueFactory(new PropertyValueFactory<>("netPay"));
+
+        payrollTableView.getTableColumns().addAll(payslipIdColumn, empNameColumn, fromColumn, toColumn, deductionColumn, allowanceColumn, grossColumn, netColumn, deleteButton, updateButton);
+
+        payrollTableView.getFilters().addAll(
+                new StringFilter<>("Payslip No.", Payroll::getPayrollId),
+                new IntegerFilter<>("Employee ID", Payroll::getEmployeeId),
+                new StringFilter<>("Employee Name", Payroll::getEmployeeName)
+        );
 
         try {
-            List<Payroll> payrolls = payrollService.fetchPayrollList();
-            if (payrolls.isEmpty()) {
-                // Show pop-up if no payroll data found
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION,"Information", null, "No payroll data found.");
-            } else {
-                ObservableList<Payroll> allPayrolls = FXCollections.observableArrayList(payrolls);
-                filteredPayrolls = new FilteredList<>(allPayrolls);
-                payrollTableView.setItems(filteredPayrolls);
-
-                // Add listener to txtEmployeeId to reset table when text is cleared
-                txtEmployeeId.textProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue.isEmpty()) {
-                        filteredPayrolls.setPredicate(null); // Reset the predicate to show all records
-                    }
-                });
-
-                datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue == null) {
-                        filteredPayrolls.setPredicate(null); // Remove the filter
-                    } else {
-                        filteredPayrolls.setPredicate(payroll -> {
-                            // Convert LocalDate to a string in the format "yyyy-MM-dd"
-                            String selectedDateString = newValue.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                            // Compare selected date string with the formatted date strings in your Payroll entity
-                            return selectedDateString.equals(payroll.getPayPeriodFrom().toString())
-                                    || selectedDateString.equals(payroll.getPayPeriodTo().toString());
-                        });
-                    }
-                });
-            }
+            List<Payroll> payrollList = payrollService.fetchPayrollList();
+            payrollTableView.getItems().clear();
+            payrollTableView.setItems(FXCollections.observableArrayList(payrollList));
         } catch (PayrollException e) {
-            throw new PayrollException("Error loading table: " + e.getMessage(), e);
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
         }
     }
 
-    @FXML
-    protected void onClickSearchEmployeeId() {
-        String employeeIdText = txtEmployeeId.getText().trim();
-
-        // Check if not empty
-        try {
-            int employeeId = Integer.parseInt(employeeIdText); // Convert the input to an integer
-            // Create a predicate to filter the list based on the employee ID
-            Predicate<Payroll> filterPredicate = payroll -> payroll.getEmployeeId() == employeeId;
-
-            // Apply the predicate to the filtered list
-            filteredPayrolls.setPredicate(filterPredicate);
-
-            // Check if any records match the employee ID
-            if (filteredPayrolls.isEmpty()) {
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "No records found for the provided Employee ID.");
-            }
-        } catch (NumberFormatException e) {
-            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Please enter a valid Employee ID.");
-        }
+    private MFXButton createButton(String text, String styleClass, EventHandler<? super MouseEvent> eventHandler) {
+        MFXButton button = new MFXButton(text);
+        button.getStyleClass().add(styleClass);
+        button.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler);
+        return button;
     }
 
-    @FXML
     protected void onClickUpdateBtn()  {
-        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelectedItem();
+        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelection().get(id);
 
         if (selectedPayroll != null) {
             String payrollId = selectedPayroll.getPayrollId();
@@ -192,64 +168,6 @@ public class PayrollListController {
         }
     }
 
-    // Right Click ContextMenu
-    private void showContextMenu(MouseEvent event, TableRow<Payroll> row, Payroll rowData) {
-        ContextMenu contextMenu = new ContextMenu();
-
-        // Update  Action
-        MenuItem updateItem = new MenuItem("Update");
-        updateItem.setOnAction(e -> {
-            String payrollId = rowData.getPayrollId();
-            navigateToPayrollCreateView(payrollId);
-        });
-
-        // Delete Action
-        MenuItem deleteItem = new MenuItem("Delete");
-        deleteItem.setOnAction(e -> {
-            String payrollId = rowData.getPayrollId();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText("Are you sure you want to delete Payslip #" + payrollId + " ?");
-
-            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-            alert.getButtonTypes().setAll(okButton, cancelButton);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == okButton) {
-                // User clicked OK, proceed with deletion
-                try {
-                    payrollService.deletePayrollById(payrollId);
-                    initialize();
-                } catch (PayrollException ex) {
-                    // Handle exception
-                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
-                }
-            } else {
-                // User clicked Cancel or closed the dialog, do nothing
-            }
-        });
-        contextMenu.getItems().addAll(updateItem, deleteItem);
-        // Show the context menu at the mouse cursor's location
-        contextMenu.show(row, event.getScreenX(), event.getScreenY());
-    }
-
-    // Right Click ContextMenu
-    private void setupContextMenu() {
-        payrollTableView.setRowFactory(tv -> {
-            TableRow<Payroll> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getButton() == MouseButton.SECONDARY && !row.isEmpty()) {
-                    Payroll rowData = row.getItem();
-                    showContextMenu(event, row, rowData);
-                }
-            });
-            return  row;
-        });
-    }
-
     @FXML
     protected void onClickNewPayroll() {
 
@@ -267,9 +185,8 @@ public class PayrollListController {
         }
     }
 
-    @FXML
     protected void onClickDeletePayroll() {
-        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelectedItem();
+        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelection().get(id);
 
         if (selectedPayroll != null) {
             String payrollId = selectedPayroll.getPayrollId();

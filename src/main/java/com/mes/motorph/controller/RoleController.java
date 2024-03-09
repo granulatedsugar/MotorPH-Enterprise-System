@@ -1,7 +1,6 @@
 package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Role;
-import com.mes.motorph.entity.UserRole;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import com.mes.motorph.exception.RoleException;
 import com.mes.motorph.services.RoleService;
@@ -15,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.Comparator;
