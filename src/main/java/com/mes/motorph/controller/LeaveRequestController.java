@@ -36,10 +36,17 @@ public class LeaveRequestController {
     private MFXDatePicker endDatePicker;
     @FXML
     private MFXTextField empNumberField;
+    @FXML
+    private Label breadCrumb;
 
 
     LeaveRequestService leaveRequestService = new LeaveRequestService();
     EmployeeService employeeService = new EmployeeService();
+
+    @FXML
+    protected void initialize() {
+        breadCrumb.setText("Attendance / Leave Request");
+    }
 
     public void setData(int empId){
         this.employeeId = empId;

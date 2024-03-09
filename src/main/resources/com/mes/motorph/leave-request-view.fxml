@@ -11,26 +11,22 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="663.0" prefWidth="923.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.LeaveRequestController">
+<AnchorPane prefHeight="663.0" prefWidth="923.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.LeaveRequestController">
     <children>
         <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="412.0" text="-" textFill="#cdd2d6">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0" />
-      <MFXPaginatedTableView fx:id="leaveReqTableView" layoutX="10.0" layoutY="489.0" pagesToShow="5" prefHeight="145.0" prefWidth="903.0" rowsPerPage="15" stylesheets="@../../../css/Button.css" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-      <MFXTextField fx:id="empNumberField" floatingText="Employee Number" layoutX="14.0" layoutY="104.0" prefHeight="49.0" prefWidth="254.0" />
-      <MFXButton layoutX="703.0" layoutY="317.0" onAction="#onClickSubmitBtn" prefHeight="42.0" prefWidth="206.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Submit" />
-      <HBox layoutX="14.0" layoutY="204.0" prefHeight="100.0" prefWidth="805.0" spacing="15.0">
+        <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
          <children>
-            <MFXDatePicker fx:id="startDatePicker" prefHeight="38.0" prefWidth="254.0" promptText="Start" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
-            <MFXDatePicker fx:id="endDatePicker" prefHeight="38.0" prefWidth="254.0" promptText="End" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
-            <MFXComboBox fx:id="leaveTypeComboBox" floatingText="Select Leave" prefHeight="42.0" prefWidth="254.0" />
-         </children>
-      </HBox>
-      <Pane layoutX="14.0" layoutY="400.0" prefHeight="76.0" prefWidth="903.0" />
-      <Label layoutX="14.0" layoutY="80.0" prefHeight="24.0" prefWidth="133.0" text="Employee Information" />
-      <Label layoutX="14.0" layoutY="174.0" prefHeight="24.0" prefWidth="133.0" text="Leave Information" />
+            <MFXTextField fx:id="empNumberField" floatMode="BORDER" floatingText="Employee Number" prefHeight="38.0" prefWidth="168.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" HBox.hgrow="ALWAYS" />
+            <MFXDatePicker fx:id="startDatePicker" floatMode="BORDER" prefHeight="30.0" prefWidth="158.0" promptText="Start" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" HBox.hgrow="ALWAYS" />
+            <MFXDatePicker fx:id="endDatePicker" floatMode="BORDER" prefHeight="42.0" prefWidth="171.0" promptText="End" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" HBox.hgrow="ALWAYS" />
+            <MFXComboBox fx:id="leaveTypeComboBox" floatMode="BORDER" floatingText="Select Leave" prefHeight="30.0" prefWidth="254.0" styleClass="mfx-text-field" stylesheets="@../../../css/TextField.css" HBox.hgrow="ALWAYS" />
+            <MFXButton onAction="#onClickSubmitBtn" prefHeight="42.0" prefWidth="168.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="Submit" HBox.hgrow="ALWAYS" />
+            <Pane prefHeight="42.0" prefWidth="123.0" HBox.hgrow="ALWAYS" />
+         </children></HBox>
+      <MFXPaginatedTableView fx:id="leaveReqTableView" layoutX="10.0" layoutY="489.0" pagesToShow="5" prefHeight="162.0" prefWidth="903.0" rowsPerPage="15" stylesheets="@../../../css/Button.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="114.0" />
     </children>
 </AnchorPane>
