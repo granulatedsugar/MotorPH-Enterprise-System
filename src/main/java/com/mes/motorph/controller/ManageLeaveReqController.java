@@ -44,8 +44,6 @@ public class ManageLeaveReqController {
 
     @FXML
     private Label breadCrumb;
-    @FXML
-    private Label employeeIdCrumb;
 
     @FXML
     private MFXPaginatedTableView<LeaveRequest> leaveRequestTableView;
@@ -60,7 +58,7 @@ public class ManageLeaveReqController {
     }
     private void setupTable(){
         leaveRequestTableView.getTableColumns().clear();
-
+        //set the columns of table
         MFXTableColumn<LeaveRequest> employeeName = new MFXTableColumn<>("Employee Name", true, Comparator.comparing(LeaveRequest::getName));
         MFXTableColumn<LeaveRequest> supervisor = new MFXTableColumn<>("Direct Supervisor", true, Comparator.comparing(LeaveRequest::getSupervisor));
         MFXTableColumn<LeaveRequest> regDate = new MFXTableColumn<>("Submitted Date", true, Comparator.comparing(LeaveRequest::getRegDate));
@@ -147,7 +145,6 @@ public class ManageLeaveReqController {
     @FXML
     protected void onClickFileLeave(){
         try {
-
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/mes/motorph/create-leave-view.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
@@ -158,18 +155,11 @@ public class ManageLeaveReqController {
             // Load the application icon
             Image icon = new Image(Main.class.getResourceAsStream("/images/app-icon.png"));
             stage.getIcons().add(icon);
-            Employee employee = employeeService.fetchEmployeeDetails(employeeId);
-            CreateLeaveController fileLeaveController = fxmlLoader.getController();
-            fileLeaveController.setData(employee);
 
         } catch (Exception e) {
             AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
             throw new RuntimeException(e);
         }
-    }
-
-    public void setEmployeeId(Employee employee) {
-        this.employeeId = employee.getId();
     }
 
     protected void rejectLeave() {
@@ -222,13 +212,12 @@ public class ManageLeaveReqController {
                         double vacaHours = employee.getVacationHours();
                         timeBet = (endDate.getTime() - startDate.getTime());
                         convertDays = ((TimeUnit.DAYS.convert(timeBet, TimeUnit.MILLISECONDS)+1)*8); //*8 to hours
-                        System.out.println("Convert days: " + convertDays + " Vaca Hours: " + vacaHours);
                         double remainingVacaHours = vacaHours-convertDays;
-                        System.out.println(remainingVacaHours);
                         Employee updEmployeeVaca = new Employee(empId, remainingVacaHours);
                         employeeService.updateVacaHours(updEmployeeVaca);
                         leaveRequestService.updateLeaveRequest(approveLeaveReq);
                         AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Leave Request Status", null, "Leave Request Approved");
+                        initialize();
                         break;
                 }
             } catch (EmployeeException | LeaveRequestException e) {

@@ -28,4 +28,7 @@ public class LeaveRequestService {
     public List<LeaveRequest> fetchLeaveRequestBySupervisor(int deptId) throws LeaveRequestException{
        return leaveRequestRepository.fetchLeaveRequestBySupervisor(deptId);
     }
+    public List<LeaveRequest> fetchAllLeaveRequestByEmpId(int empid) throws LeaveRequestException{
+        return leaveRequestRepository.fetchAllLeaveRequestByEmpId(empid);
+    }
 }

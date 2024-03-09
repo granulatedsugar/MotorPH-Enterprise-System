@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="663.0" prefWidth="462.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.CreateLeaveController">
+<AnchorPane prefHeight="664.0" prefWidth="463.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.CreateLeaveController">
     <children>
         <Label fx:id="breadCrumb" layoutX="10.0" layoutY="14.0" prefHeight="50.0" prefWidth="442.0" text="-" textFill="#cdd2d6">
             <font>
@@ -18,17 +18,16 @@
             </font>
         </Label>
         <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0" />
-      <MFXButton layoutX="81.0" layoutY="521.0" onAction="#onClickSubmitBtn" prefHeight="38.0" prefWidth="300.0" stylesheets="@../../../css/Button.css" text="Submit">
+      <MFXButton layoutX="81.0" layoutY="313.0" onAction="#onClickSubmitBtn" prefHeight="38.0" prefWidth="300.0" stylesheets="@../../../css/Button.css" text="Submit">
          <styleClass>
             <String fx:value="mfx-button-primary" />
             <String fx:value="mfx-button-new" />
          </styleClass>
       </MFXButton>
-      <MFXTextField fx:id="empIdField" floatMode="BORDER" floatingText="Employee Id" layoutX="14.0" layoutY="85.0" prefHeight="28.0" prefWidth="195.0" />
-      <MFXTextField fx:id="empNameField" floatMode="BORDER" floatingText="Employee Name" layoutX="234.0" layoutY="85.0" prefHeight="28.0" prefWidth="195.0" />
-      <MFXComboBox fx:id="leaveTypeComBox" floatingText="Leave Type" layoutX="14.0" layoutY="241.0" prefHeight="40.0" prefWidth="195.0" />
-      <MFXDatePicker layoutX="14.0" layoutY="160.0" promptText="Start of Leave" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
-      <MFXDatePicker layoutX="232.0" layoutY="160.0" promptText="End of Leave" stylesheets="@../../../css/DatePicker.css">
+      <MFXTextField fx:id="empIdField" floatMode="BORDER" floatingText="Employee Id" layoutX="22.0" layoutY="115.0" prefHeight="28.0" prefWidth="195.0" />
+      <MFXComboBox fx:id="leaveTypeComBox" floatingText="Leave Type" layoutX="243.0" layoutY="114.0" prefHeight="40.0" prefWidth="195.0" />
+      <MFXDatePicker fx:id="startDatePicker" layoutX="22.0" layoutY="190.0" promptText="Start of Leave" styleClass="mfx-date-picker" stylesheets="@../../../css/DatePicker.css" />
+      <MFXDatePicker fx:id="endDatePicker" layoutX="240.0" layoutY="190.0" promptText="End of Leave" stylesheets="@../../../css/DatePicker.css">
          <styleClass>
             <String fx:value="mfx-text-field" />
             <String fx:value="mfx-date-picker" />

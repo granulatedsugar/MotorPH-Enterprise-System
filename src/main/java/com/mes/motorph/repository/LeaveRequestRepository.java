@@ -150,4 +150,34 @@ public class LeaveRequestRepository {
         return leaveRequests;
     }
 
+    public  List<LeaveRequest> fetchAllLeaveRequestByEmpId(int empId) throws LeaveRequestException {
+        List<LeaveRequest> leaveRequests = new ArrayList<>();
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "SELECT * FROM motorph.leaverequest WHERE employeeid=?";
+            PreparedStatement newPstmt = conn.prepareStatement(sql);
+            newPstmt.setInt(1, empId);
+            ResultSet rs = newPstmt.executeQuery();
+
+            while(rs.next()){
+                Date regDate = rs.getDate("reg_date");
+                String leavetype = rs.getString("leavetype");
+                Date startDate = rs.getDate("startdate");
+                Date endDate = rs.getDate("enddate");
+                Date apprDate = rs.getDate("approve_date");
+                String status = rs.getString("status");
+
+                LeaveRequest leaveRequest = new LeaveRequest(regDate, leavetype, startDate, endDate,apprDate, status);
+                leaveRequests.add(leaveRequest);
+            }
+            rs.close();
+            newPstmt.close();
+        } catch (SQLException e) {
+            throw new LeaveRequestException("Error Connecting to the database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+        return leaveRequests;
+    }
+
 }
