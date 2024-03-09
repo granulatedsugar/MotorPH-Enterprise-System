@@ -3,6 +3,7 @@ package com.mes.motorph.view;
 import com.mes.motorph.Main;
 import com.mes.motorph.controller.AttendanceEmployeeController;
 import com.mes.motorph.controller.EmployeeAddController;
+import com.mes.motorph.controller.ManageLeaveReqController;
 import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.UserRole;
 import com.mes.motorph.exception.DepartmentException;
@@ -335,6 +336,38 @@ public class ViewFactory {
         }
 
     }
+
+    @FXML
+    protected void onClickManageLeaveReq() throws EmployeeException {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/manage-leave-view.fxml"));
+            AnchorPane leaveRequest = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+
+            // Get reference to existing BorderPane:
+            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
+
+            leaveRequest.setVisible(true);
+            Employee employee = employeeService.fetchEmployeeDetails(employeeId);
+            ManageLeaveReqController leaveRequestController = fxmlLoader.getController();
+            leaveRequestController.setEmployeeId(employee);
+
+            // Add the loaded AnchorPane to the center region:
+            borderPane.setCenter(leaveRequest);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    @FXML
+    protected void onClickLeaveReq(){
+        navigateToView("/com/mes/motorph/leave-request-view.fxml");
+
+    }
+
+
 
     private void setDashboardButtons() {
         overviewLabel.setVisible(false);

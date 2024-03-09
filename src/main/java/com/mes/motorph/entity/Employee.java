@@ -28,6 +28,9 @@ public class Employee {
     private int positionId;
     private int deptId;
 
+
+    private double hours;
+
     public Employee(int id, String address, double baseSalary, double clothingAllowance, Date dateOfBirth, String email, String firstName, String lastName, double grossSemiMonthlyRate, double hourlyRate, String pagIbig, String philHealth, double phoneAllowance, String phoneNumber, double riceSubsidy, String sss, String status, String supervisor, String tin, double vacationHours, double sickHours, int positionId, int deptId) {
         this.id = id;
         this.address = address;
@@ -78,6 +81,13 @@ public class Employee {
         this.positionId = positionId;
         this.deptId = deptId;
     }
+
+    public Employee(int id, double hours) {
+        this.id = id;
+        this.hours = hours;
+    }
+
+
 
     public int getId() {
         return id;
@@ -261,6 +271,14 @@ public class Employee {
 
     public void setDeptId(int deptId) {
         this.deptId = deptId;
+    }
+
+    public double getHours() {
+        return hours;
+    }
+
+    public void setHours(double hours) {
+        this.hours = hours;
     }
 
     // TODO: Delete after testing!

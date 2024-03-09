@@ -1,9 +1,7 @@
 package com.mes.motorph.repository;
 
 import com.mes.motorph.entity.LeaveRequest;
-import com.mes.motorph.entity.Overtime;
 import com.mes.motorph.exception.LeaveRequestException;
-import com.mes.motorph.exception.OvertimeException;
 import com.mes.motorph.utils.DBUtility;
 
 import java.sql.*;
@@ -20,20 +18,24 @@ public class LeaveRequestRepository {
         try{
             conn= DBUtility.getConnection();
             stmt = conn.createStatement();
-            String sql = "SELECT * FROM motorph.leaverequest";
+            String sql = "SELECT concat(e.firstname,\" \", e.lastname ) AS 'employee name', e.supervisor AS 'direct superior' ,lr.reg_date AS 'submitted date', lr.startdate, lr.enddate, lr.leavetype, lr.approve_date, lr.status, d.dept_desc, lr.leavereqid, lr.employeeid FROM motorph.leaverequest lr JOIN motorph.employee e ON lr.employeeid = e.id  JOIN motorph.department d ON d.dept_id = e.deptId";
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
-                int employeeId = rs.getInt("employeeid");
-                Date regDate = rs.getDate("reg_date");
-                String leaveType = rs.getString("leavetype");
+                String name = rs.getString("employee name");
+                String supervisor = rs.getString("direct superior");
+                Date regDate = rs.getDate("submitted date");
                 Date startDate = rs.getDate("startdate");
                 Date endDate = rs.getDate("enddate");
+                String leavetype = rs.getString("leavetype");
+                Date apprDate = rs.getDate("approve_date");
                 String status = rs.getString("status");
-                Date approveDate = rs.getDate("approve_date");
+                String deptDesc = rs.getString("dept_desc");
+                int leavereqid = rs.getInt("leavereqid");
+                int employeeid = rs.getInt("employeeid");
 
-               LeaveRequest leaveRequest = new com.mes.motorph.entity.LeaveRequest(employeeId, regDate, leaveType, startDate, endDate, status, approveDate);
-               leaveRequests.add(leaveRequest);
+                LeaveRequest leaveReq = new LeaveRequest(leavereqid,employeeid, name,supervisor, regDate, startDate, endDate,leavetype,apprDate,status, deptDesc);
+                leaveRequests.add(leaveReq);
             }
             rs.close();
             stmt.close();
@@ -71,13 +73,81 @@ public class LeaveRequestRepository {
             DBUtility.closeConnection(conn);
         }
     }
+    public void updateLeaveRequest(LeaveRequest leaveRequest) throws LeaveRequestException{
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "UPDATE motorph.leaverequest SET status=?, approve_date =? WHERE leavereqid=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, leaveRequest.getStatus());
+            pstmt.setDate(2, leaveRequest.getApproveDate());
+            pstmt.setInt(3, leaveRequest.getLeaveReqId());
 
+            int rows = pstmt.executeUpdate();
 
+            if(rows == 0){
+                System.out.println("Error updating leave request");
+            }else{
+                System.out.println("Leave request updated");
+            }
+        }catch (SQLException e){
+            throw new LeaveRequestException("Error connecting to database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
 
+    public void deleteLeaveRequest(int leaveReqId) throws LeaveRequestException{
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "DELETE FROM motorph.leaverequest WHERE leavereqid=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, leaveReqId);
 
+            int rows = pstmt.executeUpdate();
 
+            if(rows ==0){
+                System.out.println("Error deleting leave request");
+            }else{
+                System.out.println("Leave request deleted");
+            }
+        }catch (SQLException e){
+            throw new LeaveRequestException("Error connecting to database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+    }
 
+    public List<LeaveRequest> fetchLeaveRequestBySupervisor(int deptid) throws LeaveRequestException{
+        List<LeaveRequest> leaveRequests = new ArrayList<>();
+        try{
+            conn = DBUtility.getConnection();
+            stmt = conn.createStatement();
+            String sql = "SELECT concat(e.firstname,\" \", e.lastname ) AS 'employee name', e.supervisor AS 'direct superior' ,lr.reg_date AS 'submitted date', lr.startdate, lr.enddate, lr.leavetype, lr.approve_date, lr.status, d.dept_desc FROM motorph.leaverequest lr JOIN motorph.employee e ON lr.employeeid = e.id  JOIN motorph.department d ON d.dept_id = e.deptId WHERE dept_id=?";
+            ResultSet rs = stmt.executeQuery(sql);
 
+            while(rs.next()){
+                String name = rs.getString("employee name");
+                String supervisor = rs.getString("direct superior");
+                Date regDate = rs.getDate("submitted date");
+                Date startDate = rs.getDate("startdate");
+                Date endDate = rs.getDate("enddate");
+                String leavetype = rs.getString("leavetype");
+                Date apprDate = rs.getDate("approve_date");
+                String status = rs.getString("status");
+                String deptDesc = rs.getString("dept_desc");
+                int deptId = rs.getInt("deptId");
 
+                LeaveRequest leaveReq = new LeaveRequest(name, supervisor, regDate, startDate, endDate,leavetype,apprDate,status, deptDesc,deptId);
+                leaveRequests.add(leaveReq);
+            }
+            rs.close();
+            stmt.close();
+        }catch (SQLException e){
+            throw new LeaveRequestException("Error connecting to database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+        return leaveRequests;
+    }
 
 }
