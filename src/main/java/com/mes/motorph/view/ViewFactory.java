@@ -10,9 +10,12 @@ import com.mes.motorph.exception.DepartmentException;
 import com.mes.motorph.exception.EmployeeException;
 import com.mes.motorph.exception.PositionException;
 import com.mes.motorph.services.EmployeeService;
+import com.mes.motorph.utils.AlertUtility;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -227,7 +230,7 @@ public class ViewFactory {
 
     @FXML
     protected void onClickAttendance() {
-        navigateToView("/com/mes/motorph/attendance-view.fxml");
+        navigateToView("/com/mes/motorph/attendance-list-view.fxml");
     }
 
     @FXML
@@ -243,24 +246,25 @@ public class ViewFactory {
     @FXML
     protected void onClickTimeInOut() {
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-punch-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 462, 650);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Time Management");
+            stage.setResizable(false);
+            stage.show();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-employee-view.fxml"));
-            AnchorPane timeInOut = (AnchorPane) fxmlLoader.load(); // Assuming it's an AnchorPane
+            // Load the application icon
+            Image icon = new Image(Main.class.getResourceAsStream("/images/app-icon.png"));
+            stage.getIcons().add(icon);
 
-            // Get reference to existing BorderPane:
-            BorderPane borderPane = (BorderPane) mainView.getScene().getRoot(); // Update "mainView" with your actual BorderPane instance
-
-
-            timeInOut.setVisible(true);
+            //timeInOut.setVisible(true);
             Employee employee = employeeService.fetchEmployeeDetails(employeeId);
             AttendanceEmployeeController attendanceEmployeeController = fxmlLoader.getController();
             attendanceEmployeeController.setData(employee);
 
-            // Add the loaded AnchorPane to the center region:
-            borderPane.setCenter(timeInOut);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (EmployeeException e) {
+        } catch (Exception e) {
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -366,8 +370,6 @@ public class ViewFactory {
         navigateToView("/com/mes/motorph/leave-request-view.fxml");
 
     }
-
-
 
     private void setDashboardButtons() {
         overviewLabel.setVisible(false);

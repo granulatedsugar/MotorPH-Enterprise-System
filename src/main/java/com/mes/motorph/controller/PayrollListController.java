@@ -31,6 +31,7 @@ public class PayrollListController {
     private MFXPaginatedTableView<Payroll> payrollTableView;
     @FXML
     private Label breadCrumb;
+    private int payrollId;
     private int id;
 
 
@@ -49,11 +50,11 @@ public class PayrollListController {
         payrollTableView.getTableColumns().clear();
 
         MFXTableColumn<Payroll> payslipIdColumn = new MFXTableColumn<>("Payslip No.", true, Comparator.comparing(Payroll::getPayrollId));
-        MFXTableColumn<Payroll> empIdColumn = new MFXTableColumn<>("Employee ID", true, Comparator.comparing(Payroll::getEmployeeId));
+//        MFXTableColumn<Payroll> empIdColumn = new MFXTableColumn<>("Employee ID", true, Comparator.comparing(Payroll::getEmployeeId));
         MFXTableColumn<Payroll> empNameColumn = new MFXTableColumn<>("Employee Name", true, Comparator.comparing(Payroll::getEmployeeName));
         MFXTableColumn<Payroll> fromColumn = new MFXTableColumn<>("Start Date", true, Comparator.comparing(Payroll::getPayPeriodFrom));
         MFXTableColumn<Payroll> toColumn = new MFXTableColumn<>("End Date", true, Comparator.comparing(Payroll::getPayPeriodTo));
-        MFXTableColumn<Payroll> daysWorkedColumn = new MFXTableColumn<>("Days Worked", true, Comparator.comparing(Payroll::getDaysWorked));
+//        MFXTableColumn<Payroll> daysWorkedColumn = new MFXTableColumn<>("Days Worked", true, Comparator.comparing(Payroll::getDaysWorked));
         MFXTableColumn<Payroll> deductionColumn = new MFXTableColumn<>("Total Deduction", true, Comparator.comparing(Payroll::getTotalDeduction));
         MFXTableColumn<Payroll> allowanceColumn = new MFXTableColumn<>("Total Deduction", true, Comparator.comparing(Payroll::getTotalAllowance));
         MFXTableColumn<Payroll> grossColumn = new MFXTableColumn<>("Total Deduction", true, Comparator.comparing(Payroll::getGrossPay));
@@ -62,17 +63,17 @@ public class PayrollListController {
         MFXTableColumn<Payroll> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Payroll::getEmployeeId));
 
         payslipIdColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getPayrollId));
-        empIdColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getEmployeeId));
+//        empIdColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getEmployeeId));
         empNameColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getEmployeeName));
         fromColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getPayPeriodFrom));
         toColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getPayPeriodTo));
-        daysWorkedColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getDaysWorked));
+//        daysWorkedColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getDaysWorked));
         deductionColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getTotalDeduction));
         allowanceColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getTotalAllowance));
         grossColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getGrossPay));
         netColumn.setRowCellFactory(payroll -> new MFXTableRowCell<>(Payroll::getNetPay));
 
-        deleteButton.setRowCellFactory(payroll -> new MFXTableRowCell<>(payrolls -> "") {
+        deleteButton.setRowCellFactory(payroll -> new MFXTableRowCell<>(rowData -> "") {
             {
                 deleteButton.setAlignment(Pos.CENTER);
                 deleteButton.setMinWidth(62);
@@ -91,14 +92,12 @@ public class PayrollListController {
             }
         });
 
-        updateButton.setRowCellFactory(payroll -> new MFXTableRowCell<>(payrolls -> "") {
+        updateButton.setRowCellFactory(payroll -> new MFXTableRowCell<>(rowData -> "") {
             {
                 updateButton.setAlignment(Pos.CENTER);
                 updateButton.setMinWidth(62);
                 updateButton.setMaxWidth(62);
                 updateButton.setColumnResizable(false);
-
-                id = payroll.getEmployeeId();
 
                 MFXButton button = createButton("🖊", "mfx-button-table-update", event -> onClickUpdateBtn());
                 setGraphic(button);
@@ -137,7 +136,7 @@ public class PayrollListController {
     }
 
     protected void onClickUpdateBtn()  {
-        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelection().get(id);
+        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelectedValues().get(0);
 
         if (selectedPayroll != null) {
             String payrollId = selectedPayroll.getPayrollId();
@@ -186,7 +185,7 @@ public class PayrollListController {
     }
 
     protected void onClickDeletePayroll() {
-        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelection().get(id);
+        Payroll selectedPayroll = payrollTableView.getSelectionModel().getSelectedValues().get(0);
 
         if (selectedPayroll != null) {
             String payrollId = selectedPayroll.getPayrollId();

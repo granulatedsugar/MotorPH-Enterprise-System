@@ -1,173 +1,168 @@
 package com.mes.motorph.controller;
 
+import com.mes.motorph.Main;
 import com.mes.motorph.entity.Attendance;
-import com.mes.motorph.entity.Payroll;
+import com.mes.motorph.entity.Employee;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.services.AttendanceService;
 import com.mes.motorph.utils.AlertUtility;
 import com.mes.motorph.view.ViewFactory;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.filter.IntegerFilter;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.Time;
 import java.sql.Date;
-import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public class AttendanceController {
 
     @FXML
-    private TableView<Attendance> attendanceTableView;
+    private MFXPaginatedTableView<Attendance> attendanceTableView;
     @FXML
-    private TableColumn<Attendance, Integer> idColumn;
-    @FXML
-    private TableColumn<Attendance, Integer> empIdColumn;
-    @FXML
-    private TableColumn<Attendance, Date> dateColumn;
-    @FXML
-    private TableColumn<Attendance, Time> timeInColumn;
-    @FXML
-    private TableColumn<Attendance, Time> timeOutColumn;
-    @FXML
-    private FilteredList<Attendance> filteredList;
-    @FXML
-    private TextField empIdField;
-    @FXML
-    private DatePicker datePicker;
+    private  Label breadCrumb;
     private AttendanceService attendanceService = new AttendanceService();
+    private AttendanceEmployeeController attendanceEmployeeController = new AttendanceEmployeeController();
 
     @FXML
-    protected void initialize(){
-        setupContextMenu();
+    protected void initialize() {
+        setupTable();
+        breadCrumb.setText("Attendance / Log");
+        attendanceTableView.autosizeColumnsOnInitialization();
+        attendanceTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> attendanceTableView.autosizeColumns());
+    }
 
-        //we set values to each column
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        empIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        dateColumn.setCellFactory(column -> new TableCell<Attendance, Date>() {
-            @Override
-            protected void updateItem(Date item, boolean empty) {
-                super.updateItem(item,empty);
-                if(item == null || empty){
-                    setText(null);
-                }else{
-                    setText(item.toString());
-                }
+    private void setupTable() {
+        attendanceTableView.getTableColumns().clear();
 
-                 }
-             }
-        );
-        timeInColumn.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
-        timeOutColumn.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+        MFXTableColumn<Attendance> empIdColumn = new MFXTableColumn<>("Employee ID", true, Comparator.comparing(Attendance::getEmployeeId));
+        MFXTableColumn<Attendance> dateColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getDate));
+        MFXTableColumn<Attendance> timeInColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getTimeIn));
+        MFXTableColumn<Attendance> timeOutColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getTimeOut));
+        MFXTableColumn<Attendance> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
+        MFXTableColumn<Attendance> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
 
+        empIdColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getEmployeeId));
+        dateColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getDate));
+        timeInColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getTimeIn));
+        timeOutColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getTimeOut));
 
-        try{
-            List<Attendance> attendances = attendanceService.fetchAttedance();
-            if(attendances.isEmpty()){ //Check if list is empty, and display a message
-                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "No Attendance Record");
-            }else{
-                ObservableList<Attendance> attendanceObservableList = FXCollections.observableArrayList(attendances);
-                filteredList = new FilteredList<>(attendanceObservableList);
-                attendanceTableView.setItems(filteredList);
-                //Add an action listener to the empIdField (textfield) that if null reset the filteredList (table)
-                empIdField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-                    if(newValue.isEmpty()){
-                        filteredList.setPredicate(null);
-                    }
-                } );
-                ////Add an action listener to the datePicker (date picker) that if null reset the filteredList (table)
-                datePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-                    if(newValue == null){
-                        filteredList.setPredicate(null);
-                    }else{
-                        filteredList.setPredicate(attendance -> {
-                          String selectedStartDate = newValue.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                          return selectedStartDate.equals(attendance.getDate().toString());
-                        });
+        deleteButton.setRowCellFactory(attendance -> new MFXTableRowCell<>(attendances -> "") {
+            {
+                deleteButton.setAlignment(Pos.CENTER);
+                deleteButton.setMinWidth(62);
+                deleteButton.setMaxWidth(62);
+                deleteButton.setColumnResizable(false);
+
+                MFXButton button = createButton("⛔", "mfx-button-table-delete", event -> onClickDeleteAttendance());
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
                     }
                 });
             }
-        }catch (AttendanceException e){
-            e.printStackTrace();
-        }
-    }
+        });
 
-    @FXML
-    protected void onClickSearchEmpId(){
-        String employeeIdText = empIdField.getText().trim();
+        updateButton.setRowCellFactory(attendance -> new MFXTableRowCell<>(attendances -> "") {
+            {
+                updateButton.setAlignment(Pos.CENTER);
+                updateButton.setMinWidth(62);
+                updateButton.setMaxWidth(62);
+                updateButton.setColumnResizable(false);
 
-        try{
-            int employeeId = Integer.parseInt(employeeIdText);
-            //Create a predicate to filter the list(table) according to employeeId
-            Predicate<Attendance> filteredPredicate = attendance -> attendance.getEmployeeId() == employeeId;
-            //Set the List according to searched employeeId
-            filteredList.setPredicate(filteredPredicate);
-            //Check if the list is empty, and display a message
-            if(filteredList.isEmpty()){
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "No records found for the provided Employee ID.");
+                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> {
+                    try {
+                        onClickUpdate();
+                    } catch (AttendanceException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
+                    }
+                });
             }
-        }catch (NumberFormatException e){
-            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Please enter a valid Employee ID.");
+        });
+
+        attendanceTableView.getTableColumns().addAll(empIdColumn, dateColumn, timeInColumn, timeOutColumn, deleteButton, updateButton);
+        attendanceTableView.getFilters().addAll(
+                new IntegerFilter<>("Employee ID", Attendance::getEmployeeId)
+        );
+
+        try {
+            List<Attendance> attendanceList = attendanceService.fetchAttedance();
+            attendanceTableView.getItems().clear();
+            attendanceTableView.setItems(FXCollections.observableArrayList(attendanceList));
+        } catch (AttendanceException e) {
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
         }
-
-
     }
-    @FXML
-    protected void onClickDelete() throws AttendanceException{
-        Attendance selectedAttendance = attendanceTableView.getSelectionModel().getSelectedItem();
-        //check if a row is selected
-        if(selectedAttendance != null){//if not null
-            int attendanceId = selectedAttendance.getId();
-            //display a confirmation message
+
+    private MFXButton createButton(String text, String styleClass, EventHandler<? super MouseEvent> eventHandler) {
+        MFXButton button = new MFXButton(text);
+        button.getStyleClass().add(styleClass);
+        button.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler);
+        return button;
+    }
+
+    protected void onClickDeleteAttendance() {
+        Attendance selectedRow = attendanceTableView.getSelectionModel().getSelectedValues().get(0);
+
+        if (selectedRow != null) {
+            int attendanceId = selectedRow.getId();
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText(null);
-            alert.setContentText("Do you want to delete this row?");
+            alert.setContentText("Are you sure you want to delete selected attendance record?");
 
-            //set buttons, Ok and Cancel
             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-            alert.getButtonTypes().setAll(okButton,cancelButton);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == okButton){ //if user selected "ok"
-                try{
-                    //delete the selected row
+            if (result.isPresent() && result.get() == okButton) {
+                // User clicked OK, proceed with deletion
+                try {
                     attendanceService.deleteAttendance(attendanceId);
-                    //refresh the list/table
                     initialize();
-                    //display a message
-                    AlertUtility.showAlert(Alert.AlertType.INFORMATION, "", null, "Row Deleted");
-                }catch (AttendanceException e){
-                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
+                } catch (AttendanceException ex) {
+                    // Handle exception
+                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
                 }
-            }else{
-                //do nothing
+            } else {
+                // User clicked Cancel or closed the dialog, do nothing
             }
-        }else{
-            //if user didn't select a row, display a message
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
+        } else {
+            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
         }
-
     }
 
     @FXML
     private void onClickUpdate() throws AttendanceException {
-        Attendance selectedAttendance = attendanceTableView.getSelectionModel().getSelectedItem();
+        Attendance selectedAttendance = attendanceTableView.getSelectionModel().getSelectedValues().get(0);
 
         if(selectedAttendance != null){//check if selected row is not null
             int attendanceId = selectedAttendance.getId();
@@ -176,102 +171,58 @@ public class AttendanceController {
             Time timeIn = selectedAttendance.getTimeIn();
             Time timeOut = selectedAttendance.getTimeOut();
             //we get each values from the table
-            navigateToAttendanceEmployee(attendanceId, employeedId, date, timeIn, timeOut);
+            Attendance attendance = new Attendance(attendanceId, employeedId, date, timeIn, timeOut);
+            navigateToAttendanceEmployee(attendance);
         }else{
             AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to update");
         }
 
     }
-    private void navigateToAttendanceEmployee(int attendanceId, int employeeId, Date date, Time timeIn, Time timeOut){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/attendance-employee-view.fxml"));
 
-        try{
-            Parent attendanceEmployeeView = loader.load();
-            AttendanceEmployeeController attendanceEmployeeController = loader.getController();
+    private void navigateToAttendanceEmployee(Attendance attendance){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-punch-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 462, 650);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Time Management");
+            stage.setResizable(false);
+            stage.show();
+
+            // Load the application icon
+            Image icon = new Image(Main.class.getResourceAsStream("/images/app-icon.png"));
+            stage.getIcons().add(icon);
+
+            //timeInOut.setVisible(true);
             //call the setAttendanceDetails to set the fields when updating
-            attendanceEmployeeController.setAttendanceDetails(attendanceId,employeeId,date,timeIn,timeOut);
-            //Get the border pane of this scene
-            BorderPane mainView = (BorderPane) attendanceTableView.getScene().getRoot().lookup("#mainView");
-            //replace it with the attendance-employee-view pane
-            mainView.setCenter(attendanceEmployeeView);
-        }catch (IOException e){
-            e.printStackTrace();
+            AttendanceEmployeeController attendanceEmployeeController = fxmlLoader.getController();
+            attendanceEmployeeController.setAttendanceDetails(attendance);
+            } catch (Exception e) {
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
     @FXML
     private void onClickAdd(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mes/motorph/attendance-employee-view.fxml"));
-        try{
-            Parent attendanceEmployeeView = loader.load();
-            AttendanceEmployeeController attendanceEmployeeController = loader.getController();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/attendance-punch-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 462, 650);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Time Management");
+            stage.setResizable(false);
+            stage.show();
 
-            //Get the border pane of this scene
-            BorderPane mainView = (BorderPane) attendanceTableView.getScene().getRoot().lookup("#mainView");
+            // Load the application icon
+            Image icon = new Image(Main.class.getResourceAsStream("/images/app-icon.png"));
+            stage.getIcons().add(icon);
+
+            AttendanceEmployeeController attendanceEmployeeController = fxmlLoader.getController();
             attendanceEmployeeController.onClickAddToCreate();
-            //replace it with the attendance-employee-view pane
-            mainView.setCenter(attendanceEmployeeView);
-        }catch (IOException e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
+            throw new RuntimeException(e);
         }
-
     }
-
-    private void showContextMenu(MouseEvent event, TableRow<Attendance> row, Attendance rowData){
-        ContextMenu contextMenu = new ContextMenu();
-
-        MenuItem updateMenu = new MenuItem("Update");
-        updateMenu.setOnAction(e -> {
-            int attendanceId = rowData.getId();
-            int employeeId = rowData.getEmployeeId();
-            Date date = rowData.getDate();
-            Time timeIn = rowData.getTimeIn();
-            Time timeOut = rowData.getTimeOut();
-            navigateToAttendanceEmployee(attendanceId, employeeId,date,timeIn,timeOut);
-        });
-
-        MenuItem deleteMenu = new MenuItem("Delete");
-        deleteMenu.setOnAction(e -> {
-            int attendanceId = rowData.getId();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText("Do you want to delete this row?");
-
-            ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-            alert.getButtonTypes().setAll(okButton,cancelButton);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == okButton){
-                try{
-                    attendanceService.deleteAttendance(attendanceId);
-                    initialize();
-                    AlertUtility.showAlert(Alert.AlertType.INFORMATION, "", null, "Row Deleted");
-                }catch (AttendanceException ex){
-                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
-                }
-            }else{
-                System.out.println("CANCEL!");
-            }
-    });
-        contextMenu.getItems().addAll(updateMenu,deleteMenu);
-        contextMenu.show(row, event.getScreenX(), event.getScreenY());
-    }
-
-    private void setupContextMenu(){
-        attendanceTableView.setRowFactory(attendanceTableView1 -> {
-            TableRow tableRow = new TableRow<>();
-            tableRow.setOnMouseClicked(mouseEvent -> {
-                if (mouseEvent.getButton() == MouseButton.SECONDARY && !tableRow.isEmpty()) {
-                    Attendance rowData = (Attendance) tableRow.getItem();
-                    showContextMenu(mouseEvent, tableRow, rowData);
-                }
-            });
-            return tableRow;
-        });
-    }
-
-
 }

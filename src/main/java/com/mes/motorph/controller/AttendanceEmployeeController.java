@@ -5,22 +5,19 @@ import com.mes.motorph.entity.Employee;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.services.AttendanceService;
 import com.mes.motorph.utils.AlertUtility;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.EventHandler;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class AttendanceEmployeeController {
 
@@ -28,60 +25,55 @@ public class AttendanceEmployeeController {
     private Label breadCrumb;
     @FXML
     private Label sceneTitle;
-    private int attendanceId;
-    private int employeeId;
+    @FXML
+    private Label attendanceIdField;
+    @FXML
+    private MFXTextField empIdField;
+    @FXML
+    private MFXDatePicker dateField;
+    @FXML
+    private MFXTextField timeInField;
+    @FXML
+    private MFXTextField timeOutField;
+    @FXML
+    private MFXButton updateBtn;
+    @FXML
+    private MFXButton addBtn;
+    @FXML
+    private MFXButton timeInBtn;
+    @FXML
+    private MFXButton timeOutBtn;
+
     private Date date;
-    private Time timeIn;
-    private Time timeOut;
+    private int id;
 
     @FXML
-    private TextField attendanceIdField;
-    @FXML
-    private TextField empIdField;
-    @FXML
-    private DatePicker dateField;
-    @FXML
-    private TextField timeInField;
-    @FXML
-    private TextField timeOutField;
-    @FXML
-    private Button updateBtn;
-    @FXML
-    private Button addBtn;
-    @FXML
-    private Button timeInBtn;
-    @FXML
-    private Button timeOutBtn;
+    private MFXTextField tester;
 
 
     AttendanceService attendanceService = new AttendanceService();
 
     @FXML
     protected void initialize() throws AttendanceException, SQLException {
-        breadCrumb.setText("Attendance / Create");
-        sceneTitle.setText("Create New Attendance");
-        this.date = Date.valueOf(LocalDate.now());
+        breadCrumb.setText("Attendance / Create / Time Punch");
+//        sceneTitle.setText("Create New Attendance");
+        Date date = Date.valueOf(LocalDate.now());
         dateField.setValue(LocalDate.parse(date.toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
         addBtn.setVisible(false);
         updateBtn.setVisible(false);
     }
 
     public void setData(Employee employee) {
-        breadCrumb.setText("Attendance / Time In/Out");
-        sceneTitle.setText("Time In/Out");
+        breadCrumb.setText("Attendance / Time In-Out");
+//        sceneTitle.setText("Time In/Out");
         empIdField.setDisable(true);
         empIdField.setText(String.valueOf(employee.getId()));
-
     }
 
-    public void setAttendanceDetails(int attendanceId, int employeeId, Date date, Time timeIn, Time timeOut){
-        this.attendanceId = attendanceId;
-        this.employeeId = employeeId;
-        this.date = date;
-        this.timeIn = timeIn;
-        this.timeOut = timeOut;
-
-        attendanceIdField.setText(String.valueOf(attendanceId));
+    @FXML
+    public void setAttendanceDetails(Attendance attendance){
+        String attId = String.valueOf(attendance.getId());
+        attendanceIdField.setText(attId);
         timeInBtn.setVisible(false);
         timeOutBtn.setVisible(false);
         timeInField.setDisable(false);
@@ -91,10 +83,8 @@ public class AttendanceEmployeeController {
         updateBtn.setVisible(true);
         dateField.setDisable(false);
 
-        Attendance attendance = new Attendance(attendanceId,employeeId,date,timeIn,timeOut);
         //we set the fields
         setAttendanceDetailsFields(attendance);
-
     }
     private void setAttendanceDetailsFields(Attendance attendance){
         empIdField.setText(String.valueOf(attendance.getEmployeeId()));
@@ -114,10 +104,10 @@ public class AttendanceEmployeeController {
                 AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "Missing Fields");
             }else{
                 //if not null get all values from fields
-                this.employeeId = Integer.parseInt(empIdField.getText());
-                this.date = Date.valueOf(dateField.getValue());
-                this.timeIn = Time.valueOf(timeInField.getText());
-                this.timeOut = Time.valueOf(timeOutField.getText());
+                int employeeId = Integer.parseInt(empIdField.getText());
+                Date date = Date.valueOf(dateField.getValue());
+                Time timeIn = Time.valueOf(timeInField.getText());
+                Time timeOut = Time.valueOf(timeOutField.getText());
                 Attendance attendance = new Attendance(employeeId,date,timeIn,timeOut);
                 try {
                     //add attendance
@@ -149,8 +139,8 @@ public class AttendanceEmployeeController {
 
     @FXML
     private void onClickUpdateCreateAttendance(){
-        this.attendanceId = Integer.parseInt(attendanceIdField.getText());
-        this.employeeId = Integer.parseInt(empIdField.getText());
+        int attendanceId = Integer.parseInt(attendanceIdField.getText());
+        int employeeId = Integer.parseInt(empIdField.getText());
         this.date = Date.valueOf(dateField.getValue());
         //get time in and time out, and format it
         Time timeIn = Time.valueOf(LocalTime.parse(timeInField.getText()).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
