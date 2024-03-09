@@ -282,7 +282,7 @@ public class ViewFactory {
 
     @FXML
     protected void onClickDepartment() {
-        navigateToView("/com/mes/motorph/department-view.fxml");
+        navigateToView("/com/mes/motorph/department-list-view.fxml");
     }
 
     @FXML

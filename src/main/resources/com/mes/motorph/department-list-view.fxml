@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="663.0" prefWidth="462.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.PositionController">
+<AnchorPane prefHeight="663.0" prefWidth="462.0" styleClass="body" stylesheets="@../../../css/App.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.DepartmentController">
     <children>
         <Label fx:id="breadCrumb" layoutX="10.0" layoutY="14.0" prefHeight="50.0" prefWidth="442.0" text="-" textFill="#cdd2d6">
             <font>
@@ -22,13 +22,13 @@
                 <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="163.0" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
-      <MFXPaginatedTableView fx:id="positionTableView" layoutX="10.0" layoutY="114.0" prefHeight="163.0" prefWidth="442.0" stylesheets="@../../../css/Button.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="114.0" />
+      <MFXPaginatedTableView fx:id="departmentTableView" layoutX="10.0" layoutY="114.0" prefHeight="163.0" prefWidth="442.0" stylesheets="@../../../css/Button.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="114.0" />
       <MFXButton fx:id="submitBtn" layoutX="81.0" layoutY="521.0" onAction="#onClickSubmit" prefHeight="38.0" prefWidth="300.0" stylesheets="@../../../css/Button.css" text="Submit" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0">
          <styleClass>
             <String fx:value="mfx-button-primary" />
             <String fx:value="mfx-button-new" />
          </styleClass>
       </MFXButton>
-      <MFXTextField fx:id="positionNameField" floatMode="BORDER" floatingText="Create New Position" layoutX="81.0" layoutY="469.0" maxWidth="300.0" prefHeight="30.0" prefWidth="300.0" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0" />
+      <MFXTextField fx:id="departmentField" floatMode="BORDER" floatingText="Create New Department" layoutX="81.0" layoutY="469.0" maxWidth="300.0" prefHeight="30.0" prefWidth="300.0" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0" />
     </children>
 </AnchorPane>

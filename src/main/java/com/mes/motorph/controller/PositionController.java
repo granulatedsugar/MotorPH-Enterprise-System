@@ -2,13 +2,9 @@ package com.mes.motorph.controller;
 
 import com.mes.motorph.entity.Position;
 import com.mes.motorph.exception.PositionException;
-import com.mes.motorph.exception.RoleException;
 import com.mes.motorph.services.PositionService;
 import com.mes.motorph.utils.AlertUtility;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTableView;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.collections.FXCollections;
@@ -26,11 +22,9 @@ public class PositionController {
     @FXML
     private Label breadCrumb;
     @FXML
-    private MFXTableView<Position> positionTableView;
+    private MFXPaginatedTableView<Position> positionTableView;
     @FXML
     private MFXTextField positionNameField;
-    @FXML
-    private TextField positionIdField;
     private String title;
     private int id;
 
@@ -39,16 +33,21 @@ public class PositionController {
     @FXML
     protected void initialize() {
         setupTable();
-        breadCrumb.setText("Administration / Position / Create");
+        breadCrumb.setText("Administration / Position / Manage");
+        positionTableView.autosizeColumnsOnInitialization();
+        positionTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> positionTableView.autosizeColumns());
     }
 
     private void setupTable() {
+        // Clear existing columns
+        positionTableView.getTableColumns().clear();
+
         MFXTableColumn<Position> titleColumn = new MFXTableColumn<>("Position", true, Comparator.comparing(Position::getTitle));
         MFXTableColumn<Position> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Position::getPositionId));
         MFXTableColumn<Position> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Position::getPositionId));
 
         titleColumn.setRowCellFactory(position -> new MFXTableRowCell<>(Position::getTitle));
-        titleColumn.setMinWidth(500);
+
         updateButton.setRowCellFactory(position -> new MFXTableRowCell<>(positions -> "") {
             {
                 updateButton.setAlignment(Pos.CENTER);
@@ -58,7 +57,10 @@ public class PositionController {
 
                 title = position.getTitle();
 
-                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> confirmAndUpdatePosition());
+                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> {
+                    Position selectedPosition = positionTableView.getSelectionModel().getSelectedValues().get(id);
+                    setData(selectedPosition);
+                });
                 setGraphic(button);
 
                 mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
@@ -92,13 +94,19 @@ public class PositionController {
         positionTableView.getTableColumns().addAll(titleColumn, deleteButton, updateButton);
 
         positionTableView.getFilters().addAll(
-                new StringFilter<>("Title", Position::getTitle)
+                new StringFilter<>("Position", Position::getTitle)
         );
 
         try {
             List<Position> roleList = positionService.fetchPositions();
             positionTableView.getItems().clear(); // Clear existing items
-            positionTableView.setItems(FXCollections.observableArrayList(roleList));
+            if (!roleList.isEmpty()) {
+                positionTableView.setItems(FXCollections.observableArrayList(roleList));
+            } else {
+                // Handle case when roleList is empty
+                // Display a message to the user or adjust the behavior of your application accordingly
+                System.out.println("Role list is empty.");
+            }
         } catch (PositionException e) {
             AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
         }
@@ -111,12 +119,18 @@ public class PositionController {
         return button;
     }
 
-    private void confirmAndDeleteRole() {
-        Position selectedRole = positionTableView.getSelectionModel().getSelectedValues().get(id);
+    protected void setData(Position position) {
+        positionNameField.setFloatingText("Update Position");
+        positionNameField.setText(position.getTitle());
+        id = position.getPositionId();
+    }
 
-        if (selectedRole != null) {
-            int positionId = selectedRole.getPositionId();
-            String title = selectedRole.getTitle();
+    private void confirmAndDeleteRole() {
+        Position selectedPosition = positionTableView.getSelectionModel().getSelectedValues().get(id);
+
+        if (selectedPosition != null) {
+            int positionId = selectedPosition.getPositionId();
+            String title = selectedPosition.getTitle();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText(null);
@@ -131,7 +145,8 @@ public class PositionController {
             if (result.isPresent() && result.get() == okButton) {
                 // User clicked OK, proceed with deletion
                 try {
-                    positionService.deletePosition(positionId);
+                    System.out.println(positionId);
+                   positionService.deletePosition(positionId);
                     initialize();
                 } catch (PositionException ex) {
                     // Handle exception
@@ -151,9 +166,11 @@ public class PositionController {
         } else if (id == 0 && !positionNameField.getText().isEmpty()) {
             title = positionNameField.getText();
             createNewPosition();
+
         } else {
             showAlert("Please select a role to update.");
         }
+        initialize();
     }
 
     private void confirmAndUpdatePosition() {
@@ -172,7 +189,7 @@ public class PositionController {
 
             Position position = new Position(newPosition);
             positionService.createPosition(position);
-            showAlert("Role Created!");
+            showAlert("Position Created!");
         } catch (PositionException e) {
             throw new RuntimeException(e);
         }
@@ -193,12 +210,11 @@ public class PositionController {
 
     protected void updatePositionSelected() throws PositionException {
         title = positionNameField.getText();
-        System.out.println(id + title);
         Position position = new Position(id, title);
         positionService.updatePosition(position);
     }
 
-    private void handleRoleException(RoleException ex) {
+    private void handleRoleException(PositionException ex) {
         AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Error updating position: " + ex.getMessage());
         ex.printStackTrace();
     }

@@ -1,228 +1,227 @@
 package com.mes.motorph.controller;
 
-import com.mes.motorph.entity.Attendance;
+
 import com.mes.motorph.entity.Department;
-import com.mes.motorph.entity.Position;
-import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.exception.DepartmentException;
-import com.mes.motorph.exception.PositionException;
 import com.mes.motorph.services.DepartmentService;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 public class DepartmentController {
     @FXML
-    private TableView<Department> departmentTableView;
+    private Label breadCrumb;
     @FXML
-    private TableColumn<Department, Integer> departmentIdColumn;
+    private MFXPaginatedTableView<Department> departmentTableView;
     @FXML
-    private TableColumn<Department,String> departmentTitleColumn;
-    @FXML
-    private TextField deptField;
-    @FXML
-    private TextField deptIdField;
-    @FXML
-    private FilteredList<Department> departmentFilteredList;
-
+    private MFXTextField departmentField;
+    private int deptId;
+    private String deptDesc;
 
     DepartmentService departmentService = new DepartmentService();
 
     @FXML
-    protected void initialize(){
-        setupContextMenu();
+    protected void initialize() {
+        setupTable();
+        breadCrumb.setText("Administration / Department / Manage");
+        departmentTableView.autosizeColumnsOnInitialization();
+        departmentTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> departmentTableView.autosizeColumns());
+    }
 
-        departmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("deptId"));
-        departmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("deptDesc"));
+    private void setupTable() {
+        // Clear existing columns
+        departmentTableView.getTableColumns().clear();
 
-        try{
-            List<Department> departments = departmentService.fetchDepartments();
-            if(departments.isEmpty()){
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION,"Information", null, "No position data found.");
-            }else{
-                ObservableList<Department> departmentObservableList = FXCollections.observableArrayList(departments);
-                departmentFilteredList = new FilteredList<>(departmentObservableList);
-                departmentTableView.setItems(departmentFilteredList);
+        MFXTableColumn<Department> descColumn = new MFXTableColumn<>("Department", true, Comparator.comparing(Department::getDeptDesc));
+        MFXTableColumn<Department> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Department::getDeptId));
+        MFXTableColumn<Department> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Department::getDeptId));
 
-                deptIdField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-                    if(newValue.isEmpty()){
-                        departmentFilteredList.setPredicate(null);
+
+        descColumn.setRowCellFactory(department -> new MFXTableRowCell<>(Department::getDeptDesc));
+
+        updateButton.setRowCellFactory(department -> new MFXTableRowCell<>(departments -> "") {
+            {
+                updateButton.setAlignment(Pos.CENTER);
+                updateButton.setMinWidth(62);
+                updateButton.setMaxWidth(62);
+                updateButton.setColumnResizable(false);
+
+                deptDesc = department.getDeptDesc();
+
+                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> {
+                    Department selectedDepartment = departmentTableView.getSelectionModel().getSelectedValues().get(deptId);
+                    setData(selectedDepartment);
+                });
+                setGraphic(button);
+
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
                     }
                 });
             }
-        } catch (DepartmentException e) {
-            throw new RuntimeException(e);
-        }
+        });
 
-    }
+        deleteButton.setRowCellFactory(department -> new MFXTableRowCell<>(departments -> "") {
+            {
+                deleteButton.setAlignment(Pos.CENTER);
+                deleteButton.setMinWidth(62);
+                deleteButton.setMaxWidth(62);
+                deleteButton.setColumnResizable(false);
 
+                MFXButton button = createButton("⛔", "mfx-button-table-delete", event -> confirmAndDeleteRole());
+                setGraphic(button);
 
-
-    @FXML
-    private void onClickAdd() throws Exception {
-        if(deptField.getText().isEmpty()){
-            AlertUtility.showAlert(Alert.AlertType.ERROR, "Update Error", null, "Field is Empty");
-        }
-        else{
-            inputProcess(true);
-        }
-    }
-
-    private boolean isEmpty(){
-        if (deptField.getText().isEmpty()){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    @FXML
-    private void onClickUpdate() throws Exception {
-        Department selectedIndex = departmentTableView.getSelectionModel().getSelectedItem();
-        if(isEmpty()){
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "Please Fill the Field");
-        }else{
-            if(selectedIndex != null){
-                inputProcess(false);
-            }else{
-                AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to update");
+                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+                    System.out.println(newValue);
+                    if (newValue) {
+                        setMouseTransparent(false);
+                    }
+                });
             }
+        });
+
+        departmentTableView.getTableColumns().addAll(descColumn, deleteButton, updateButton);
+
+        departmentTableView.getFilters().addAll(
+                new StringFilter<>("Department", Department::getDeptDesc)
+        );
+
+        try {
+            List<Department> deptList = departmentService.fetchDepartments();
+            departmentTableView.getItems().clear(); // Clear existing items
+            if (!deptList.isEmpty()) {
+                departmentTableView.setItems(FXCollections.observableArrayList(deptList));
+            } else {
+                // Handle case when roleList is empty
+                // Display a message to the user or adjust the behavior of your application accordingly
+                System.out.println("Department list is empty.");
+            }
+        } catch (DepartmentException e) {
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
         }
     }
 
-    @FXML
-    private void onClickDelete() throws DepartmentException{
-        Department department = departmentTableView.getSelectionModel().getSelectedItem();
-        if(department != null){
-            int deptId = department.getDeptId();
-            System.out.println(deptId);
+    private MFXButton createButton(String text, String styleClass, EventHandler<? super MouseEvent> eventHandler) {
+        MFXButton button = new MFXButton(text);
+        button.getStyleClass().add(styleClass);
+        button.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler);
+        return button;
+    }
+
+    protected void setData(Department department) {
+        departmentField.setFloatingText("Update Department");
+        departmentField.setText(department.getDeptDesc());
+        deptId = department.getDeptId();
+    }
+
+    private void confirmAndDeleteRole() {
+        Department selectedDepartment = departmentTableView.getSelectionModel().getSelectedValues().get(deptId);
+
+        if (selectedDepartment != null) {
+            int id = selectedDepartment.getDeptId();
+            String desc = selectedDepartment.getDeptDesc();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText(null);
-            alert.setContentText("Do you want to delete this row?");
+            alert.setContentText("Are you sure you want to delete department " + desc  + " ?");
 
             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-            alert.getButtonTypes().setAll(okButton,cancelButton);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == okButton){
-                try{
-                    departmentService.deleteDepartment(deptId);
+            if (result.isPresent() && result.get() == okButton) {
+                // User clicked OK, proceed with deletion
+                try {
+                    System.out.println(id);
+                    departmentService.deleteDepartment(id);
                     initialize();
-                    AlertUtility.showAlert(Alert.AlertType.INFORMATION, "", null, "Row Deleted");
-                }catch (DepartmentException e){
-                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
+                } catch (DepartmentException ex) {
+                    // Handle exception
+                    AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to delete.");
                 }
-            }else{
-
+            } else {
+                // User clicked Cancel or closed the dialog, do nothing
             }
-        }else{
-            AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning!", null, "please select a row to delete");
         }
-
-    }
-
-    private Department fetchDepartment(){
-        String deptDesc = deptField.getText();
-        return new Department(deptDesc);
-    }
-
-    protected void inputProcess(boolean isNew) throws Exception{
-        try {
-            Department department = fetchDepartment();
-            if(isNew) {
-                departmentService.createDepartment(department);
-                initialize();
-                resetField();
-            } else{
-                int id = departmentTableView.getSelectionModel().getSelectedItem().getDeptId();
-                departmentService.updateDepartment(String.valueOf(department), id);
-                initialize();
-                resetField();
-            }
-        }catch (DepartmentException e) {
-                String action = isNew ? "creating" : "updating";
-                String position = fetchDepartment().getDeptDesc();
-                String errorMessage = "error " + action + " the" + position + "| Reason: " + e.getMessage();
-                AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, errorMessage);
-        }
-    }
-
-    private void resetField(){
-        deptField.setText("");
     }
 
     @FXML
-    private void onClickSearchDept(){
-        String positionIdText = deptIdField.getText().trim();
-
-        try{
-            int deptId = Integer.parseInt(positionIdText);
-
-            Predicate<Department> filterPredicate = department -> department.getDeptId() == deptId;
-
-            departmentFilteredList.setPredicate(filterPredicate);
-
-            if(departmentFilteredList.isEmpty()){
-                AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "No records found for the provided Position ID.");
-            }
-        }catch (NumberFormatException e) {
-            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Please enter a valid department Id");
+    private void onClickSubmit() {
+        if (deptId != 0) {
+            deptDesc = departmentField.getText();
+            confirmAndUpdateDepartment();
+        } else if (deptId == 0 && !departmentField.getText().isEmpty()) {
+            deptDesc = departmentField.getText();
+            createNewDepartment();
+        } else {
+            showAlert("Please select a department to update.");
         }
-
+        initialize();
     }
 
-    private void showContextMenu(MouseEvent event, TableRow<Department> row, Department rowData){
-        ContextMenu contextMenu = new ContextMenu();
+    private void confirmAndUpdateDepartment() {
+        Alert alert = createConfirmationAlert("Are you sure you want to update " + deptDesc + " ?");
+        alert.showAndWait();
+        try {
+            updateDepartmentSelected();
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, "Updated department.");
+        } catch (DepartmentException e) {
+            AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, "Unable to update record.");
+        }
+    }
+    private void createNewDepartment() {
+        try {
+            String newDepartment = departmentField.getText();
 
-        MenuItem updateMenu = new MenuItem("Update");
-        updateMenu.setOnAction(e -> {
-            try {
-                onClickUpdate();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        MenuItem deleteMenu = new MenuItem("Delete");
-        deleteMenu.setOnAction(e ->{
-            try {
-                onClickDelete();
-            } catch ( DepartmentException ex) {
-                throw new RuntimeException(ex);
-            }
-        } );
-
-
-        contextMenu.getItems().addAll(updateMenu, deleteMenu);
-        contextMenu.show(row, event.getScreenX(), event.getScreenY());
-
+            Department department = new Department(newDepartment);
+            departmentService.createDepartment(department);
+            showAlert("Department Created!");
+        } catch (DepartmentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void setupContextMenu() {
-        departmentTableView.setRowFactory(tableView -> {
-            TableRow<Department> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getButton() == MouseButton.SECONDARY && !row.isEmpty()) {
-                    Department rowData = row.getItem();
-                    showContextMenu(event, row, rowData);
-                }
-            });
-            return  row;
-        });
+    private void showAlert(String message) {
+        AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, message);
     }
 
+    private Alert createConfirmationAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.getButtonTypes().setAll(new ButtonType("OK", ButtonBar.ButtonData.OK_DONE), new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE));
+        return alert;
+    }
+
+    protected void updateDepartmentSelected() throws DepartmentException {
+        deptDesc = departmentField.getText();
+        departmentService.updateDepartment(deptDesc, deptId);
+    }
+
+    private void handleRoleException(DepartmentException ex) {
+        AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Error updating position: " + ex.getMessage());
+        ex.printStackTrace();
+    }
 }

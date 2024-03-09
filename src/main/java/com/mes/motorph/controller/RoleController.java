@@ -41,6 +41,8 @@ public class RoleController {
     protected void initialize() {
         setupTable();
         breadCrumb.setText("Administration / Role / Create");
+        rolesTableView.autosizeColumnsOnInitialization();
+        rolesTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> rolesTableView.autosizeColumns());
     }
 
     private void setupTable() {
@@ -54,7 +56,7 @@ public class RoleController {
 
         idColumn.setRowCellFactory(role -> new MFXTableRowCell<>(Role::getRoleId));
         nameColumn.setRowCellFactory(role -> new MFXTableRowCell<>(Role::getName));
-        nameColumn.setMinWidth(250);
+//        nameColumn.setMinWidth(250);
 
         updateButton.setRowCellFactory(role -> new MFXTableRowCell<>(roles -> "") {
             {
@@ -65,7 +67,8 @@ public class RoleController {
 
                 MFXButton button = createButton("🖊", "mfx-button-table-update", event -> { Role selectedRole = rolesTableView.getSelectionModel().getSelectedValues().get(roleId);
                 // Pass the selected row to setData() method
-                setData(selectedRole); });
+                setData(selectedRole);
+                });
                 setGraphic(button);
 
                 mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
@@ -120,6 +123,7 @@ public class RoleController {
     }
 
     protected void setData(Role role) {
+        roleNameField.setFloatingText("Update Role");
         roleNameField.setText(role.getName());
         roleId = role.getRoleId();
     }
