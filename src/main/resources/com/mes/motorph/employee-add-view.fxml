@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="newView" prefHeight="700.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.EmployeeAddController">
+<AnchorPane fx:id="newView" prefHeight="700.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.EmployeeAddController">
    <children>
       <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="57.0" prefWidth="428.0" text="Employees / Add / Employee" textFill="#cdd2d6">
          <font>
@@ -21,7 +21,7 @@
       </Label>
       <HBox layoutX="24.0" layoutY="64.0" prefHeight="37.0" prefWidth="879.0">
          <children>
-            <Label fx:id="sceneTitle" prefHeight="22.0" prefWidth="303.0" styleClass="scene-title" stylesheets="@../../../css/scenes.css" text="Add New Employee">
+            <Label fx:id="sceneTitle" prefHeight="22.0" prefWidth="303.0" styleClass="scene-title" stylesheets="@../../../css/scenes.css">
                <font>
                   <Font size="14.0" />
                </font></Label>

@@ -123,7 +123,7 @@ public class EmployeeAddController {
     public void setData(Employee employee) throws PositionException, DepartmentException {
         setEmployeeDataFields(employee);
         breadCrumb.setText("Employee / Profile / " + employee.getFirstName() + " " + employee.getLastName());
-        sceneTitle.setText("Profile: " + employee.getFirstName() + " " + employee.getLastName());
+        //sceneTitle.setText("Profile: " + employee.getFirstName() + " " + employee.getLastName());
         employeeAdd.setVisible(false);
         employeeUpdate.setVisible(true);
         disableTextFields();
@@ -325,7 +325,7 @@ public class EmployeeAddController {
     // Sets up data fields when updating an employee
     private void setEmployeeDataFields(Employee employee) throws PositionException, DepartmentException {
         String empId = String.valueOf(employee.getId());
-        sceneTitle.setText("Update Employee " + employee.getFirstName() + " " + employee.getLastName());
+        //sceneTitle.setText("Update Employee " + employee.getFirstName() + " " + employee.getLastName());
         empIdLabel.setText(empId);
         firstNameAdd.setText(employee.getFirstName());
         lastNameAdd.setText(employee.getLastName());

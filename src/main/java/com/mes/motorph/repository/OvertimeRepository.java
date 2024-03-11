@@ -42,6 +42,34 @@ public class OvertimeRepository {
         return overtimes;
     }
 
+    public List<Overtime> fetchAllOvertimeByEmpId(int empId) throws OvertimeException{
+        List<Overtime> overtimes = new ArrayList<>();
+        try{
+            conn = DBUtility.getConnection();
+            String sql = "SELECT * FROM motorph.overtime WHERE employeeid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, empId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                Date date = rs.getDate("date");
+                int employeeId = rs.getInt("employeeid");
+                String status = rs.getString("status");
+
+                Overtime overtime = new Overtime(id, date, employeeId, status);
+                overtimes.add(overtime);
+            }
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            throw new OvertimeException("Error Fetching data from the database" + e.getMessage(), e);
+        }finally {
+            DBUtility.closeConnection(conn);
+        }
+        return overtimes;
+    }
+
     public void createOvertime(Overtime overtime) throws OvertimeException{
         try{
             conn = DBUtility.getConnection();

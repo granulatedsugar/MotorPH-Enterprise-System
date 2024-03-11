@@ -12,6 +12,9 @@ public class OvertimeService {
     public List<Overtime> fetchAllOvertime() throws OvertimeException{
         return overtimeRepository.fetchAllOvertime();
     }
+    public List<Overtime> fetchAllOvertimeByEmpId(int empId) throws OvertimeException{
+        return overtimeRepository.fetchAllOvertimeByEmpId(empId);
+    }
 
     public void createOvertime(Overtime overtime) throws OvertimeException{
         overtimeRepository.createOvertime(overtime);

@@ -12,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -78,6 +80,7 @@ public class PayrollCreateController {
     private PositionService positionService = new PositionService();
     private DepartmentService departmentService = new DepartmentService();
     private SalaryCalculationService salaryCalculationService = new SalaryCalculationService();
+    private OvertimeService overtimeService = new OvertimeService();
 
     // TODO:
     // Implement next phase : continuous improvement
@@ -227,6 +230,38 @@ public class PayrollCreateController {
         }
     }
 
+//    private void calculateSalaryDetails(Employee employee) {
+//        LocalDate selectedFromDate = startDatePicker.getValue();
+//        LocalDate selectedToDate = endDatePicker.getValue();
+//        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        String fDate = selectedFromDate.format(outputFormatter);
+//        String tDate = selectedToDate.format(outputFormatter);
+//        DateTimeFormatter payslipIdFormat = DateTimeFormatter.ofPattern("dd-yyyy-MM");
+//        String payslipIdValue = selectedToDate.format(payslipIdFormat);
+//        payrollIdField.setText(payslipIdValue + "-" + employee.getId());
+//
+//        try {
+//            // Check Attendance
+//            List<Attendance> attendances = attendanceService.fetchAttendaceByEmployeId(employee.getId(), fDate, tDate);
+//            List<Overtime> overtimeList = overtimeService.fetchAllOvertimeByEmpId(employee.getId()); // This will return a list of overtime requests data logId / Date / employeeid / status(approved/pending/rejected)
+//            double totalOvertime = 0;
+//            int totalLate = 0;
+//
+//            // Count Days
+//            int attendanceCount = attendances.size();
+//
+//            // Calculate Late and Overtime
+//            for (Attendance attendance : attendances) {
+//                double overtime = attendance.getOvertime();
+//                totalOvertime += overtime;
+//
+//                int late = attendance.getLate();
+//                totalLate += late;
+//            }
+//
+//            double overtimeAmount = (employee.getHourlyRate() * 1.25 ) * totalOvertime;
+//            double lateAmount = totalLate * employee.getHourlyRate();
+
     private void calculateSalaryDetails(Employee employee) {
         LocalDate selectedFromDate = startDatePicker.getValue();
         LocalDate selectedToDate = endDatePicker.getValue();
@@ -240,30 +275,44 @@ public class PayrollCreateController {
         try {
             // Check Attendance
             List<Attendance> attendances = attendanceService.fetchAttendaceByEmployeId(employee.getId(), fDate, tDate);
+            List<Overtime> overtimeList = overtimeService.fetchAllOvertimeByEmpId(employee.getId());
+
             double totalOvertime = 0;
             int totalLate = 0;
-
-            // Count Days
             int attendanceCount = attendances.size();
 
             // Calculate Late and Overtime
             for (Attendance attendance : attendances) {
-                double overtime = attendance.getOvertime();
-                totalOvertime += overtime;
+                totalOvertime += attendance.getOvertime();
+                totalLate += attendance.getLate();
+            }
 
-                int late = attendance.getLate();
-                totalLate += late;
+            // Calculate total overtime hours approved within the date range
+            // Calculate total overtime hours approved within the date range
+            for (LocalDate date = selectedFromDate; !date.isAfter(selectedToDate); date = date.plusDays(1)) {
+                for (Overtime overtime : overtimeList) {
+                    LocalDate overtimeDate = overtime.getDate().toLocalDate(); // Assuming overtime.getDate() returns a LocalDateTime
+                    if (overtimeDate.isEqual(date) && overtime.getStatus().equalsIgnoreCase("Approved")) {
+                        totalOvertime += 1; // Assuming each approved overtime request adds 1 hour of overtime
+                    }
+                }
             }
 
             double overtimeAmount = (employee.getHourlyRate() * 1.25 ) * totalOvertime;
             double lateAmount = totalLate * employee.getHourlyRate();
+
+            // Create a DecimalFormat object with the desired pattern
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            // Set the rounding mode to ensure two decimal places
+            decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
 
             // Earnings
             double monthlyRate = salaryCalculationService.calculateMonthlyRate(employee.getGrossSemiMonthlyRate());
             monthlyRateField.setText(String.valueOf(monthlyRate));
             dailyRateField.setText(String.valueOf(monthlyRate / 20));
             daysWorkedField.setText(String.valueOf(attendanceCount));
-            overtimeField.setText(String.valueOf(totalOvertime));
+            String formattedOvertimeAmount = decimalFormat.format(overtimeAmount);
+            overtimeField.setText(formattedOvertimeAmount);
 
             // Benefits
             double totalBenefits = salaryCalculationService.calculateTotalBenefits(employee.getRiceSubsidy(), employee.getPhoneAllowance(), employee.getClothingAllowance());
@@ -283,22 +332,31 @@ public class PayrollCreateController {
                 double withholdingTax = deductionService.calculateWithholdingTax(grossIncome);
                 double totalDeductions = sssDeduction + phDeduction + pagIbiDeduction + withholdingTax;
 
-                sssField.setText(String.valueOf(sssDeduction));
-                phField.setText(String.valueOf(phDeduction));
-                pagIbigField.setText(String.valueOf(pagIbiDeduction));
-                withholdingTaxField.setText(String.valueOf(withholdingTax));
+                String formattedSSS = decimalFormat.format(sssDeduction);
+                String formattedPh = decimalFormat.format(phDeduction);
+                String formattedPagIbig = decimalFormat.format(pagIbiDeduction);
+                String formattedtotalDeductions = decimalFormat.format(totalDeductions);
+
+                sssField.setText(formattedSSS);
+                phField.setText(formattedPh);
+                pagIbigField.setText(formattedPagIbig);
+                // Format withholdingTax using the DecimalFormat object
+                String formattedWithholdingTax = decimalFormat.format(withholdingTax);
+                withholdingTaxField.setText(formattedWithholdingTax);
 
                 totalBenefitsField.setText(String.valueOf(totalBenefits));
-                grossIncomeField.setText(String.valueOf(totalGrossIncome));
-                totalDeductionsField.setText(String.valueOf(totalDeductions));
+                String formattedGross = decimalFormat.format(totalGrossIncome);
+                grossIncomeField.setText(formattedGross);
+                totalDeductionsField.setText(formattedtotalDeductions);
                 double totalNetPay = salaryCalculationService.calculateNetPay(totalGrossIncome, totalDeductions, totalBenefits);
-                netPayField.setText(String.valueOf(totalNetPay));
+                String formattedNet = decimalFormat.format(totalNetPay);
+                netPayField.setText(formattedNet);
 
             } else {
                 // Handle if no attendance data exists
                 AlertUtility.showAlert(Alert.AlertType.WARNING, "No Data", null, "No attendance found for " + employee.getFirstName() + " " + employee.getLastName());
             }
-        } catch (AttendanceException | PayrollException e) {
+        } catch (AttendanceException | PayrollException | OvertimeException e) {
             e.printStackTrace();
         }
     }
