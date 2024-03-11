@@ -1,10 +1,7 @@
 package com.mes.motorph.view;
 
 import com.mes.motorph.Main;
-import com.mes.motorph.controller.AttendanceEmployeeController;
-import com.mes.motorph.controller.EmployeeAddController;
-import com.mes.motorph.controller.LeaveRequestController;
-import com.mes.motorph.controller.ManageLeaveReqController;
+import com.mes.motorph.controller.*;
 import com.mes.motorph.entity.Employee;
 import com.mes.motorph.entity.LeaveRequest;
 import com.mes.motorph.entity.UserRole;
@@ -370,6 +367,38 @@ public class ViewFactory {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    protected void onClickOvertimeReq(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewFactory.class.getResource("/com/mes/motorph/overtime-request-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 462, 650);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Ovetime");
+            stage.setResizable(false);
+            stage.show();
+
+            // Load the application icon
+            Image icon = new Image(Main.class.getResourceAsStream("/images/app-icon.png"));
+            stage.getIcons().add(icon);
+
+            //timeInOut.setVisible(true);
+            Employee employee = employeeService.fetchEmployeeDetails(employeeId);
+            OvertimeRequestController overtimeRequestController = fxmlLoader.getController();
+            overtimeRequestController.setData(employee);
+
+        } catch (Exception e) {
+            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    protected void onClickManageOvertime(){
+        navigateToView("/com/mes/motorph/manage-overtime-view.fxml");
+    }
+
 
     private void setDashboardButtons() {
         overviewLabel.setVisible(false);

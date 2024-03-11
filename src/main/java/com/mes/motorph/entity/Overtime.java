@@ -20,6 +20,11 @@ public class Overtime {
         this.employeeId = employeeId;
         this.status = status;
     }
+
+    public Overtime(int overtimeId, String status) {
+        this.overtimeId = overtimeId;
+        this.status = status;
+    }
     public int getOvertimeId() {
         return overtimeId;
     }

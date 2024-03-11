@@ -43,7 +43,7 @@ public class CreateLeaveController {
 
     @FXML
     protected void initialize(){
-        breadCrumb.setText("File Leave");
+        breadCrumb.setText("Attendance / File Leave");
         setComboBox();
     }
 
