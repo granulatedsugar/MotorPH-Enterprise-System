@@ -153,6 +153,24 @@
                         </ImageView>
                      </graphic>
                   </MFXButton>
+                  <MFXButton fx:id="overtimeReqBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickOvertimeReq" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Overtime ">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/layers.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MFXButton>
+                  <MFXButton fx:id="manageOvertimeBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickManageOvertime" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Manage Overtime">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/layers.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MFXButton>
                   <Text fx:id="payrollSection" strokeType="OUTSIDE" strokeWidth="0.0" text="Accounting" wrappingWidth="153.84765625" />
                   <MFXButton fx:id="payrollStatementBtn" alignment="TOP_LEFT" graphicTextGap="10.0" onAction="#onClickPayroll" prefHeight="40.0" prefWidth="200.0" styleClass="mfx-button-sidebar" stylesheets="@../../../css/Button.css" text="Payslips">
                      <graphic>

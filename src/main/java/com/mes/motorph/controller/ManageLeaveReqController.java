@@ -54,7 +54,7 @@ public class ManageLeaveReqController {
     @FXML
     protected void initialize() {
         setupTable();
-        breadCrumb.setText("Attendance/Leave Request");
+        breadCrumb.setText("Attendance / Manage Leave Request");
     }
     private void setupTable(){
         leaveRequestTableView.getTableColumns().clear();
