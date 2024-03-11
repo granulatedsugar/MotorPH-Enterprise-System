@@ -65,7 +65,7 @@ public class AttendanceRepository {
                 Time timeOut = rs.getTime("Punch Out");
                 double workedHours = rs.getDouble("Worked Hours");
                 int regularWorkHours = rs.getInt("Regular Work Hours");
-                int overtime = rs.getInt("overtime");
+                double overtime = rs.getDouble("overtime");
                 int late = rs.getInt("late");
 
                 Attendance attendance = new Attendance(id, regDate, employeeId, employeeName, timeIn, timeOut, workedHours, regularWorkHours, overtime, late);

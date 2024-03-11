@@ -11,7 +11,7 @@ public class Attendance {
     private Time timeOut;
     private double workedHours;
     private int regularWorkedHours;
-    private int overtime;
+    private double overtime;
     private int late;
 
 
@@ -79,11 +79,11 @@ public class Attendance {
         this.regularWorkedHours = regularWorkedHours;
     }
 
-    public int getOvertime() {
+    public double getOvertime() {
         return overtime;
     }
 
-    public void setOvertime(int overtime) {
+    public void setOvertime(double overtime) {
         this.overtime = overtime;
     }
 
@@ -95,7 +95,7 @@ public class Attendance {
         this.late = late;
     }
 
-    public Attendance(int id, Date date, int employeeId, String employeeName, Time timeIn, Time timeOut, double workedHours, int regularWorkedHours, int overtime, int late) {
+    public Attendance(int id, Date date, int employeeId, String employeeName, Time timeIn, Time timeOut, double workedHours, int regularWorkedHours, double overtime, int late) {
         this.id = id;
         this.date = date;
         this.employeeId = employeeId;

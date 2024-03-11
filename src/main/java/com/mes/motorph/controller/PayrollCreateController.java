@@ -277,23 +277,35 @@ public class PayrollCreateController {
             List<Attendance> attendances = attendanceService.fetchAttendaceByEmployeId(employee.getId(), fDate, tDate);
             List<Overtime> overtimeList = overtimeService.fetchAllOvertimeByEmpId(employee.getId());
 
-            double totalOvertime = 0;
+            double totalOvertime = 0.0;
             int totalLate = 0;
             int attendanceCount = attendances.size();
 
-            // Calculate Late and Overtime
-            for (Attendance attendance : attendances) {
-                totalOvertime += attendance.getOvertime();
-                totalLate += attendance.getLate();
-            }
+//            // Calculate Late and Overtime
+//            for (Attendance attendance : attendances) {
+//                totalOvertime += attendance.getOvertime();
+//                totalLate += attendance.getLate();
+//            }
 
-            // Calculate total overtime hours approved within the date range
+            // TODO : Delete after testing for overtime
+            System.out.println("selectedToDate: " + selectedToDate);
+            for (Overtime overtime : overtimeList) {
+                System.out.println("Overtime date: " + overtime.getDate());
+                System.out.println("Overtime status: " + overtime.getStatus());
+            }
             // Calculate total overtime hours approved within the date range
             for (LocalDate date = selectedFromDate; !date.isAfter(selectedToDate); date = date.plusDays(1)) {
                 for (Overtime overtime : overtimeList) {
                     LocalDate overtimeDate = overtime.getDate().toLocalDate(); // Assuming overtime.getDate() returns a LocalDateTime
                     if (overtimeDate.isEqual(date) && overtime.getStatus().equalsIgnoreCase("Approved")) {
-                        totalOvertime += 1; // Assuming each approved overtime request adds 1 hour of overtime
+                        // Add the overtime hours from Attendance for the matching date
+                        for (Attendance attendance : attendances) {
+                            LocalDate attendanceDate = attendance.getDate().toLocalDate(); // Assuming attendance.getDate() returns a LocalDateTime
+                            if (attendanceDate.isEqual(date)) {
+                                totalOvertime += attendance.getOvertime();
+                                System.out.println(totalOvertime);
+                            }
+                        }
                     }
                 }
             }

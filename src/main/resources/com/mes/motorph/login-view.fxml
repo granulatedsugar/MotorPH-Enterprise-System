@@ -42,7 +42,7 @@
                </font>
             </Text>
             <Text layoutX="139.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All Rights Reserved | MotorPH © 2024" />
-            <MFXButton layoutX="115.0" layoutY="580.0" onAction="#openStepperStage" prefHeight="50.0" prefWidth="250.0" styleClass="mfx-button-secondary" stylesheets="@../../../css/Button.css" text="Create Password" />
+            <MFXButton layoutX="115.0" layoutY="580.0" onAction="#openStepperStage" prefHeight="50.0" prefWidth="250.0" styleClass="mfx-button-secondary" stylesheets="@../../../css/Button.css" text="Get Started" />
             <Text layoutX="116.0" layoutY="568.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Employee?">
                <font>
                   <Font size="14.0" />
