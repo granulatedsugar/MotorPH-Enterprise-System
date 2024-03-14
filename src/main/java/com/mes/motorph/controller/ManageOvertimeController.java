@@ -43,8 +43,8 @@ public class ManageOvertimeController {
         overtimeReqTableView.getTableColumns().clear();
 
         MFXTableColumn<Overtime> date = new MFXTableColumn<>("Submitted Date", true, Comparator.comparing(Overtime::getDate));
-        MFXTableColumn<Overtime> employeeId = new MFXTableColumn<>("Submitted Date", true, Comparator.comparing(Overtime::getEmployeeId));
-        MFXTableColumn<Overtime> status = new MFXTableColumn<>("Submitted Date", true, Comparator.comparing(Overtime::getStatus));
+        MFXTableColumn<Overtime> employeeId = new MFXTableColumn<>("Status Date", true, Comparator.comparing(Overtime::getEmployeeId));
+        MFXTableColumn<Overtime> status = new MFXTableColumn<>("Status", true, Comparator.comparing(Overtime::getStatus));
         MFXTableColumn<Overtime> approveBtn = new MFXTableColumn<>("", true, Comparator.comparing(Overtime::getOvertimeId));
         MFXTableColumn<Overtime> rejectBtn = new MFXTableColumn<>("", true, Comparator.comparing(Overtime::getOvertimeId));
 

@@ -51,8 +51,8 @@ public class AttendanceController {
 
         MFXTableColumn<Attendance> empIdColumn = new MFXTableColumn<>("Employee ID", true, Comparator.comparing(Attendance::getEmployeeId));
         MFXTableColumn<Attendance> dateColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getDate));
-        MFXTableColumn<Attendance> timeInColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getTimeIn));
-        MFXTableColumn<Attendance> timeOutColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getTimeOut));
+        MFXTableColumn<Attendance> timeInColumn = new MFXTableColumn<>("Time In", true, Comparator.comparing(Attendance::getTimeIn));
+        MFXTableColumn<Attendance> timeOutColumn = new MFXTableColumn<>("Time Out", true, Comparator.comparing(Attendance::getTimeOut));
         MFXTableColumn<Attendance> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
         MFXTableColumn<Attendance> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
 

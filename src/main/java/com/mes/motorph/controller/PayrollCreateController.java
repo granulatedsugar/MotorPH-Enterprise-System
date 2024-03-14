@@ -402,6 +402,7 @@ public class PayrollCreateController {
             String payrollId = fetchFromInput().getPayrollId();
             String errorMessage = "Error " + action + " Payroll #" + payrollId + " | Reason: " + e.getLocalizedMessage();
             AlertUtility.showAlert(Alert.AlertType.ERROR, "Error", null, errorMessage);
+            throw new RuntimeException(e);
         }
     }
 
