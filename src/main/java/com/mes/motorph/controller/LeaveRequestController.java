@@ -52,7 +52,6 @@ public class LeaveRequestController {
         this.employeeId = empId;
         empNumberField.setText(String.valueOf(empId));
         empNumberField.setDisable(true);
-        System.out.println(empId);
         setupTable();
         setComboBox();
     }

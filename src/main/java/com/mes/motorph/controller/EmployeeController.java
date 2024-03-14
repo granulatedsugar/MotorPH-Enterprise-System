@@ -143,7 +143,6 @@ public class EmployeeController {
             employeeTableView.setItems(FXCollections.observableArrayList(employeeList));
         } catch (EmployeeException e) {
             AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
-            throw new RuntimeException(e);
         }
     }
 

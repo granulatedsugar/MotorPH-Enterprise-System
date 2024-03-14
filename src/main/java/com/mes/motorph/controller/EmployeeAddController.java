@@ -139,7 +139,6 @@ public class EmployeeAddController {
             // Set a listener to handle selection
             positionAdd.setOnAction(event -> {
                 Position selectedPosition = positionAdd.getSelectionModel().getSelectedItem();
-                System.out.println("Selected Position: " + selectedPosition.getPositionId());
             });
         } catch (PositionException e) {
             e.printStackTrace();
@@ -156,7 +155,7 @@ public class EmployeeAddController {
 
             departmentAdd.setOnAction(event -> {
                 Department selectedDepartment = departmentAdd.getSelectionModel().getSelectedItem();
-                System.out.println("Selected Department: " + selectedDepartment.getDeptId() + " - " + selectedDepartment.getDeptDesc());
+                // System.out.println("Selected Department: " + selectedDepartment.getDeptId() + " - " + selectedDepartment.getDeptDesc());
             });
         } catch (DepartmentException e) {
             e.printStackTrace();

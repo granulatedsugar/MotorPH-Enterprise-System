@@ -10,6 +10,7 @@ import com.mes.motorph.exception.EmployeeException;
 import com.mes.motorph.exception.PositionException;
 import com.mes.motorph.services.EmployeeService;
 import com.mes.motorph.utils.AlertUtility;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -32,37 +33,41 @@ public class ViewFactory {
     @FXML
     private Label overviewLabel;
     @FXML
-    private Button dashboardBtn;
+    private MFXButton dashboardBtn;
     @FXML
     private Label managementLabel;
     @FXML
     private Text employeeSection;
     @FXML
-    private Button employeeDetailsBtn;
+    private MFXButton employeeDetailsBtn;
     @FXML
-    private Button employeeCreateBtn;
+    private MFXButton employeeCreateBtn;
     @FXML
     private Text attendanceSection;
     @FXML
-    private Button timeInOutBtn;
+    private MFXButton timeInOutBtn;
     @FXML
-    private Button attendanceManageBtn;
+    private MFXButton attendanceManageBtn;
+    @FXML
+    private MFXButton manageLeaveReqBtn;
+    @FXML
+    private MFXButton manageOvertimeBtn;
     @FXML
     private Text payrollSection;
     @FXML
-    private Button payrollStatementBtn;
+    private MFXButton payrollStatementBtn;
     @FXML
-    private Button payrollCreateBtn;
+    private MFXButton payrollCreateBtn;
     @FXML
     private Text adminSection;
     @FXML
-    private Button userBtn;
+    private MFXButton userBtn;
     @FXML
-    private Button roleBtn;
+    private MFXButton roleBtn;
     @FXML
-    private Button positionBtn;
+    private MFXButton positionBtn;
     @FXML
-    private Button departmentBtn;
+    private MFXButton departmentBtn;
     @FXML
     private MenuButton accountMenu;
     @FXML
@@ -186,6 +191,10 @@ public class ViewFactory {
         employeeDetailsBtn.setManaged(hasEmployeeDetailsAccess);
         attendanceManageBtn.setVisible(hasAttendanceManageAccess);
         attendanceManageBtn.setManaged(hasAttendanceManageAccess);
+        manageLeaveReqBtn.setVisible(hasAttendanceManageAccess);
+        manageLeaveReqBtn.setManaged(hasAttendanceManageAccess);
+        manageOvertimeBtn.setVisible(hasAttendanceManageAccess);
+        manageOvertimeBtn.setManaged(hasAttendanceManageAccess);
         payrollSection.setVisible(hasPayrollSectionAccess);
         payrollSection.setManaged(hasPayrollSectionAccess);
         payrollStatementBtn.setVisible(hasPayrollStatementAccess);
@@ -413,6 +422,10 @@ public class ViewFactory {
         employeeDetailsBtn.setManaged(false);
         attendanceManageBtn.setVisible(false);
         attendanceManageBtn.setManaged(false);
+        manageLeaveReqBtn.setVisible(false);
+        manageLeaveReqBtn.setManaged(false);
+        manageOvertimeBtn.setVisible(false);
+        manageOvertimeBtn.setManaged(false);
         payrollSection.setVisible(false);
         payrollSection.setManaged(false);
         payrollStatementBtn.setVisible(false);
