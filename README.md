@@ -51,49 +51,68 @@ These instructions will get you a copy of the project up and running on your loc
 Welcome to the MotorPH Payroll System! In this tutorial, we will guide you on how to run this application by following the screenshots. The application has been developed to manage the payroll of a company and it is user-friendly and efficient. By following the steps in this tutorial, you will be able to run the application and manage the payroll process with ease. We will provide you with clear and concise instructions along with screenshots to help you run the application smoothly. So, let's get started and run the MotorPH Payroll System!
 
 #### Login Screen
+* **To login, you need username and a password.**
+* **Username: Use the email address associated with the employee account.**
+* **List of username: mgarcia@motorph.com, alim@motorph.com, baquino@motorph.com, ireyes@motorph.com, ehernandez@motorph.com, avillanueva@motorph.com, bsanjose@motorph.com, aromualdez@motorph.com, ratienza@motorph.com,...,ralvaro@motorph.com**
+* **Password: Use the default password "password".**
 
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/a89757b2-1326-406d-9ccf-2547cdca1e42)
-
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/6e97f50e-6463-4736-a6ba-f118342484be)
 
-
 #### Welcome Screen
-
+* **Upon successful login, you will be automatically redirected to the welcome screen.**
+* **The welcome screen will display the name of the logged-in user.**
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/b6ed58af-337f-4e04-a88e-b236cb740ca1)
 
 #### Dashboard
-
+* **Dashboard page displays an overview of the company.**
+* **Information includes: Number of employees, Total products, Payroll expenses, Employee status breakdown, Expense breakdown.**
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/9a0fd119-88d5-41c8-995e-8cdd42750e54)
 
 #### Employee List
-
+* **Management module consists of two functions: Employee Details, Add/Update Employees**
+* **Note: Access to these functionalities may be restricted for certain employees.**
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/88b46fd9-9063-4aa7-93d6-6a9c3d1c9492)
 
 #### Add/Update Employee
-
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/976a43b4-28f9-42ec-8b0b-648e86335cdd)
 
 #### Attendance
+* **Attendance module consists of four functions: Time in/ Time out, Manage Attendance (Log), Manage Leave, Leave Request**
+* **Note: Access to these functionalities may be restricted for certain employees.**
 
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/8ef59a42-f8d7-44ce-98df-6d8f9367cd40)
+* **Some employee can create a manual attendance**
+* **Click the "Log", click "+ New Attendance", Complete all fields, and Click Submit.**
 
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/2f4a5fc7-2868-4eec-8b42-352452f35f45)
+* **Click "Time In/Out" in the side menu, then punch in when logging in and punch out when logging out on the stage that pops out.**
 
+##### File Leave Request
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/0d7d00a9-41b3-4b5a-8d01-4ad360c9d223)
+* **To file a leave request, the user should click on "Leave Request", Select Start/End Dates and Leave Type, and Click the submit button.**
 
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/ccf9249d-40a5-4251-a72a-af2d5d7e338f)
+* **Some employees can create a manual leave request**
+* **Click the "Manage Leave", Click "File a Leave", Complete the required fields in the displayed stage, and click submit button.**
+* **This is for certain employees that forgot to file a leave.**
 
 #### Payroll
-
+* **Payroll module consists of two functions: Payslips, New Payslips**
+* **Note: Access to these functionalities may be restricted for certain employees.**
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/085122e5-e1a4-4760-a3a5-e46a8342d1ec)
+* **User can create a new payslip by clicking the "New Payslip" in the sidebar or by clicking "Payslips", and " + New Payslip".**
+* **In the creating a new payslip, the user should click the override checkbox, Type Employee Id, Select Start and End Date, click generate.**
+* **The system automatically calculate everything and fill all the fields.**
 
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/14d94ce6-b396-428e-8f2f-51a9d6e76546)
 
 #### Administration
-
+* **Administration module consists of four functions: Users, User Roles, Position, Department**
+* **Note: Access to these functionalities may be restricted for certain employees.**
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/dcdd44b8-92d3-4f33-99e6-31b40f0023e3)
-
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/21081f1f-a5d8-4d0c-bb2e-ea729d9fd135)
+
 
 
 ## Built With
@@ -105,6 +124,9 @@ Welcome to the MotorPH Payroll System! In this tutorial, we will guide you on ho
 * **Nicholas Roque**
 * **Sid Tolentino**
 * **Taylor Tayengco**
+
+## Documents
+* [Use Case Diagram](https://lucid.app/lucidchart/e3aa0238-decc-4b32-8b14-58f21b83ad63/edit?viewport_loc=-750%2C-150%2C4039%2C1896%2C.Q4MUjXso07N&invitationId=inv_081452c2-a4ca-4e7c-a076-6a5be3b217f8)
 
 ## Acknowledgments
 * Armando Sta. Cruz III
