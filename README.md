@@ -56,13 +56,13 @@ Welcome to the MotorPH Payroll System! In this tutorial, we will guide you on ho
 * **List of username: mgarcia@motorph.com, alim@motorph.com, baquino@motorph.com, ireyes@motorph.com, ehernandez@motorph.com, avillanueva@motorph.com, bsanjose@motorph.com, aromualdez@motorph.com, ratienza@motorph.com,...,ralvaro@motorph.com**
 * **Password: Use the default password "password".**
 
-![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/a89757b2-1326-406d-9ccf-2547cdca1e42)
-![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/6e97f50e-6463-4736-a6ba-f118342484be)
+<img src="https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/a89757b2-1326-406d-9ccf-2547cdca1e42" alt="login">
+<img src="https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/6e97f50e-6463-4736-a6ba-f118342484be" alt="create-pass">
 
 #### Welcome Screen
 * **Upon successful login, you will be automatically redirected to the welcome screen.**
 * **The welcome screen will display the name of the logged-in user.**
-![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/b6ed58af-337f-4e04-a88e-b236cb740ca1)
+<img src="https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/b6ed58af-337f-4e04-a88e-b236cb740ca1" alt="create-pass">
 
 #### Dashboard
 * **Dashboard page displays an overview of the company.**
