@@ -70,11 +70,13 @@ Welcome to the MotorPH Payroll System! In this tutorial, we will guide you on ho
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/9a0fd119-88d5-41c8-995e-8cdd42750e54)
 
 #### Employee List
-* **Management module consists of two functions: Employee Details, Add/Update Employees**
+* **Employee module consists of two functions: Employee Details, Add/Update Employees**
 * **Note: Access to these functionalities may be restricted for certain employees.**
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/88b46fd9-9063-4aa7-93d6-6a9c3d1c9492)
 
 #### Add/Update Employee
+* **To add a new employee click the "Add" button on the left side bar, Fill in all the required fields, then click the "Add" on the bottom right corner**
+* **To update an existing employee, Click the "Details" button and select an employee row and press the pen icon on the right side, Update any of the fields as needed, press the update button on the bottom right corner**
 ![image](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/976a43b4-28f9-42ec-8b0b-648e86335cdd)
 
 #### Attendance
