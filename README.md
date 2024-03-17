@@ -1,4 +1,4 @@
-# MOTORPH-PAYROLL-SYSTEM
+![banner-mph](https://github.com/granulatedsugar/MotorPH-Enterprise-System/assets/48410720/d354cf27-3b05-48ae-afaa-8b2fcd575c82)
 
 Welcome to the MotorPH Payroll System, a comprehensive and user-friendly solution developed to manage the payroll of MotorPH. This system is designed to streamline the payroll process and make it more efficient, accurate and secure. It enables the company to easily track employee salaries, work hours, deductions, and other compensation related information. The system is fully automated, eliminating the need for manual data entry and reducing the chances of errors. The user-friendly interface of the system makes it easy for the HR and finance departments to manage payroll-related tasks with ease. The MotorPH Console Payroll System is a reliable, secure and scalable solution that will help MotorPH to stay ahead in the competitive business world.
 
