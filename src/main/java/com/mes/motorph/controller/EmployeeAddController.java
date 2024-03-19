@@ -116,8 +116,6 @@ public class EmployeeAddController {
         positionComboBox();
         departmentComboBox();
         employeeUpdate.setVisible(false);
-
-
     }
 
     public void setData(Employee employee) throws PositionException, DepartmentException {
@@ -125,9 +123,8 @@ public class EmployeeAddController {
         breadCrumb.setText("Employee / Profile / " + employee.getFirstName() + " " + employee.getLastName());
         //sceneTitle.setText("Profile: " + employee.getFirstName() + " " + employee.getLastName());
         employeeAdd.setVisible(false);
-        employeeUpdate.setVisible(true);
+        employeeUpdate.setVisible(false);
         disableTextFields();
-
     }
 
     protected void positionComboBox() {
