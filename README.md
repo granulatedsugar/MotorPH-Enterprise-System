@@ -129,6 +129,7 @@ Welcome to the MotorPH Payroll System! In this tutorial, we will guide you on ho
 
 ## Documents
 * [Use Case Diagram](https://lucid.app/lucidchart/e3aa0238-decc-4b32-8b14-58f21b83ad63/edit?viewport_loc=-750%2C-150%2C4039%2C1896%2C.Q4MUjXso07N&invitationId=inv_081452c2-a4ca-4e7c-a076-6a5be3b217f8)
+* [Test Cases](https://docs.google.com/spreadsheets/d/1fQqnoPAjFw55cTYgn-U8fvzfwBrAuhWm6lzDbZaJLEM/edit?usp=sharing)
 
 ## Acknowledgments
 * Armando Sta. Cruz III
