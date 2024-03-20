@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -17,10 +20,19 @@
         </Label>
         <HBox alignment="CENTER" layoutX="10.0" layoutY="64.0" prefHeight="50.0" prefWidth="580.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="64.0">
             <children>
+            <MFXDatePicker fx:id="datePicker" />
                 <Pane nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="349.0" HBox.hgrow="ALWAYS" />
             <MFXButton onAction="#onClickAdd" prefHeight="30.0" prefWidth="179.0" styleClass="mfx-button-primary" stylesheets="@../../../css/Button.css" text="➕ New Attendance" />
             </children>
         </HBox>
-      <MFXPaginatedTableView fx:id="attendanceTableView" layoutX="8.0" layoutY="114.0" prefHeight="162.0" prefWidth="907.0" rowsPerPage="15" stylesheets="@../../../css/Button.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="114.0" />
+      <Pagination fx:id="attPagination" layoutX="10.0" layoutY="113.0" prefHeight="541.0" prefWidth="903.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="113.0" />
+      <TableView fx:id="pageTableView" editable="true" layoutX="10.0" layoutY="116.0" prefHeight="459.0" prefWidth="903.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+        <columns>
+            <TableColumn fx:id="dateColumn" prefWidth="108.0" text="Date" />
+            <TableColumn fx:id="empIdColumn" prefWidth="75.0" text="Employee ID" />
+            <TableColumn fx:id="timeInColumn" prefWidth="75.0" text="Time In" />
+            <TableColumn fx:id="timeOutColumn" prefWidth="75.0" text="Time Out" />
+        </columns>
+      </TableView>
     </children>
 </AnchorPane>

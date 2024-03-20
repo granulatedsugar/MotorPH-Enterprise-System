@@ -1,19 +1,20 @@
 /*Payroll Table*/
-.table-view .column-header#idColumn .label,
-.table-view .column-header#employeeIdColumn .label,
-.table-view .column-header#employeeNameColumn .label,
-.table-view .column-header#employeeNameColumn .label,
-.table-view .column-header#fromColumn .label,
-.table-view .column-header#toColumn .label,
-.table-view .column-header#daysWorkedColumn .label,
-.table-view .column-header#totalDeductionColumn .label,
-.table-view .column-header#totalAllowanceColumn .label,
-.table-view .column-header#grossPayColumn .label,
-.table-view .column-header#grossPayColumn .label,
-.table-view .column-header#netPayColumn .label {
+.table-view .column-header .label {
     -fx-alignment: CENTER_LEFT;
 }
 
 .mfx-table-view .column#updateButton {
     /*-fx-max-width: 50;*/
 }
+
+/*.table-view .column-header#employeeIdColumn .label,*/
+/*.table-view .column-header#employeeNameColumn .label,*/
+/*.table-view .column-header#employeeNameColumn .label,*/
+/*.table-view .column-header#fromColumn .label,*/
+/*.table-view .column-header#toColumn .label,*/
+/*.table-view .column-header#daysWorkedColumn .label,*/
+/*.table-view .column-header#totalDeductionColumn .label,*/
+/*.table-view .column-header#totalAllowanceColumn .label,*/
+/*.table-view .column-header#grossPayColumn .label,*/
+/*.table-view .column-header#grossPayColumn .label,*/
+/*.table-view .column-header#netPayColumn .label*/

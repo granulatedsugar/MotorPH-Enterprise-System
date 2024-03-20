@@ -3,27 +3,35 @@ package com.mes.motorph.controller;
 import com.mes.motorph.Main;
 import com.mes.motorph.entity.Attendance;
 import com.mes.motorph.entity.Employee;
+import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.services.AttendanceService;
 import com.mes.motorph.utils.AlertUtility;
 import com.mes.motorph.view.ViewFactory;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 import java.util.Comparator;
 import java.util.List;
@@ -31,92 +39,104 @@ import java.util.Optional;
 
 public class AttendanceController {
 
+    // Test TableView Pagination
+    @FXML
+    private TableView<Attendance> pageTableView;
+    @FXML
+    private TableColumn<Attendance, Integer> empIdColumn;
+    @FXML
+    private TableColumn<Attendance, Date> dateColumn;
+    @FXML
+    private TableColumn<Attendance, Time> timeInColumn;
+    @FXML
+    private TableColumn<Attendance, Time> timeOutColumn;
+    @FXML
+    private Pagination attPagination;
+    @FXML
+    private List<Attendance> attendancesArrayList;
+    private int itemsPerPage;
+    @FXML
+    private MFXDatePicker datePicker;
+    @FXML
+    private FilteredList<Attendance> filteredAttendances;
+
     @FXML
     private MFXPaginatedTableView<Attendance> attendanceTableView;
     @FXML
     private  Label breadCrumb;
     private AttendanceService attendanceService = new AttendanceService();
     private AttendanceEmployeeController attendanceEmployeeController = new AttendanceEmployeeController();
+    private boolean isFiltering = false;
 
     @FXML
     protected void initialize() {
         setupTable();
         breadCrumb.setText("Attendance / Log");
-        attendanceTableView.autosizeColumnsOnInitialization();
-        attendanceTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> attendanceTableView.autosizeColumns());
+//        attendanceTableView.autosizeColumnsOnInitialization();
+//        attendanceTableView.currentPageProperty().addListener((observable, oldValue, newValue) -> attendanceTableView.autosizeColumns());
     }
 
     private void setupTable() {
-        attendanceTableView.getTableColumns().clear();
-
-        MFXTableColumn<Attendance> empIdColumn = new MFXTableColumn<>("Employee ID", true, Comparator.comparing(Attendance::getEmployeeId));
-        MFXTableColumn<Attendance> dateColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getDate));
-        MFXTableColumn<Attendance> timeInColumn = new MFXTableColumn<>("Time In", true, Comparator.comparing(Attendance::getTimeIn));
-        MFXTableColumn<Attendance> timeOutColumn = new MFXTableColumn<>("Time Out", true, Comparator.comparing(Attendance::getTimeOut));
-        MFXTableColumn<Attendance> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
-        MFXTableColumn<Attendance> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
-
-        empIdColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getEmployeeId));
-        dateColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getDate));
-        timeInColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getTimeIn));
-        timeOutColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getTimeOut));
-
-        deleteButton.setRowCellFactory(attendance -> new MFXTableRowCell<>(attendances -> "") {
-            {
-                deleteButton.setAlignment(Pos.CENTER);
-                deleteButton.setMinWidth(62);
-                deleteButton.setMaxWidth(62);
-                deleteButton.setColumnResizable(false);
-
-                MFXButton button = createButton("⛔", "mfx-button-table-delete", event -> onClickDeleteAttendance());
-                setGraphic(button);
-
-                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
-                    System.out.println(newValue);
-                    if (newValue) {
-                        setMouseTransparent(false);
-                    }
-                });
-            }
-        });
-
-        updateButton.setRowCellFactory(attendance -> new MFXTableRowCell<>(attendances -> "") {
-            {
-                updateButton.setAlignment(Pos.CENTER);
-                updateButton.setMinWidth(62);
-                updateButton.setMaxWidth(62);
-                updateButton.setColumnResizable(false);
-
-                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> {
-                    try {
-                        onClickUpdate();
-                    } catch (AttendanceException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
-                setGraphic(button);
-
-                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
-                    System.out.println(newValue);
-                    if (newValue) {
-                        setMouseTransparent(false);
-                    }
-                });
-            }
-        });
-
-        attendanceTableView.getTableColumns().addAll(empIdColumn, dateColumn, timeInColumn, timeOutColumn, deleteButton, updateButton);
-        attendanceTableView.getFilters().addAll(
-                new IntegerFilter<>("Employee ID", Attendance::getEmployeeId)
-        );
-
         try {
-            List<Attendance> attendanceList = attendanceService.fetchAttedance();
-            attendanceTableView.getItems().clear();
-            attendanceTableView.setItems(FXCollections.observableArrayList(attendanceList));
+            this.attendancesArrayList = attendanceService.fetchAttedance();
         } catch (AttendanceException e) {
-            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
+            throw new RuntimeException(e);
         }
+
+        // Initialize filteredAttendances
+        filteredAttendances = new FilteredList<>(FXCollections.observableArrayList(attendancesArrayList));
+
+        this.itemsPerPage = 25;
+        attPagination.setPageCount(calculatePageCount(filteredAttendances.size(), itemsPerPage));
+        attPagination.setPageFactory(this::createPage);
+
+        // Define table columns
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        empIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        timeInColumn.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
+        timeOutColumn.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+
+        dateColumn.setCellFactory(column -> new TableCell<Attendance, Date>() {
+            @Override
+            protected void updateItem(Date item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item.toString()); // Customize the date formatting as needed
+                }
+            }
+        });
+
+        // Add listener to the DatePicker
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                isFiltering = false;
+            } else {
+                isFiltering = true;
+                String selectedDateString = newValue.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                filteredAttendances.setPredicate(attendance ->
+                        attendance.getDate().toString().equals(selectedDateString)
+                );
+            }
+            attPagination.setPageCount(calculatePageCount(filteredAttendances.size(), itemsPerPage));
+            attPagination.setPageFactory(this::createPage);
+        });
+    }
+
+    // Calculate page
+    private int calculatePageCount(int totalItems, int itemsPerPage) {
+        return (int) Math.ceil((double) totalItems / itemsPerPage);
+    }
+
+    private Node createPage(Integer pageIndex) {
+        int fromIndex = pageIndex * itemsPerPage;
+        int toIndex = Math.min(fromIndex + itemsPerPage, filteredAttendances.size());
+
+        ObservableList<Attendance> items = isFiltering ? filteredAttendances : FXCollections.observableArrayList(attendancesArrayList);
+        pageTableView.setItems(FXCollections.observableArrayList(items.subList(fromIndex, toIndex)));
+
+        return pageTableView;
     }
 
     private MFXButton createButton(String text, String styleClass, EventHandler<? super MouseEvent> eventHandler) {
@@ -171,8 +191,8 @@ public class AttendanceController {
             Time timeIn = selectedAttendance.getTimeIn();
             Time timeOut = selectedAttendance.getTimeOut();
             //we get each values from the table
-            Attendance attendance = new Attendance(attendanceId, employeedId, date, timeIn, timeOut);
-            navigateToAttendanceEmployee(attendance);
+//            Attendance attendance = new Attendance(attendanceId, employeedId, date, timeIn, timeOut);
+//            navigateToAttendanceEmployee(attendance);
         }else{
             AlertUtility.showAlert(Alert.AlertType.WARNING, "Warning", null, "Please select a row to update");
         }
@@ -226,3 +246,78 @@ public class AttendanceController {
         }
     }
 }
+
+
+//    NOTE: MATERIALFX
+//    private void setupTable() {
+//        attendanceTableView.getTableColumns().clear();
+//
+//        MFXTableColumn<Attendance> empIdColumn = new MFXTableColumn<>("Employee ID", true, Comparator.comparing(Attendance::getEmployeeId));
+//        MFXTableColumn<Attendance> dateColumn = new MFXTableColumn<>("Date", true, Comparator.comparing(Attendance::getDate));
+//        MFXTableColumn<Attendance> timeInColumn = new MFXTableColumn<>("Time In", true, Comparator.comparing(Attendance::getTimeIn));
+//        MFXTableColumn<Attendance> timeOutColumn = new MFXTableColumn<>("Time Out", true, Comparator.comparing(Attendance::getTimeOut));
+//        MFXTableColumn<Attendance> deleteButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
+//        MFXTableColumn<Attendance> updateButton = new MFXTableColumn<>("", true, Comparator.comparing(Attendance::getId));
+//
+//        empIdColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getEmployeeId));
+//        dateColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getDate));
+//        timeInColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getTimeIn));
+//        timeOutColumn.setRowCellFactory(attendance -> new MFXTableRowCell<>(Attendance::getTimeOut));
+//
+//        deleteButton.setRowCellFactory(attendance -> new MFXTableRowCell<>(attendances -> "") {
+//            {
+//                deleteButton.setAlignment(Pos.CENTER);
+//                deleteButton.setMinWidth(62);
+//                deleteButton.setMaxWidth(62);
+//                deleteButton.setColumnResizable(false);
+//
+//                MFXButton button = createButton("⛔", "mfx-button-table-delete", event -> onClickDeleteAttendance());
+//                setGraphic(button);
+//
+//                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+//                    System.out.println(newValue);
+//                    if (newValue) {
+//                        setMouseTransparent(false);
+//                    }
+//                });
+//            }
+//        });
+//
+//        updateButton.setRowCellFactory(attendance -> new MFXTableRowCell<>(attendances -> "") {
+//            {
+//                updateButton.setAlignment(Pos.CENTER);
+//                updateButton.setMinWidth(62);
+//                updateButton.setMaxWidth(62);
+//                updateButton.setColumnResizable(false);
+//
+//                MFXButton button = createButton("🖊", "mfx-button-table-update", event -> {
+//                    try {
+//                        onClickUpdate();
+//                    } catch (AttendanceException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
+//                });
+//                setGraphic(button);
+//
+//                mouseTransparentProperty().addListener((observable, oldValue, newValue) -> {
+//                    System.out.println(newValue);
+//                    if (newValue) {
+//                        setMouseTransparent(false);
+//                    }
+//                });
+//            }
+//        });
+//
+//        attendanceTableView.getTableColumns().addAll(empIdColumn, dateColumn, timeInColumn, timeOutColumn, deleteButton, updateButton);
+//        attendanceTableView.getFilters().addAll(
+//                new IntegerFilter<>("Employee ID", Attendance::getEmployeeId)
+//        );
+//
+//        try {
+//            List<Attendance> attendanceList = attendanceService.fetchAttedance();
+//            attendanceTableView.getItems().clear();
+//            attendanceTableView.setItems(FXCollections.observableArrayList(attendanceList));
+//        } catch (AttendanceException e) {
+//            AlertUtility.showAlert(Alert.AlertType.INFORMATION, "Information", null, e.getMessage());
+//        }
+//    }
