@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -50,6 +51,8 @@ public class AttendanceController {
     private TableColumn<Attendance, Time> timeInColumn;
     @FXML
     private TableColumn<Attendance, Time> timeOutColumn;
+    @FXML
+    private TableColumn<Attendance, Void> updateColumn;
     @FXML
     private Pagination attPagination;
     @FXML
@@ -92,9 +95,44 @@ public class AttendanceController {
 
         // Define table columns
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        empIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        empIdColumn.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         timeInColumn.setCellValueFactory(new PropertyValueFactory<>("timeIn"));
         timeOutColumn.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+        updateColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button updateButton = new Button();
+
+            {
+                // Load your image
+                Image image = new Image(getClass().getResourceAsStream("/images/pen.png"));
+
+                // Create an ImageView with the image
+                ImageView imageView = new ImageView(image);
+
+                // Set the size of the ImageView (adjust as needed)
+                imageView.setFitWidth(20);
+                imageView.setFitHeight(20);
+
+                // Set the ImageView as the graphic of the button
+                updateButton.setGraphic(imageView);
+
+                updateButton.setOnAction(event -> {
+                    Attendance attendanceRowData = getTableView().getItems().get(getIndex());
+
+                    System.out.println("Update button clicked for: " + attendanceRowData);
+                    navigateToAttendanceEmployee(attendanceRowData);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(updateButton);
+                }
+            }
+        });
 
         dateColumn.setCellFactory(column -> new TableCell<Attendance, Date>() {
             @Override
