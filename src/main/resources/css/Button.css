@@ -97,3 +97,8 @@
     -fx-background-color: #FFEFEF;
     -fx-text-fill: #FF3232;
 }
+
+.center-button-cell {
+    -fx-alignment: CENTER;
+    -fx-background-color: transparent;
+}

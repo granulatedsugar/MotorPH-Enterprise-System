@@ -15,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -106,7 +107,7 @@ public class AttendanceController {
 
                 // Set the ImageView as the graphic of the button
                 updateButton.setGraphic(imageView);
-                updateButton.getStyleClass().add("center-button-cell");
+                setAlignment(Pos.CENTER);
 
                 updateButton.setOnAction(event -> {
                     Attendance attendanceRowData = getTableView().getItems().get(getIndex());

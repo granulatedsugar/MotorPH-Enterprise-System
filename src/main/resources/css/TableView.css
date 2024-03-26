@@ -1,16 +1,12 @@
-/*Payroll Table*/
 .table-view .column-header .label {
     -fx-alignment: CENTER_LEFT;
 }
 
-/*.table-view .column#updateButton {*/
-/*    !*-fx-alignment: CENTER;*!*/
-/*}*/
-
-.table-view .center-button-cell {
+.table-view .column-header#updateColumn .label {
     -fx-alignment: CENTER;
-    -fx-background-color: transparent
 }
+
+
 /*.table-view .column-header#employeeIdColumn .label,*/
 /*.table-view .column-header#employeeNameColumn .label,*/
 /*.table-view .column-header#employeeNameColumn .label,*/
