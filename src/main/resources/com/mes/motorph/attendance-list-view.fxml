@@ -2,6 +2,7 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="663.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.AttendanceController">
+<AnchorPane prefHeight="663.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mes.motorph.controller.AttendanceController">
     <children>
         <Label fx:id="breadCrumb" layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="173.0" text="-" textFill="#cdd2d6">
             <font>
@@ -26,14 +27,18 @@
             </children>
         </HBox>
       <Pagination fx:id="attPagination" layoutX="10.0" layoutY="113.0" prefHeight="541.0" prefWidth="903.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="113.0" />
-      <TableView fx:id="pageTableView" editable="true" layoutX="10.0" layoutY="116.0" prefHeight="459.0" prefWidth="903.0" styleClass="column-header" stylesheets="@../../../css/TableView.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <TableView fx:id="pageTableView" editable="true" layoutX="10.0" layoutY="116.0" prefHeight="459.0" prefWidth="903.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <columns>
             <TableColumn fx:id="dateColumn" prefWidth="110.0" text="Date" />
             <TableColumn fx:id="empIdColumn" prefWidth="110.0" text="Employee ID" />
             <TableColumn fx:id="timeInColumn" prefWidth="110.0" text="Time In" />
             <TableColumn fx:id="timeOutColumn" prefWidth="110.0" text="Time Out" />
-            <TableColumn fx:id="updateColumn" prefWidth="50.0" text=" " />
+            <TableColumn id="center-header" fx:id="updateColumn" prefWidth="50.0" text="Update" />
         </columns>
+         <stylesheets>
+            <URL value="@../../../css/TableView.css" />
+            <URL value="@../../../css/Button.css" />
+         </stylesheets>
       </TableView>
     </children>
 </AnchorPane>

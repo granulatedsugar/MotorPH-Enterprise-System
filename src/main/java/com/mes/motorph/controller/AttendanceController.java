@@ -2,8 +2,6 @@ package com.mes.motorph.controller;
 
 import com.mes.motorph.Main;
 import com.mes.motorph.entity.Attendance;
-import com.mes.motorph.entity.Employee;
-import com.mes.motorph.entity.Payroll;
 import com.mes.motorph.exception.AttendanceException;
 import com.mes.motorph.services.AttendanceService;
 import com.mes.motorph.utils.AlertUtility;
@@ -11,16 +9,12 @@ import com.mes.motorph.view.ViewFactory;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
-import io.github.palexdev.materialfx.filter.IntegerFilter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -31,10 +25,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.sql.Time;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,6 +106,7 @@ public class AttendanceController {
 
                 // Set the ImageView as the graphic of the button
                 updateButton.setGraphic(imageView);
+                updateButton.getStyleClass().add("center-button-cell");
 
                 updateButton.setOnAction(event -> {
                     Attendance attendanceRowData = getTableView().getItems().get(getIndex());
