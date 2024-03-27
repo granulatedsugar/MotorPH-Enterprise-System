@@ -47,6 +47,8 @@ public class AttendanceController {
     @FXML
     private TableColumn<Attendance, Void> updateColumn;
     @FXML
+    private TableColumn<Attendance, Void> deleteColumn;
+    @FXML
     private Pagination attPagination;
     @FXML
     private List<Attendance> attendancesArrayList;
@@ -107,6 +109,7 @@ public class AttendanceController {
 
                 // Set the ImageView as the graphic of the button
                 updateButton.setGraphic(imageView);
+                updateButton.setStyle("-fx-background-color: transparent");
                 setAlignment(Pos.CENTER);
 
                 updateButton.setOnAction(event -> {
@@ -124,6 +127,46 @@ public class AttendanceController {
                     setGraphic(null);
                 } else {
                     setGraphic(updateButton);
+                }
+            }
+        });
+
+        deleteColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button deleteButton = new Button();
+
+            {
+                // Load your image
+                Image image = new Image(getClass().getResourceAsStream("/images/trash-bin.png"));
+
+                // Create an ImageView with the image
+                ImageView imageView = new ImageView(image);
+
+                // Set the size of the ImageView (adjust as needed)
+                imageView.setFitWidth(20);
+                imageView.setFitHeight(20);
+
+                // Set the ImageView as the graphic of the button
+                deleteButton.setGraphic(imageView);
+                deleteButton.setStyle("-fx-background-color: transparent");
+                setAlignment(Pos.CENTER);
+
+                deleteButton.setOnAction(event -> {
+                    Attendance attendanceRowData = getTableView().getItems().get(getIndex());
+
+                    System.out.println("Update button clicked for: " + attendanceRowData);
+
+                    // Call the onClickDeleteAttendance method with the selected Attendance object
+                    onClickDeleteAttendance(attendanceRowData);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
                 }
             }
         });
@@ -178,11 +221,11 @@ public class AttendanceController {
         return button;
     }
 
-    protected void onClickDeleteAttendance() {
-        Attendance selectedRow = attendanceTableView.getSelectionModel().getSelectedValues().get(0);
+    protected void onClickDeleteAttendance(Attendance attendance) {
+//        Attendance selectedRow = attendanceTableView.getSelectionModel().getSelectedValues().get(0);
 
-        if (selectedRow != null) {
-            int attendanceId = selectedRow.getId();
+        if (attendance != null) {
+            int attendanceId = attendance.getId();
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
